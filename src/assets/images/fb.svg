@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="29px" viewBox="0 0 16 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>fb-hover</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.54">
+        <g id="Home" transform="translate(-363.000000, -4599.000000)" fill="#000000">
+            <g id="Home-Slides">
+                <g id="Contact" transform="translate(216.000000, 4040.000000)">
+                    <g id="contact_content" transform="translate(78.000000, 224.000000)">
+                        <g id="follow-group" transform="translate(0.000000, 306.000000)">
+                            <g id="socials" transform="translate(0.000000, 29.000000)">
+                                <g id="socials-hover">
+                                    <path d="M84.0547066,0.486576729 C83.6026972,0.419612363 82.0457757,0.285683632 80.2377378,0.285683632 C76.4542511,0.285683632 73.859382,2.59595424 73.859382,6.83145036 L73.859382,10.4810083 L69.5904037,10.4810083 L69.5904037,15.4363713 L73.859382,15.4363713 L73.859382,28.1428597 L78.9821559,28.1428597 L78.9821559,15.4363713 L83.2343932,15.4363713 L83.8872957,10.4810083 L78.9821559,10.4810083 L78.9821559,7.31694201 C78.9821559,5.89394925 79.3672011,4.90622485 81.4263553,4.90622485 L84.0547066,4.90622485 L84.0547066,0.486576729 Z" id="fb-hover"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
