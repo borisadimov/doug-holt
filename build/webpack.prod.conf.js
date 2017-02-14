@@ -20,7 +20,7 @@ let webpackConfig = merge(baseWebpackConfig, {
     path: path.resolve(__dirname, '../dist'),
     filename: 'js/[name].js',
     chunkFilename: 'js/[id].js',
-    publicPath: '/doug-holt/'
+    publicPath: '/'
   },
   vue: {
     loaders: utils.cssLoaders({
