@@ -10,7 +10,7 @@
         v-bind:class="{'dot-active': portfolio.showContacts}"
         @click="onDotClick(categories.length)"
       )
-  
+
     transition(
       v-bind:css="false"
       v-on:before-enter="scrollBeforeEnter"
@@ -23,18 +23,18 @@
         v-if="catIndex == portfolio.category"
         v-bind:to="'/gallery/' + category.name"
         )
-  
+
         .bg
         .slide(
           v-for="(slide, slIndex) of category.slides"
           v-bind:key="slIndex"
           )
           transition(name="title" appear)
-            .product(v-show="slIndex == slideNum")
+            .slide-title(v-show="slIndex == slideNum")
               | {{category.name}}
               span {{slide.name}}
           transition(name="slide")
-            .screen(
+            .slide-img(
               v-show="slIndex == slideNum"
               v-bind:style="{ backgroundImage: 'url(assets/categories/' + category.name + '/slides/' + slide.image + ')' }"
               )
@@ -52,7 +52,7 @@
 
   export default {
     name: "HomeComponent",
-  
+
     components: {
       ContactsComponent
     },
@@ -61,13 +61,13 @@
       return {
         categories,
         portfolio: this.$select('portfolio'),
-        
+
         category: null,
         slideNum: 0,
         slidesLength: 1,
-        
+
         timer: 0,
-  
+
         scrollHandler: null
       }
     },
@@ -79,19 +79,24 @@
         store.actions.portfolio.categoryNext,
         store.actions.portfolio.categoryPrev
       );
-      
+
       let loadCnt = 0;
-      for (let slide of this.category.slides) {
-        let img = new Image();
-        img.onload = () => {
-          loadCnt++;
-          if (loadCnt == this.slidesLength)
-            store.dispatch(onLoad(100));
-          else
-            store.dispatch(onLoad(loadCnt * 100 / this.slidesLength));
-        };
-        img.src = 'assets/categories/' + this.category.name + '/slides/' + slide.image;
-      }
+
+
+      categories.forEach((cat) => {
+        cat.slides.forEach((slide) => {
+          let img = new Image();
+          img.onload = () => {
+            loadCnt++;
+            if (loadCnt == this.slidesLength)
+              store.dispatch(onLoad(100));
+            else
+              store.dispatch(onLoad(loadCnt * 100 / this.slidesLength));
+          };
+          img.src = 'assets/categories/' + cat.name + '/slides/' + slide.image;
+        })
+      })
+
     },
 
     beforeDestroy () {
@@ -99,6 +104,18 @@
     },
 
     methods: {
+      loadOthers() {
+        for (let cat of this.categories) {
+          if (cat == this.category)
+            continue;
+
+          for (let slide of cat.slides) {
+            let img = new Image();
+            img.src = 'assets/categories/' + cat.name + '/slides/' + slide.image;
+          }
+        }
+      },
+
       onCatUpdate () {
         if (this.portfolio.showContacts)
           return;
@@ -106,14 +123,14 @@
         this.slidesLength = this.category.slides.length;
         this.timer = setInterval(() => this.slideNext(), 5000);
       },
-      
+
       slideNext () {
         if (this.slideNum >= this.slidesLength - 1)
           this.slideNum = 0;
         else
           this.slideNum++;
       },
-  
+
       scrollBeforeEnter (el) {
         let value = this.portfolio.direction === 'down' ? '100%' : "-100%";
         el.style.transform = `translate3d(0, ${value}, 0)`;
@@ -126,7 +143,7 @@
         let value = this.portfolio.direction === 'down' ? '-100%' : "100%";
         Velocity(el, { translateY: value, translateZ: 0 }, { duration: 400, complete: done });
       },
-  
+
       onDotClick (catIndex) {
         let diff = catIndex - this.portfolio.category;
         if (diff < 0) {
@@ -153,12 +170,20 @@
 </script>
 <style lang="scss" scoped rel="stylesheet/scss">
   .home {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
     .category {
-      height: 100vh;
-      width: 100%;
-      position: absolute;
-      margin-left: 216px;
       display: block;
+      position: absolute;
+      top: 0;
+      left: 216px;
+      height: 100%;
+      width: 100vw;
+      overflow: hidden;
 
       .bg {
         position: absolute;
@@ -167,12 +192,12 @@
         width: 100%;
         height: 100%;
         background: #000;
-        opacity: 0.2;
+        opacity: 0.38;
 
         z-index: 9;
       }
 
-      .product {
+      .slide-title {
         font-family: 'Marvel', sans-serif;
         font-weight: bold;
         font-size: 16px;
@@ -201,17 +226,58 @@
         }
       }
 
-      .screen {
+      .slide-img {
         position: absolute;
         top: 0;
-        left: 0;
+        right: 0;
         width: 100%;
         height: 100%;
         background: center center no-repeat / cover;
-  
+
         animation-name: starting;
         animation-duration: 4s;
         animation-fill-mode: backwards;
+      }
+    }
+
+    .dots {
+      position: absolute;
+      top: 50%;
+      right: 36px;
+      transform: translateY(-50%);
+
+      z-index: 10;
+
+      .dot {
+        border: 1px solid #FFFFFF;
+        height: 8px;
+        width: 8px;
+        cursor: pointer;
+        border-radius: 100px;
+
+        margin-bottom: 24px;
+        display: block;
+
+        transition: background-color .5s, border-color .5s;
+
+        &.dot-square {
+          margin-bottom: 0;
+          border-radius: 0;
+        }
+
+        &.dot-active {
+          background: #FFFFFF;
+        }
+      }
+    }
+
+    .dots-inverse {
+      .dot {
+        border-color: #707070;
+
+        &.dot-active {
+          background: #707070;
+        }
       }
     }
   }
@@ -225,47 +291,6 @@
     }
   }
 
-
-  .dots {
-    position: absolute;
-    top: 50%;
-    right: 36px;
-    transform: translateY(-50%);
-
-    z-index: 10;
-
-    .dot {
-      border: 1px solid #FFFFFF;
-      height: 8px;
-      width: 8px;
-      cursor: pointer;
-      border-radius: 100px;
-
-      margin-bottom: 24px;
-      display: block;
-      
-      transition: background-color .5s, border-color .5s;
-
-      &.dot-square {
-        margin-bottom: 0;
-        border-radius: 0;
-      }
-
-      &.dot-active {
-        background: #FFFFFF;
-      }
-    }
-  }
-  
-  .dots-inverse {
-    .dot {
-      border-color: #707070;
-  
-      &.dot-active {
-        background: #707070;
-      }
-    }
-  }
 
   .slide-enter-active {
     transition: opacity 1s ease, transform 4s ease;
@@ -284,7 +309,7 @@
     opacity: 0;
   }
 
-  
+
   .title-enter-active {
     transition: opacity 1s ease 1s, transform 1s ease 1s;
   }

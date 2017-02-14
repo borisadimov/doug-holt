@@ -28,21 +28,21 @@
 <script>
   import {onLoad} from 'ducks/nav';
   import {store, router} from 'index';
-  
-  
+
+
   export default {
     name: "ContactsComponent",
-    
+
     data () {
       return {
         nav: this.$select('nav')
       }
     },
-  
+
     mounted () {
       store.dispatch(onLoad(100));
     },
-    
+
     methods: {
       onClose () {
         router.push({name: this.nav.pagePrev});
@@ -58,7 +58,7 @@
     width: 100%;
     height: 100%;
     background: #f5f5f5;
-    
+
     opacity: 1;
 
     font-size: 28px;
@@ -71,7 +71,7 @@
     justify-content: center;
 
     padding: 0 78px;
-    
+
     z-index: 50;
 
     &-studio {
@@ -93,7 +93,7 @@
       text-transform: uppercase;
 
       margin-top: 38px;
-
+      cursor: default;
       display: flex;
       flex-flow: column nowrap;
       align-items: flex-start;
@@ -177,7 +177,7 @@
       top: 12vh;
       left: 78px;
       cursor: pointer;
-      
+
       &:hover {
         opacity: .6;
       }

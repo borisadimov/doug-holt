@@ -17,6 +17,8 @@ export default class ScrollHandler {
   
   container = document.body;
   
+  disabled = false;
+  
   
   //mode: 'v' — vertical, 'h' — horizontal
   constructor(moveNextAction, movePrevAction, mode = 'v') {
@@ -41,6 +43,10 @@ export default class ScrollHandler {
   }
   
   scrollHandler = e => {
+    this.preventDefault(e);
+    if (this.disabled)
+      return;
+    
     e = e || window.event;
 
     let scrollInfo = lethargy.check(e);
@@ -50,8 +56,6 @@ export default class ScrollHandler {
       else
         this.move('prev');
     }
-
-    this.preventDefault(e);
   };
 
   createScrollListener () {
@@ -116,6 +120,9 @@ export default class ScrollHandler {
   }
 
   touchStartHandler = event => {
+    if (this.disabled)
+      return;
+    
     let e = event || window.event || e || e.originalEvent;
     if (this.isReallyTouch(e)) {
       let touchEvents = this.getEventsPage(e);

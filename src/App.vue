@@ -1,9 +1,11 @@
 <template lang="pug">
   #app
-    transition(name="loader")
-      loader-component(v-if="loaderShow")
+    loader-component
     transition(name="curtain")
-      .curtain(v-if="nav.menuOpened && !nav.menuFixed")
+      .curtain(
+        v-if="nav.menuOpened && !nav.menuFixed"
+        @click="onCurtainClick"
+        )
     transition(
       name="view"
       v-bind:mode="RTMode"
@@ -11,12 +13,6 @@
       v-bind:leave-active-class="RTLeaActClass"
       )
       router-view.router-view(v-bind:class="{'router-view-menu': nav.menuOpened && !nav.menuFixed}")
-    transition(
-      name="menu-padding"
-      v-bind:enter-active-class="MPEntActClass"
-      v-bind:leave-active-class="MPLeaActClass"
-      )
-      .menu-padding(v-if="nav.menuOpened")
     transition(
       name="menu"
       v-bind:enter-active-class="MEntActClass"
@@ -31,6 +27,10 @@
         v-show="!nav.menuFixed"
         v-html="require('assets/images/burger.inline.svg')"
         )
+    .secret
+      input(type="password")
+
+      input(type="submit" value="Submit")
 </template>
 
 <script>
@@ -56,23 +56,24 @@
         burgerLines1: null,
         burgerLines3: null,
         burgerArrow: null,
-        
+
         RTMode: '',
-        
+
         RTEntActClass: 'view-active-long',
         RTLeaActClass: 'view-active-long',
-  
+
         MEntActClass: 'menu-active-norm',
         MLeaActClass: 'menu-active-lv-norm',
-  
+
         MBEntActClass: 'menu-active-norm',
-        
+
         MPEntActClass: 'menu-active-norm',
         MPLeaActClass: 'menu-active-lv-norm',
-        
+
         loaderShow: true,
         loaderCan1: true,
         loaderCan2: false
+
       }
     },
 
@@ -88,6 +89,10 @@
           store.actions.nav.menuClose();
         else
           store.actions.nav.menuOpen();
+      },
+
+      onCurtainClick() {
+        store.actions.nav.menuClose();
       }
     },
 
@@ -115,47 +120,19 @@
             this.RTMode = '';
             this.RTEntActClass = 'view-active-none';
             this.RTLeaActClass = 'view-active-long view-leave-active';
-            
             this.MPEntActClass = 'menu-active-norm';
-            
+
           } else {
             this.RTMode = '';
             this.RTEntActClass = 'view-active-dly';
             this.RTLeaActClass = 'view-active-dly';
-            
             if (this.nav.pageCurrent == PAGE_HOME) {
               this.MEntActClass = 'menu-active-dly';
-              this.MPEntActClass = 'menu-active-dly';
             } else {
               this.MEntActClass = 'menu-active-norm';
-              this.MPEntActClass = 'menu-active-norm';
-              this.MPLeaActClass = 'menu-active-dly';
-              setTimeout(() => this.MPLeaActClass = 'menu-active-lv-norm', 1000);
-            }
           }
         }
-      },
-      'nav.loadProgress': {
-        handler() {
-          if (!this.loaderShow && this.nav.loadProgress < 100) {
-            this.loaderShow = true;
-            setTimeout(() => {
-              this.loaderCan1 = true;
-              if (this.loaderCan2) {
-                this.loaderShow = false;
-                this.loaderCan1 = false;
-                this.loaderCan2 = false;
-              }
-            }, 1500);
-          } else if (this.nav.loadProgress == 100) {
-            this.loaderCan2 = true;
-            if (this.loaderCan1) {
-              this.loaderShow = false;
-              this.loaderCan1 = false;
-              this.loaderCan2 = false;
-            }
-          }
-        }
+      }
       }
     }
   }
@@ -262,7 +239,15 @@
     opacity: .4;
     z-index: 3;
   }
-
+  .secret {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    height: 40px;
+    background: #aaa;
+    display: none;
+  }
   .router-view {
     position: absolute;
     top: 0;
@@ -271,7 +256,7 @@
     height: 100%;
     transition: transform .5s;
   }
-  
+
   .menu-padding {
     position: absolute;
     top: 0;
@@ -303,17 +288,13 @@
     transition: transform 1.5s step-end;
   }
 
-  .menu-padding-enter, .menu-padding-leave-active {
-    transform: translate3d(-100%, 0, 0);
-  }
-
   .menu-burger-enter-active, .menu-burger-leave-active {
     transition: opacity 1s step-end;
   }
   .menu-burger-enter, .menu-burger-leave-active {
     opacity: .01
   }
-  
+
   .curtain-enter-active, .curtain-leave-active {
     transition: opacity .5s;
   }
@@ -321,30 +302,24 @@
     opacity: .01;
   }
 
-  
   .loader-enter-active, .loader-leave-active {
     transition: transform 1s ease-in-out .4s;
   }
   .loader-enter, .loader-leave-active {
     transform: translate3d(0, -100%, 0);
   }
-  
 
   .view-enter, .view-leave-active {
     transform: translate3d(0, 100%, 0);
   }
-
   .view-active-none {
     transition: none;
   }
-
   .view-active-long {
     transition: transform .5s;
   }
-
   .view-active-dly {
     transition: transform 1.5s step-end;
   }
-  
 
 </style>

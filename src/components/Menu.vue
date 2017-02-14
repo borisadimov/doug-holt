@@ -1,31 +1,32 @@
 <template lang="pug">
   .menu
-    router-link(to="/")
-      .logo
-        | DOUG HOLT
-        .logo-inner
-          | PHOTOGRAPHY
+    .menu-container(v-bind:class="{'menu-white': nav.menuFixed}")
+      router-link(to="/")
+        .logo
+          | DOUG HOLT
+          .logo-inner
+            | PHOTOGRAPHY
 
-    .nav(@mouseleave="onNavLeave")
-      .nav-item.nav-work(@mouseenter="onWorksEnter")
-        .nav-workLabel
-          | Work
-          .nav-arrow(v-bind:class="{'arrow-up': showCats}")
-        .nav-inner(ref="cats")
-          .nav-innerItem(
-            v-for="(category, index) of categories"
-            v-bind:key="index")
-              router-link(v-bind:to="'/gallery/' + category.name")
-                | {{category.name}}
-      .nav-bottom-cont(ref="bottom")
-        .nav-item
-          router-link(to="/about") About
-        .nav-item
-          router-link(to="/journal") Journal
-        .nav-item
-          router-link(to="/contacts") Contact
+      .nav(@mouseleave="onNavLeave")
+        .nav-item.nav-work(@mouseenter="onWorksEnter")
+          .nav-workLabel
+            | Work
+            .nav-arrow(v-bind:class="{'arrow-up': showCats}")
+          .nav-inner(ref="cats")
+            .nav-innerItem(
+              v-for="(category, index) of categories"
+              v-bind:key="index")
+                router-link(v-bind:to="'/gallery/' + category.name")
+                  | {{category.name}}
+        .nav-bottom-cont(ref="bottom")
+          .nav-item
+            router-link(to="/about") About
+          .nav-item
+            router-link(to="/journal") Journal
+          .nav-item
+            router-link(to="/contacts") Contact
 
-    .lock
+      .lock
 </template>
 
 <script type="text/babel">
@@ -97,18 +98,36 @@
     position: absolute;
     top: 0;
     left: 0;
-    bottom: 0;
     width: 216px;
-    background: #F5F5F5;
+    height: 100%;
 
-    padding: 10vh 36px;
+    z-index: 15;
 
-    z-index: 5;
+    &-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+
+      padding: 10vh 36px;
+      background: #F5F5F5;
+      transition: background .5s;
+    }
+
+    .menu-white {
+      background: white;
+
+      .nav-bottom-cont {
+        background: white;
+      }
+    }
 
     .lock {
       background: url('~assets/images/lock.svg') no-repeat center center / contain;
       height: 13px;
       width: 10px;
+      display: none;
       position: absolute;
       left: 36px;
       bottom: 38px;
@@ -169,6 +188,7 @@
         position: relative;
         z-index: 10;
         background: #F5F5F5;
+        transition: background-color .5s;
       }
 
       &-work {

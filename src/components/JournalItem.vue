@@ -1,211 +1,380 @@
 <template lang="pug">
-  transition(appear)
-    .about
-      .about-title
-        | Journal Item
+  .journal-single
+    .menu-burger(
+      ref="burgerRight"
+      @click="onMenuToggle"
+      v-html="require('assets/images/burger-right.inline.svg')"
+      )
 
-      .about-item
-        .about-image
-          img(src="~assets/images/about-studio-1.jpg")
-        .about-copy
-          | THE STUDIO
-          .about-largeText.about-margin-1vw
-            | There are a lot of still life, product and fashion photography studios in New York City.
-          .about-text.about-margin-5vw
-            | The distinction enjoyed by Doug Holt’s Commercial Photography Studio lies in the fact that the Studio demands energy and collaboration. More than just a product photography studio, art direction, styling and retouching can be done in-house (by arrangement).
+    transition(name="curtain")
+      .menu-curtain(
+        v-if="nav.menuRightOpened"
+        @click="onCurtainClick"
+        )
 
-      .about-item-image
-        img(src="~assets/images/about-studio-2.jpg")
-
-      .about-item
-        .about-copy
-          .about-text
-            | You’ll notice, no one spends much time on my comfortable couches. Everyone is standing close to the Set, looking at the shot being taken, discussing what is appearing on the digital monitors; focusing together to capture one excellent image, after another, after another.
-        .about-image
-          img(src="~assets/images/about-studio-3.jpg")
-
-      .about-item-image
-        img(src="~assets/images/about-studio-4.jpg")
-
-      .about-item
-        .about-image
-          img(src="~assets/images/about-studio-5.jpg")
-        .about-copy
-          .about-text
-            | The studio collaborates with graphics designers, web engineers and social media experts, stylists, models, agenices as well as advertising and marketing professionals. We produce in-studio and on-location photo shoots as well as commercials and documentaries.
-          .about-largeText.about-margin-5vw
-            | And in the end, we just have FUN!
-
-      .about-item-image
-        img(src="~assets/images/about-studio-6.jpg")
-
-
-      .about-item
-        .about-copy
-          .about-largeText
-            | Doug Holt has 15 years experience as a professional photographer.
-          .about-text.about-margin-5vw
-            | Coming to the calling after several years as a risk analyst on Wall St. His career’s arc fuses good business sense with a talent for enhancing luxury brands and is apparent in the long client list of Doug Holt Photography.
-        .about-image
-          img(src="~assets/images/about-studio-7.jpg")
-
-      .about-item-image
-        img(src="~assets/images/about-studio-8.jpg")
+    transition(name="menu")
+      .menu(v-if="nav.menuRightOpened")
+        .menu-title
+          | Journal List
+        .menu-list
+          .menu-header
+            .menu-year
+              | Year
+            .menu-title
+              | Title
+          .menu-item(
+            v-for="(tempPost, i) of posts"
+            v-bind:key="i"
+            @click="onMenuItemClick(tempPost)"
+            )
+            .menu-year
+              | 2016
+            .menu-name
+              .menu-dot
+                .menu-dotBg(v-if="tempPost.id == post.id")
+              | {{tempPost.title}}
+  
+    .journal-content(v-bind:class="{'content-menu': nav.menuRightOpened}")
+      .journal-content-image
+        img(
+          v-bind:src="'/assets/posts/' + post.id + '/' + post.image"
+          v-on:load="onImgLoaded"
+          )
+      .journal-content-info
+        .journal-content-title
+          | {{post.title}}
+        .journal-content-date
+          | {{post.date}}
+        .journal-content-titleBig
+          | {{post.title}}
+        .journal-content-author
+          | By {{post.author}}
+        .journal-content-text(v-html="post.text")
 </template>
 
 <script>
   import {onLoad} from 'ducks/nav';
-  import {store} from 'index';
-  
-  
+  import {store, router} from 'index';
+  import {posts, getPost} from 'store/fixtures';
+
+
   export default {
     name: "JournalItemComponent",
     
-    mounted: function () {
-      store.dispatch(onLoad(100));
+    data () {
+      return {
+        posts: posts.slice(),
+        post: getPost(this.$route.params.post),
+        nav: this.$select('nav'),
+        
+        burgerLines13: null,
+        burgerArrow: null
+      }
+    },
+    
+    mounted () {
+      this.burgerLines13 = this.$refs.burgerRight.querySelectorAll('.line13');
+      this.burgerArrow = this.$refs.burgerRight.querySelector('.arrow');
+      
+      this.posts.reverse();
+    },
+    
+    methods: {
+      onImgLoaded () {
+        store.dispatch(onLoad(100));
+      },
+  
+      onMenuToggle () {
+        if (this.nav.menuRightOpened)
+          store.actions.nav.menuRightClose();
+        else
+          store.actions.nav.menuRightOpen();
+      },
+  
+      onCurtainClick () {
+        store.actions.nav.menuRightClose();
+      },
+  
+      onMenuItemClick (post) {
+        store.actions.nav.menuRightClose();
+        this.post = post;
+        history.replaceState({path: "/journal/" + this.post.id}, "post.id", "/journal/" + this.post.id);
+      }
+    },
+  
+    watch: {
+      'nav.menuRightOpened': {
+        handler () {
+          if (this.nav.menuRightOpened) {
+            this.burgerArrow.classList.add('arrow-show');
+            for (let i = 0; i < this.burgerLines13.length; i++)
+              this.burgerLines13[i].classList.add('line13-show');
+          } else {
+            this.burgerArrow.classList.remove('arrow-show');
+            for (let i = 0; i < this.burgerLines13.length; i++)
+              this.burgerLines13[i].classList.remove('line13-show');
+          }
+        }
+      }
     }
   }
 </script>
 
+<style lang="scss" rel="stylesheet/scss">
+  .journal-single {
+    .menu-burger {
+      position: absolute;
+      top: 26px;
+      right: 26px;
+      cursor: pointer;
+      
+      width: 35px;
+      height: 14px;
+      
+      opacity: 0.38;
+      transition: opacity 0.2s ease;
+      
+      z-index: 20;
+      
+      &:hover {
+        opacity: 1;
+      }
+      
+      .line13 {
+        transition: transform .6s;
+      }
+      
+      .arrow {
+        transform: scale(0);
+        transform-origin: 100% 50%;
+        transition: transform .6s;
+      }
+      
+      .line13-show {
+        transform: translate3d(-11px, 0, 0);
+      }
+      
+      .arrow-show {
+        transform: scale(1);
+      }
+    }
+  }
+</style>
+
 <style lang="scss" scoped rel="stylesheet/scss">
-  .about {
+  .journal-single {
     width: 100%;
     height: 100%;
     background: white;
-    
+
     overflow-y: scroll;
-    
-    padding: 0 10% 11vw;
-    
-    &-title {
-      margin-top: 14vw;
-      
-      font-size: 2.2vw;
-      color: rgba(0,0,0,0.87);
-      letter-spacing: 2px;
-      line-height: 3vw;
-      
-      text-align: center;
-    }
-    
-    &-item {
+    overflow-x: hidden;
+
+    padding: 0 6% 5vw;
+
+    .journal-content {
+      padding: 26px 0;
+
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;
-      
-      margin-top: 11vw;
-      
-      font-family: 'Marvel', sans-serif;
-      font-weight: bold;
-      font-size: 1.25vw;
-      color: rgba(0,0,0,0.87);
-      letter-spacing: 1.55px;
-      line-height: 1.35vw;
-      
-      &:first-child {
-        margin-top: 165px;
-      }
-      
-      img {
-        width: 100%;
-      }
-    }
-    
-    &-item-image {
-      display: flex;
-      flex-flow: column nowrap;
-      align-items: flex-end;
-      
-      margin-top: 140px;
-      
-      padding-left: 24%;
-      
-      img {
-        width: 100%;
-      }
-    }
-    
-    &-image,
-    &-copy {
-      flex: 0 0 40%;
-    }
-    
-    &-largeText {
-      font-family: 'Work Sans', sans-serif;
-      font-weight: 400;
-      font-size: 2vw;
-      line-height: 2.5vw;
-      color: rgba(0,0,0,0.87);
-      letter-spacing: 2px;
-    }
-    
-    &-text {
-      font-family: 'Work Sans', sans-serif;
-      font-weight: 400;
-      font-size: 1.55vw;
-      color: rgba(0,0,0,0.87);
-      letter-spacing: 1px;
-      line-height: 2vw;
-    }
-    
-    &-margin-1vw {
-      margin-top: 1vw;
-    }
-    
-    &-margin-5vw {
-      margin-top: 5vw;
-    }
-  }
   
-  .clients {
-    margin-top: 165px;
-    border-top: 1px solid rgba(0,0,0,0.24);
+      transition: transform .5s;
+  
+      &-image {
+        margin-top: 46px;
     
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
+        flex: 0 0 45%;
     
-    &-column {
-      flex: 1;
-      
-      &:first-child {
-        flex: 0 0 25%;
+        img {
+          width: 100%;
+        }
+      }
+  
+      &-info {
+        flex: 0 0 50%;
+      }
+  
+      &-title {
+        font-size: 18px;
+        color: rgba(0,0,0,0.87);
+        letter-spacing: 0;
+        line-height: 18px;
+    
+        padding-bottom: 46px;
+        border-bottom: 1px solid rgba(0,0,0,0.38);
+        text-align: center;
+      }
+  
+      &-date {
+        margin-top: 16px;
+    
+        font-family: 'Marvel', sans-serif;
+        font-size: 16px;
+        color: rgba(0,0,0,0.87);
+        letter-spacing: 1.55px;
+        line-height: 18px;
+        text-align: center;
+        padding: 0 30px;
+      }
+  
+      &-titleBig {
+        margin-top: 75px;
+        font-size: 40px;
+        color: rgba(0,0,0,0.87);
+        letter-spacing: 0;
+        line-height: 46px;
+        text-align: center;
+        padding: 0 30px;
+      }
+  
+      &-author {
+        font-size: 18px;
+        color: rgba(0,0,0,0.54);
+        letter-spacing: 1px;
+        line-height: 18px;
+    
+        padding: 55px 30px 79px;
+        text-align: center;
+      }
+  
+      &-text {
+        margin-top: 18px;
+    
+        font-size: 18px;
+        color: rgba(0,0,0,0.87);
+        letter-spacing: 1px;
+        line-height: 24px;
+        padding: 0 30px;
       }
     }
-    
-    &-item {
-      margin-top: 1vw;
-      
-      display: flex;
-      flex-flow: column nowrap;
+
+    .content-menu {
+      transform: translate3d(-175px, 0, 0);
     }
-    
-    &-letter {
-      font-family: 'Marvel', sans-serif;
-      font-weight: bold;
-      font-size: 1.1vw;
-      line-height: 1.25vw;
-      color: rgba(0,0,0,0.87);
-      letter-spacing: 1.55px;
-      
-      margin-bottom: 1vw;
-    }
-    
-    span {
-      font-size: 0.9vw;
-      color: rgba(0,0,0,0.54);
-      letter-spacing: 0;
-      line-height: 1.45vw;
-    }
-  }
   
-  .v-enter-active {
-    transition: transform 1s ease 1s;
-  }
-  .v-leave-active {
-    transition: transform 1s;
-  }
-  .v-enter, .v-leave-active {
-    transform: translate3d(0, 100vh, 0);
+    .menu-curtain {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, .7);
+      z-index: 25;
+    }
+  
+    .menu {
+      position: absolute;
+      right: 0;
+      top: 0;
+    
+      background: #FFFFFF;
+    
+      width: 502px;
+      height: 100%;
+      padding: 36px 80px;
+    
+      z-index: 30;
+    
+      &-title {
+        font-size: 18px;
+        color: rgba(0,0,0,0.87);
+        letter-spacing: 1px;
+      }
+    
+      &-list {
+        margin-top: 105px;
+      }
+    
+      &-header,
+      &-item {
+        display: flex;
+        flex-flow: row nowrap;
+      }
+    
+      &-header {
+        font-family: 'Marvel', sans-serif;
+        font-weight: bold;
+        font-size: 13px;
+        color: rgba(0,0,0,0.87);
+        letter-spacing: 1.26px;
+        line-height: 13px;
+      
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(0,0,0,0.24);
+      }
+    
+      &-item {
+        font-size: 14px;
+        color: rgba(0,0,0,0.87);
+        letter-spacing: 0.5px;
+        line-height: 20px;
+      
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.24);
+      
+        cursor: pointer;
+      
+        transition: background 0.2s ease;
+        will-change: background;
+      
+        .menu-order {
+          text-align: center;
+        }
+      
+        &:hover {
+          background: #f8f8f8;
+        }
+      }
+    
+      &-order {
+        flex: 0 0 10%;
+      }
+    
+      &-name {
+        flex: 0 0 50%;
+        margin-left: 8%;
+      
+        position: relative;
+      }
+    
+      &-client {
+        flex: 0 0 32%;
+      }
+    
+      &-dot {
+        position: absolute;
+        left: -14px;
+        top: 8px;
+      
+        width: 6px;
+        height: 6px;
+        border: 1px rgba(0,0,0,0.87) solid;
+        border-radius: 100px;
+      
+        &Bg {
+          background: rgba(0,0,0,0.87);
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  
+    .menu-enter-active, .menu-leave-active {
+      transition: transform .5s;
+    }
+    .menu-enter, .menu-leave-active {
+      transform: translate3d(100%, 0, 0);
+    }
+  
+    .curtain-enter-active, .curtain-leave-active {
+      transition: opacity .5s;
+    }
+    .curtain-enter, .curtain-leave-active {
+      opacity: .01;
+    }
   }
 </style>

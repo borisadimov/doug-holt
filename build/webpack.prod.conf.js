@@ -19,7 +19,8 @@ let webpackConfig = merge(baseWebpackConfig, {
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'js/[name].js',
-    chunkFilename: 'js/[id].js'
+    chunkFilename: 'js/[id].js',
+    publicPath: '/doug-holt/'
   },
   vue: {
     loaders: utils.cssLoaders({
@@ -52,6 +53,9 @@ let webpackConfig = merge(baseWebpackConfig, {
     ),
     new webpack.optimize.UglifyJsPlugin({
       compress: {warnings: false}
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     }),
     new ExtractTextPlugin('css/[name].[contenthash].css'),
     // split vendor js into its own file

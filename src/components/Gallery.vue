@@ -7,10 +7,13 @@
       )
 
     transition(name="curtain")
-      .menu-curtain(v-if="nav.menuGalleryOpened")
+      .menu-curtain(
+        v-if="nav.menuRightOpened"
+        @click="onCurtainClick"
+        )
 
     transition(name="menu")
-      .menu(v-if="nav.menuGalleryOpened")
+      .menu(v-if="nav.menuRightOpened")
         .menu-title
           | {{ category.name }} List
         .menu-list
@@ -37,7 +40,7 @@
             .menu-client
               | {{ item.client }}
 
-    .content(v-bind:class="{'content-menu': nav.menuGalleryOpened}")
+    .content(v-bind:class="{'content-menu': nav.menuRightOpened}")
       .title
         | {{ category.name }}
 
@@ -80,7 +83,17 @@
               v-bind:key="i"
               v-if="i == itemNum"
               ) {{ item.title }}
-    .info
+    .info-icon(v-on:click="toggleInfo")
+    .info-block(v-bind:class="{shown: showInfo}")
+      .info-block-cross(v-on:click="toggleInfo")
+      .info-block-label
+        | CATEGORY
+      .info-block-name
+        | {{ category.name }}
+      .info-block-label
+        | INFO
+      .info-block-text
+        | {{ category.info }}
 </template>
 
 <script>
@@ -100,7 +113,7 @@
         portfolio: this.$select('portfolio'),
         category: categories[this.$select('portfolio').category],
         nav: this.$select('nav'),
-
+        showInfo: false,
         itemNum: 0,
         direction: 'right',
         burgerLines13: null,
@@ -139,28 +152,43 @@
     },
 
     methods: {
+      toggleInfo (){
+        this.showInfo = !this.showInfo;
+      },
+      hideInfo (){
+        this.showInfo = false;
+      },
       itemNext () {
         if (this.itemNum >= this.category.items.length - 1)
           return;
         this.itemNum++;
         this.direction = 'right';
+        this.hideInfo();
       },
       itemPrev () {
         if (this.itemNum <= 0)
           return;
         this.itemNum--;
         this.direction = 'left';
+        this.hideInfo();
       },
 
       onMenuToggle () {
-        if (this.nav.menuGalleryOpened)
-          store.actions.nav.menuGalleryClose();
+        if (this.nav.menuRightOpened)
+          store.actions.nav.menuRightClose();
         else
-          store.actions.nav.menuGalleryOpen();
+          store.actions.nav.menuRightOpen();
+          this.hideInfo();
+      },
+
+      onCurtainClick () {
+        store.actions.nav.menuRightClose();
+        this.hideInfo();
+
       },
 
       onMenuItemClick (i) {
-        store.actions.nav.menuGalleryClose();
+        store.actions.nav.menuRightClose();
         this.direction = i > this.itemNum ? 'right' : 'left';
         this.itemNum = i;
       },
@@ -199,9 +227,10 @@
           this.itemNum = 0;
         }
       },
-      'nav.menuGalleryOpened': {
+      'nav.menuRightOpened': {
         handler () {
-          if (this.nav.menuGalleryOpened) {
+          this.scrollHandler.disabled = this.nav.menuRightOpened;
+          if (this.nav.menuRightOpened) {
             this.burgerArrow.classList.add('arrow-show');
             for (let i = 0; i < this.burgerLines13.length; i++)
               this.burgerLines13[i].classList.add('line13-show');
@@ -210,6 +239,11 @@
             for (let i = 0; i < this.burgerLines13.length; i++)
               this.burgerLines13[i].classList.remove('line13-show');
           }
+        }
+      },
+      'nav.menuOpened': {
+        handler () {
+          this.scrollHandler.disabled = this.nav.menuOpened;
         }
       }
     }
@@ -366,7 +400,7 @@
       width: 100%;
       height: 100%;
       background: rgba(255, 255, 255, .7);
-      z-index: 4;
+      z-index: 25;
     }
 
     .menu {
@@ -380,7 +414,7 @@
       height: 100%;
       padding: 36px 80px;
 
-      z-index: 5;
+      z-index: 30;
 
       &-title {
         font-size: 18px;
@@ -469,7 +503,7 @@
       }
     }
 
-    .info {
+    .info-icon {
       background: url('~assets/images/info.svg') no-repeat center center / contain;
       height: 23px;
       width: 22px;
@@ -486,6 +520,74 @@
 
       &:hover {
         opacity: 1;
+      }
+    }
+    .info-block {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50vw;
+      height: 74vh;
+      background: #212121;
+      color: #fff;
+      padding: 100px;
+
+      transition: transform .4s ease;
+      transform: translate3d(0,100%,0);
+
+      &.shown {
+        transform: translate3d(0,0,0);
+      }
+
+      &-cross {
+        position: absolute;
+        top: 35px;
+        left: 35px;
+        width: 24px;
+        height: 24px;
+        display: block;
+        transform: rotate(45deg);
+        transform-origin: 50% 50%;
+        opacity: 0.7;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+
+        &:hover{
+          opacity: 1;
+        }
+        &:before {
+          display: block;
+          content: "";
+          position: absolute;
+          width: 24px;
+          height: 1px;
+          top: 11.5px;
+          left: 0;
+          background: #fff;
+        }
+        &:after {
+          display: block;
+          content: "";
+          position: absolute;
+          width: 1px;
+          height: 24px;
+          top: 0;
+          left: 11.5px;
+          background: #fff;
+
+        }
+      }
+      &-label {
+        opacity: 0.5;
+        margin-bottom: 7px;
+      }
+      &-name {
+        font-size: 30px;
+        margin-bottom: 10px;
+      }
+      &-text {
+        opacity: 0.7;
+        font-size: 18px;
       }
     }
   }

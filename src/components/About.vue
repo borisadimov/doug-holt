@@ -1,248 +1,247 @@
 <template lang="pug">
-  transition
-    .about
-      .about-title
-        | About
+  .about
+    .about-title
+      | About
 
-      .about-item
-        .about-image
-          img(src="~assets/images/about-studio-1.jpg" v-on:load="onImgLoaded")
-        .about-copy
-          | THE STUDIO
-          .about-largeText.about-margin-1vw
-            | There are a lot of still life, product and fashion photography studios in New York City.
-          .about-text.about-margin-5vw
-            | The distinction enjoyed by Doug Holt’s Commercial Photography Studio lies in the fact that the Studio demands energy and collaboration. More than just a product photography studio, art direction, styling and retouching can be done in-house (by arrangement).
+    .about-item
+      .about-image
+        img(src="~assets/images/about-studio-1.jpg" v-on:load="onImgLoaded")
+      .about-copy
+        | THE STUDIO
+        .about-largeText.about-margin-1vw
+          | There are a lot of still life, product and fashion photography studios in New York City.
+        .about-text.about-margin-5vw
+          | The distinction enjoyed by Doug Holt’s Commercial Photography Studio lies in the fact that the Studio demands energy and collaboration. More than just a product photography studio, art direction, styling and retouching can be done in-house (by arrangement).
 
-      .about-item-image
-        img(src="~assets/images/about-studio-2.jpg" v-on:load="onImgLoaded")
+    .about-item-image
+      img(src="~assets/images/about-studio-2.jpg" v-on:load="onImgLoaded")
 
-      .about-item
-        .about-copy
-          .about-text
-            | You’ll notice, no one spends much time on my comfortable couches. Everyone is standing close to the Set, looking at the shot being taken, discussing what is appearing on the digital monitors; focusing together to capture one excellent image, after another, after another.
-        .about-image
-          img(src="~assets/images/about-studio-3.jpg" v-on:load="onImgLoaded")
+    .about-item
+      .about-copy
+        .about-text
+          | You’ll notice, no one spends much time on my comfortable couches. Everyone is standing close to the Set, looking at the shot being taken, discussing what is appearing on the digital monitors; focusing together to capture one excellent image, after another, after another.
+      .about-image
+        img(src="~assets/images/about-studio-3.jpg" v-on:load="onImgLoaded")
 
-      .about-item-image
-        img(src="~assets/images/about-studio-4.jpg" v-on:load="onImgLoaded")
+    .about-item-image
+      img(src="~assets/images/about-studio-4.jpg" v-on:load="onImgLoaded")
 
-      .about-item
-        .about-image
-          img(src="~assets/images/about-studio-5.jpg" v-on:load="onImgLoaded")
-        .about-copy
-          .about-text
-            | The studio collaborates with graphics designers, web engineers and social media experts, stylists, models, agenices as well as advertising and marketing professionals. We produce in-studio and on-location photo shoots as well as commercials and documentaries.
-          .about-largeText.about-margin-5vw
-            | And in the end, we just have FUN!
+    .about-item
+      .about-image
+        img(src="~assets/images/about-studio-5.jpg" v-on:load="onImgLoaded")
+      .about-copy
+        .about-text
+          | The studio collaborates with graphics designers, web engineers and social media experts, stylists, models, agenices as well as advertising and marketing professionals. We produce in-studio and on-location photo shoots as well as commercials and documentaries.
+        .about-largeText.about-margin-5vw
+          | And in the end, we just have FUN!
 
-      .about-item-image
-        img(src="~assets/images/about-studio-6.jpg" v-on:load="onImgLoaded")
+    .about-item-image
+      img(src="~assets/images/about-studio-6.jpg" v-on:load="onImgLoaded")
 
 
-      .about-item
-        .about-copy
-          .about-largeText
-            | Doug Holt has 15 years experience as a professional photographer.
-          .about-text.about-margin-5vw
-            | Coming to the calling after several years as a risk analyst on Wall St. His career’s arc fuses good business sense with a talent for enhancing luxury brands and is apparent in the long client list of Doug Holt Photography.
-        .about-image
-          img(src="~assets/images/about-studio-7.jpg" v-on:load="onImgLoaded")
+    .about-item
+      .about-copy
+        .about-largeText
+          | Doug Holt has 15 years experience as a professional photographer.
+        .about-text.about-margin-5vw
+          | Coming to the calling after several years as a risk analyst on Wall St. His career’s arc fuses good business sense with a talent for enhancing luxury brands and is apparent in the long client list of Doug Holt Photography.
+      .about-image
+        img(src="~assets/images/about-studio-7.jpg" v-on:load="onImgLoaded")
 
-      .about-item-image
-        img(src="~assets/images/about-studio-8.jpg" v-on:load="onImgLoaded")
+    .about-item-image
+      img(src="~assets/images/about-studio-8.jpg" v-on:load="onImgLoaded")
 
-      .clients
-        .clients-column
-          .clients-item
-            .clients-letter
-              | SELECTED CLIENTS
-        .clients-column
-          .clients-item
-            .clients-letter
-              | A
-            span Adriana Castro
-            span Adriana Castro
-            span Aimee Kestenberg
-            span Alison Brod Communications
-            span Allure
-            span Amy Conway
+    .clients
+      .clients-column
+        .clients-item
+          .clients-letter
+            | SELECTED CLIENTS
+      .clients-column
+        .clients-item
+          .clients-letter
+            | A
+          span Adriana Castro
+          span Adriana Castro
+          span Aimee Kestenberg
+          span Alison Brod Communications
+          span Allure
+          span Amy Conway
 
-          .clients-item
-            .clients-letter
-              | B
-            span B Low the Belt
-            span Bajra Silk & Cashmere
-            span Be & D Design
-            span Behrman Communications
-            span BonFaire
-            span Boots USA
-            span Bottletops
-            span Brand Value Advisors
-            span Butter and Eggs
-            span by Kilian USA
+        .clients-item
+          .clients-letter
+            | B
+          span B Low the Belt
+          span Bajra Silk & Cashmere
+          span Be & D Design
+          span Behrman Communications
+          span BonFaire
+          span Boots USA
+          span Bottletops
+          span Brand Value Advisors
+          span Butter and Eggs
+          span by Kilian USA
 
-          .clients-item
-            .clients-letter
-              | C
-            span Carnegie Fabrics
-            span Carson Street
-            span Casadei
-            span Casio
-            span Charles Pavarini III Design Associates
-            span Chic Child
-            span Clara Kasavina
-            span Claudio Ciuti
-            span Clos-ette
-            span Clutch Bags
-            span Coye Nokes
-            span Crosby Wright Marketing and PR
-            span Cynthia Desser
-            span Cynthia Gale
+        .clients-item
+          .clients-letter
+            | C
+          span Carnegie Fabrics
+          span Carson Street
+          span Casadei
+          span Casio
+          span Charles Pavarini III Design Associates
+          span Chic Child
+          span Clara Kasavina
+          span Claudio Ciuti
+          span Clos-ette
+          span Clutch Bags
+          span Coye Nokes
+          span Crosby Wright Marketing and PR
+          span Cynthia Desser
+          span Cynthia Gale
 
-          .clients-item
-            .clients-letter
-              | D
-            span Dan Nelson – Vision Design
-            span Dareen Hakim
-            span Details
-            span Diane Young Cosmetics
+        .clients-item
+          .clients-letter
+            | D
+          span Dan Nelson – Vision Design
+          span Dareen Hakim
+          span Details
+          span Diane Young Cosmetics
 
-          .clients-item
-            .clients-letter
-              | E
-            span Elle
-            span Emilia Fanjul Communications Corp
-            span Esquire
+        .clients-item
+          .clients-letter
+            | E
+          span Elle
+          span Emilia Fanjul Communications Corp
+          span Esquire
 
-          .clients-item
-            .clients-letter
-              | F
-            span Folley + Corrina
-            span Forbes
+        .clients-item
+          .clients-letter
+            | F
+          span Folley + Corrina
+          span Forbes
 
-        .clients-column
-          .clients-item
-            .clients-letter
-              | G
-            span Gauthier Jewelry
-            span Genetech Building Systems
-            span Glamour
-            span Google
-            span GQ
+      .clients-column
+        .clients-item
+          .clients-letter
+            | G
+          span Gauthier Jewelry
+          span Genetech Building Systems
+          span Glamour
+          span Google
+          span GQ
 
-          .clients-item
-            .clients-letter
-              | H
-            span Halston
-            span Hammitt
-            span Hayden Harnett
+        .clients-item
+          .clients-letter
+            | H
+          span Halston
+          span Hammitt
+          span Hayden Harnett
 
-          .clients-item
-            .clients-letter
-              | I
-            span Isharya
-            span Ivy Kirzhner
+        .clients-item
+          .clients-letter
+            | I
+          span Isharya
+          span Ivy Kirzhner
 
-          .clients-item
-            .clients-letter
-              | J
-            span Jenny Bird
-            span Joanna Maxham
-            span Joy Gryson
+        .clients-item
+          .clients-letter
+            | J
+          span Jenny Bird
+          span Joanna Maxham
+          span Joy Gryson
 
-          .clients-item
-            .clients-letter
-              | K
-            span Katherine Kwei
-            span Konplott
-            span Kooba
+        .clients-item
+          .clients-letter
+            | K
+          span Katherine Kwei
+          span Konplott
+          span Kooba
 
-          .clients-item
-            .clients-letter
-              | L
-            span Land Rover
-            span Laura B
-            span Laura Geller Cosmetics
-            span Lionette by Noa Sade
-            span Liquid Metal
+        .clients-item
+          .clients-letter
+            | L
+          span Land Rover
+          span Laura B
+          span Laura Geller Cosmetics
+          span Lionette by Noa Sade
+          span Liquid Metal
 
-          .clients-item
-            .clients-letter
-              | M
-            span Madeline Weinrib
-            span Marriott
-            span Missoni
+        .clients-item
+          .clients-letter
+            | M
+          span Madeline Weinrib
+          span Marriott
+          span Missoni
 
-          .clients-item
-            .clients-letter
-              | N
-            span Nanette Lepore
-            span Noon by Noor
+        .clients-item
+          .clients-letter
+            | N
+          span Nanette Lepore
+          span Noon by Noor
 
-          .clients-item
-            .clients-letter
-              | O
-            span Oakley
+        .clients-item
+          .clients-letter
+            | O
+          span Oakley
 
-        .clients-column
-          .clients-item
-            .clients-letter
-              | P
-            span PepperCom PR
-            span Peter Margonelli Studios
-            span Porcelanosa Tiles and Bathroom
+      .clients-column
+        .clients-item
+          .clients-letter
+            | P
+          span PepperCom PR
+          span Peter Margonelli Studios
+          span Porcelanosa Tiles and Bathroom
 
-          .clients-item
-            .clients-letter
-              | R
-            span Ralph Lauren
-            span Ramy Brook
-            span Robb Report
-            span Robert Lee Morris Jewelry
-            span Rolls Royce
+        .clients-item
+          .clients-letter
+            | R
+          span Ralph Lauren
+          span Ramy Brook
+          span Robb Report
+          span Robert Lee Morris Jewelry
+          span Rolls Royce
 
-          .clients-item
-            .clients-letter
-              | S
-            span Sergio Rossi
-            span Shoshanna
-            span Side Design
-            span Siren PR
-            span Snapping Turtle Kids
-            span Strategic Hotels and Resorts
-            span SuperSmile
-            span Sydney Salerno Jewelry
+        .clients-item
+          .clients-letter
+            | S
+          span Sergio Rossi
+          span Shoshanna
+          span Side Design
+          span Siren PR
+          span Snapping Turtle Kids
+          span Strategic Hotels and Resorts
+          span SuperSmile
+          span Sydney Salerno Jewelry
 
-          .clients-item
-            .clients-letter
-              | T
-            span Tamara Magel Home Inc
-            span Tecno Spa
-            span The Armoury
-            span The New York Times
-            span The New Yorker
-            span Tibi
-            span Tocca
-            span Town and Country
+        .clients-item
+          .clients-letter
+            | T
+          span Tamara Magel Home Inc
+          span Tecno Spa
+          span The Armoury
+          span The New York Times
+          span The New Yorker
+          span Tibi
+          span Tocca
+          span Town and Country
 
-          .clients-item
-            .clients-letter
-              | U
-            span United Nations
+        .clients-item
+          .clients-letter
+            | U
+          span United Nations
 
-          .clients-item
-            .clients-letter
-              | V
-            span Verizon
-            span Versace
-            span Viacom + Nickelodeon
-            span Vogue
+        .clients-item
+          .clients-letter
+            | V
+          span Verizon
+          span Versace
+          span Viacom + Nickelodeon
+          span Vogue
 
-          .clients-item
-            .clients-letter
-              | W
-            span W Magazine
+        .clients-item
+          .clients-letter
+            | W
+          span W Magazine
 </template>
 
 <script type="text/babel">
@@ -404,16 +403,5 @@
       letter-spacing: 0;
       line-height: 1.45vw;
     }
-  }
-
-
-  .v-enter-active {
-    transition: transform 1s ease 1s;
-  }
-  .v-leave-active {
-    transition: transform 1s;
-  }
-  .v-enter, .v-leave-active {
-    transform: translate3d(0, 100vh, 0);
   }
 </style>
