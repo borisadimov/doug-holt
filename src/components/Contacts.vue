@@ -1,6 +1,6 @@
 <template lang="pug">
   .contacts
-    .contacts-close(@click="onClose")
+    .contacts-close(@click="onClose" v-if="!!nav.pagePrev")
     .contacts-studio
       | Doug Holt Photography Studio
     .contacts-address
@@ -45,7 +45,7 @@
 
     methods: {
       onClose () {
-        router.push({name: this.nav.pagePrev});
+        router.push({name: this.nav.pagePrev, params: this.nav.prevParams});
       }
     }
   }

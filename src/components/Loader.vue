@@ -11,42 +11,42 @@
             | Doug Holt
           .loader-subtitle
             | Photography
-      
+
           .loader-bar(v-bind:style="{width: progress + '%'}")
             .loader-bar-line
 </template>
 
 <script>
   import {PAGE_HOME} from 'index';
-  
-  
+
+
   export default {
     name: 'LoaderComponent',
-  
+
     data () {
       return {
         nav: this.$select('nav'),
-  
+
         firstRun: true,
-  
+
         loaderShow: true,
         loaderCan1: true,
         loaderCan2: false,
-  
+
         contentShow: false,
         progress: 0,
         timeout: 0,
-  
+
         leaveActClass: 'main-leave-active-menu',
         enterClass: ''
       }
     },
-    
+
     mounted () {
       this.onPageUpd();
       this.show();
     },
-    
+
     methods: {
       onPageUpd () {
         if (this.nav.pageCurrent == PAGE_HOME)
@@ -54,10 +54,10 @@
         else
           this.leaveActClass = 'main-leave-active-norm';
       },
-      
+
       show () {
         this.loaderShow = true;
-  
+
         if (this.firstRun) {
           this.showContent();
           this.enterClass = 'main-enter-norm';
@@ -65,10 +65,10 @@
           this.timeout = setTimeout(() => this.showContent(), 1500);
         }
       },
-      
+
       showContent () {
         this.contentShow = true;
-  
+
         if (window.requestAnimationFrame) {
           let animate = () => {
             if (!this.loaderShow)
@@ -80,7 +80,7 @@
           animate();
         }
       },
-      
+
       hide () {
         this.firstRun = false;
         this.contentShow = false;
@@ -91,7 +91,7 @@
         clearTimeout(this.timeout);
       }
     },
-    
+
     watch: {
       'nav.loadProgress': {
         handler() {
@@ -104,7 +104,7 @@
               if (this.loaderCan2)
                 this.hide();
             }, 1500);
-  
+
           } else {
             this.loaderCan2 = true;
             if (this.loaderCan1)
@@ -138,12 +138,12 @@
       left: 0;
       width: 100%;
       height: 100%;
-  
+
       display: flex;
       flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
-  
+
       font-weight: 500;
       color: rgba(0,0,0,0.87);
       text-transform: uppercase;

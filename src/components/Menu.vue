@@ -23,7 +23,7 @@
             router-link(to="/about") About
           .nav-item
             router-link(to="/journal") Journal
-          .nav-item
+          .nav-item(v-bind:class="{disabled: !!portfolio.showContacts}")
             router-link(to="/contacts") Contact
 
       .lock
@@ -42,6 +42,7 @@
       return {
         categories,
         nav: this.$select('nav'),
+        portfolio: this.$select('portfolio'),
 
         showCats: false,
 
@@ -181,6 +182,9 @@
 
         &:hover > a {
           color: #000000;
+        }
+        &.disabled {
+          pointer-events: none;
         }
       }
 
