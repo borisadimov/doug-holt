@@ -266,7 +266,7 @@
       opacity: 0.38;
       transition: opacity 0.2s ease;
 
-      z-index: 20;
+      z-index: 50;
 
       &:hover {
         opacity: 1;
