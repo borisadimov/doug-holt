@@ -27,6 +27,7 @@
 
 <script>
   import {onLoad} from 'ducks/nav';
+  import {categorySet} from 'ducks/portfolio';
   import {store, router} from 'index';
 
 
@@ -45,7 +46,11 @@
 
     methods: {
       onClose () {
-        router.push({name: this.nav.pagePrev, params: this.nav.prevParams});
+        if (this.nav.pageCurrent === "home") {
+          store.dispatch(categorySet(0));
+        } else {
+          router.push({name: this.nav.pagePrev, params: this.nav.prevParams});
+        }
       }
     }
   }

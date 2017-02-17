@@ -1,5 +1,5 @@
 <template lang="pug">
-  .gallery
+  .gallery(@keydown="handleKey")
     .menu-burger(
       ref="burgerGallery"
       @click="onMenuToggle"
@@ -56,7 +56,10 @@
           v-if="i == itemNum"
           )
           .item-pic(v-bind:style="{ backgroundImage: 'url(/assets/categories/' + category.name + '/items/' + item.image + ')' }")
-
+          .nav-left(@click="itemPrev" v-if="!(itemNum <= 0)")
+          .nav-right(@click="itemNext" v-if="!(itemNum >= category.items.length - 1)")
+      .arrow-left
+      .arrow-right
       .count
         .count-index-wrapper(v-bind:style="{ minWidth: counterWidth + 'px' }")
           transition(
@@ -149,9 +152,24 @@
 
     beforeDestroy () {
       this.scrollHandler.destroy();
+      window.removeEventListener('keydown', this.handleKey);
     },
 
+    created: function () {
+      window.addEventListener('keydown', this.handleKey);
+    },
     methods: {
+      handleKey(e) {
+        if (e.keyCode == 37) {
+          this.itemPrev();
+          return false;
+        }
+        if (e.keyCode == 39) {
+          this.itemNext();
+          return false;
+        }
+        return false;
+      },
       toggleInfo (){
         this.showInfo = !this.showInfo;
       },
@@ -304,7 +322,6 @@
       height: 100%;
 
       transition: transform .5s;
-
       .title {
         font-size: 18px;
         color: rgba(0, 0, 0, 0.87);
@@ -317,7 +334,6 @@
         width: 100%;
         text-align: center;
       }
-
       .count {
         position: absolute;
         bottom: 26px;
@@ -370,7 +386,24 @@
         left: 10%;
         width: 80%;
         height: 60%;
-
+        .nav-left {
+          cursor: w-resize;
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 50%;
+          z-index: 5;
+        }
+        .nav-right {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: 50%;
+          z-index: 5;
+          cursor: e-resize;
+        }
         &-pic {
           position: absolute;
           top: 0;
