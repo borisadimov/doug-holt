@@ -387,7 +387,7 @@
         width: 80%;
         height: 60%;
         .nav-left {
-          cursor: w-resize;
+          cursor: url(~assets/images/arrow-left.png), w-resize;
           position: absolute;
           top: 0;
           left: 0;
@@ -402,7 +402,7 @@
           bottom: 0;
           width: 50%;
           z-index: 5;
-          cursor: e-resize;
+          cursor: url(~assets/images/arrow-right.png), e-resize;
         }
         &-pic {
           position: absolute;
