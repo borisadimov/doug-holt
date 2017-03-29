@@ -273,12 +273,12 @@
   .gallery {
     .menu-burger {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 24px;
+      right: 24px;
       cursor: pointer;
 
-      width: 24px;
-      height: 10px;
+      width: 35px;
+      height: 14px;
 
       opacity: 0.38;
       transition: opacity 0.2s ease;
