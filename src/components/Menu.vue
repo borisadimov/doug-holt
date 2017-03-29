@@ -3,14 +3,14 @@
     .menu-container(v-bind:class="{'menu-white': nav.menuFixed}")
       router-link(to="/")
         .logo
-          | DOUG HOLT
+          | Doug Holt
           .logo-inner
             | PHOTOGRAPHY
 
       .nav(@mouseleave="onNavLeave")
         .nav-item.nav-work(@mouseenter="onWorksEnter")
           .nav-workLabel
-            | Work
+            | Portfolios
             .nav-arrow(v-bind:class="{'arrow-up': showCats}")
           .nav-inner(ref="cats")
             .nav-innerItem(
@@ -74,9 +74,9 @@
         Velocity(this.$refs.bottom, "stop");
         Velocity(
           this.$refs.bottom,
-          {translateY: this.catsHeight, translateZ: 0},
+          {translateY: this.catsHeight-20, translateZ: 0},
           {duration: 300, complete: () =>
-            Velocity(this.$refs.bottom, {translateY: 0, marginTop: this.catsHeight}, {duration: 30})
+            Velocity(this.$refs.bottom, {translateY: 0, marginTop: this.catsHeight-20}, {duration: 30})
           }
         );
       },
@@ -174,6 +174,9 @@
         will-change: color;
       }
 
+      &-workLabel {
+        font-weight: 600;
+      }
       &-item {
         padding-top: 4px;
         padding-bottom: 20px;
@@ -189,6 +192,7 @@
       }
 
       &-bottom-cont {
+        padding-top: 20px;
         position: relative;
         z-index: 10;
         background: #F5F5F5;

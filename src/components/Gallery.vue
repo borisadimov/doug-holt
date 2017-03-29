@@ -5,7 +5,6 @@
       @click="onMenuToggle"
       v-html="require('assets/images/burger-right.inline.svg')"
       )
-
     transition(name="curtain")
       .menu-curtain(
         v-if="nav.menuRightOpened"
@@ -274,12 +273,12 @@
   .gallery {
     .menu-burger {
       position: absolute;
-      top: 26px;
-      right: 26px;
+      top: 20px;
+      right: 20px;
       cursor: pointer;
 
-      width: 35px;
-      height: 14px;
+      width: 24px;
+      height: 10px;
 
       opacity: 0.38;
       transition: opacity 0.2s ease;
@@ -337,23 +336,23 @@
       .count {
         position: absolute;
         bottom: 26px;
-        height: 20px;
+        height: 17px;
         overflow: hidden;
 
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
 
-        font-size: 18px;
+        font-size: 15px;
         color: rgba(0, 0, 0, 0.87);
-        letter-spacing: 1.5px;
+        letter-spacing: 1.2px;
 
         width: 100%;
         padding: 0 26px;
 
         &-index-wrapper {
           min-width: 13px;
-          min-height: 20px;
+          min-height: 17px;
           position: relative;
         }
 
@@ -368,13 +367,13 @@
         }
 
         &-name-wrapper {
-          min-width: 303px;
-          min-height: 20px;
+          min-width: 270px;
+          min-height: 17px;
           position: relative;
         }
 
         &-name {
-          margin-left: 34px;
+          margin-left: 25px;
           position: absolute;
           white-space: nowrap;
         }
@@ -382,10 +381,10 @@
 
       .item {
         position: absolute;
-        top: 20%;
+        top: 15%;
         left: 10%;
         width: 80%;
-        height: 60%;
+        height: 70%;
         .nav-left {
           cursor: url(~assets/images/arrow-left.png), w-resize;
           position: absolute;
@@ -538,11 +537,11 @@
 
     .info-icon {
       background: url('~assets/images/info.svg') no-repeat center center / contain;
-      height: 23px;
-      width: 22px;
+      height: 17px;
+      width: 16px;
       position: absolute;
-      right: 26px;
-      bottom: 26px;
+      right: 20px;
+      bottom: 20px;
 
       opacity: 0.7;
 
