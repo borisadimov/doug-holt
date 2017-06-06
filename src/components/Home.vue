@@ -191,8 +191,6 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: #000;
-        opacity: 0.38;
 
         z-index: 9;
       }
@@ -213,6 +211,8 @@
         bottom: 134px;
 
         z-index: 10;
+
+        display: none;
 
         span {
           text-transform: none;

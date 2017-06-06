@@ -185,7 +185,7 @@
       transition: transform .5s;
 
       &-image {
-        margin-top: 46px;
+        margin-top: 50px;
 
         flex: 0 0 45%;
 
@@ -204,6 +204,7 @@
         letter-spacing: 0;
         line-height: 18px;
 
+        margin-top: 50px;
         padding-bottom: 46px;
         border-bottom: 1px solid rgba(0,0,0,0.38);
         text-align: center;

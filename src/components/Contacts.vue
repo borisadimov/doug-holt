@@ -13,16 +13,16 @@
       a.contacts-infoItem(href="tel:+19176501132")
         | +1 (917) 650 1132
       a.contacts-infoItem(href="mailto:douglasleeholt@gmail.com")
-        | douglaslessholt@gmail.com
+        | douglasleeholt@gmail.com
 
     .contacts-follow
       | Follow
       .contacts-socials
         a.contacts-ig(href="http://instagram.com/dougholtstudios" target="_blank")
         | /
-        a.contacts-fb(href="http://facebook.com" target="_blank")
+        a.contacts-fb(href="https://www.facebook.com/douglasleeholt" target="_blank")
         | /
-        a.contacts-tw(href="http://twitter.com" target="_blank")
+        a.contacts-tw(href="https://twitter.com/dougholt" target="_blank")
 </template>
 
 <script>

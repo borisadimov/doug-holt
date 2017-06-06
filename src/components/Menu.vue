@@ -3,7 +3,7 @@
     .menu-container(v-bind:class="{'menu-white': nav.menuFixed}")
       router-link(to="/")
         .logo
-          | Doug Holt
+          | DOUG HOLT
           .logo-inner
             | PHOTOGRAPHY
 
