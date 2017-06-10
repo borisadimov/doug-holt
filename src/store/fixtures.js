@@ -276,6 +276,7 @@ export const categories = [
     Of course, we produce many banner ads for Editorial and Commercial applications as well.
 
     All images taken by Doug Holt Photography Studios are of the highest quality and shot an extremely reasonable rates.`,
+    slides: [],
     items: [
       {
         index: 0,
@@ -451,6 +452,7 @@ export const categories = [
     index: 2,
     name: "Accessory",
     info: `Doug Holt Photography Studios specializes in still life and product photography of fashion accessories such as shoes, handbags, luggage, pants, dresses, ready to wear, belts and eye wear.  We shoot jewelry collections and fashion products in studio, on tabletop, and on 3D mannequins.  We have huge seamless white and solid color backgrounds and shoot around the calendar, in house for large New York City Area designers and manufacturers.  Our bread and butter comes from shooting look books and catalogs, entire collections for ECom websites, national advertisements, Instagram and Facebook social media campaigns and banner ads for Editorial and Commercial applications.  All images taken by Doug Holt Photography Studios are of the highest quality and at an extremely reasonable rates.`,
+    slides: [],
     items: [
       {
         index: 0,
@@ -678,6 +680,7 @@ export const categories = [
     Shooting jewelry in a common production at my photo studio.  I love shooting collections on Models, and I love to take the time and care required to do jewelry still life and product shots well. In this digital age, every piece of jewelry I photograph goes through a thorough color balance process, silhouetting from background and intense digital retouching for amazing final image result.
 
     The Studio is well-equipped with huge 13ft seamless and painted Canvas backgrounds.  The studio bustles with Commercial Look Book, Catalog, Sales Sheet,  E Commerce shoots.  We produce a lot of Highly Creative Editorial Social Media campaigns for placement on Instagram and Facebook as well as International Print Advertisement Campaigns.`,
+    slides: [],
     items: [
       {
         index: 0,
@@ -953,6 +956,7 @@ export const categories = [
     Digital retouching of Interior and Architectural images is no simple thing, which is why I work at the same terminal as my retoucher on all interior shoots.
 
     My studio is well-equipped with huge 13ft seamless and painted Canvas backgrounds, surfaces and sweeps to shoot Table Top on.  The studio bustles with Commercial Look Book, Catalog, Sales Sheet,  E Commerce shoots.  We also produce a lot of Highly Creative Editorial Social Media campaigns for placement on Instagram and Facebook as well as International Print Advertisement Campaigns.`,
+    slides: [],
     items: [
       {
         index: 0,

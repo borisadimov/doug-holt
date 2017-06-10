@@ -16,9 +16,9 @@ rm('-rf', '.git');
 exec('git init .');
 exec("git add -A");
 exec("git commit -m 'updated static views'");
-exec("git remote add origin git@github.com:flywithmemsl/doug-holt.git");
-exec("git checkout -b gh-pages");
-exec("git push -f --set-upstream origin gh-pages");
+exec("git remote add origin git@github.com:doug-holt/doug-holt.github.io.git");
+// exec("git checkout -b gh-pages");
+exec("git push -f --set-upstream origin master");
 
 cd(oldPath);
 
