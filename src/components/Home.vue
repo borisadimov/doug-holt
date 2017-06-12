@@ -133,15 +133,15 @@
 
       scrollBeforeEnter (el) {
         let value = this.portfolio.direction === 'down' ? '100%' : "-100%";
-        el.style.transform = `translate3d(0, ${value}, 0)`;
+        el.style.transform = `translate3d(${value}, 0, 0)`;
       },
       scrollEnter (el, done) {
         let value = this.portfolio.direction === 'down' ? '99%' : "-99%";
-        Velocity(el, { translateY: [0, value], translateZ: 0 }, { duration: 400, complete: done });
+        Velocity(el, { translateX: [0, value], translateZ: 0 }, { duration: 400, complete: done });
       },
       scrollLeave (el, done) {
         let value = this.portfolio.direction === 'down' ? '-100%' : "100%";
-        Velocity(el, { translateY: value, translateZ: 0 }, { duration: 400, complete: done });
+        Velocity(el, { translateX: value, translateZ: 0 }, { duration: 400, complete: done });
       },
 
       onDotClick (catIndex) {

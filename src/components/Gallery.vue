@@ -56,7 +56,7 @@
           )
           .item-pic(v-bind:style="{ backgroundImage: 'url(/assets/categories/' + category.name + '/items/' + item.image + ')' }")
           .nav-left(@click="itemPrev" v-if="!(itemNum <= 0)")
-          .nav-right(@click="itemNext" v-if="!(itemNum >= category.items.length - 1)")
+          .nav-right(@click="itemNext")
       .arrow-left
       .arrow-right
       .count
@@ -177,7 +177,7 @@
       },
       itemNext () {
         if (this.itemNum >= this.category.items.length - 1)
-          return;
+          return this.itemNum = 0;
         this.itemNum++;
         this.direction = 'right';
         this.hideInfo();
