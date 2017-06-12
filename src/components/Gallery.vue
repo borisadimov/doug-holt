@@ -444,7 +444,7 @@
 
       width: 502px;
       height: 100%;
-      padding: 36px 80px;
+      padding: 36px 0;
 
       z-index: 30;
 
@@ -452,10 +452,14 @@
         font-size: 18px;
         color: rgba(0,0,0,0.87);
         letter-spacing: 1px;
+        padding: 0 80px;
       }
 
       &-list {
         margin-top: 105px;
+        padding: 0 80px;
+        max-height: calc(100% - 110px);
+        overflow-y: auto;
       }
 
       &-header,

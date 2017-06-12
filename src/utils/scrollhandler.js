@@ -9,17 +9,17 @@ export default class ScrollHandler {
   touchStartX = 0;
   touchEndY = 0;
   touchEndX = 0;
-  
+
   mode = 'v';
-  
+
   isTouchDevice = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|playbook|silk|BlackBerry|BB10|Windows Phone|Tizen|Bada|webOS|IEMobile|Opera Mini)/);
   isTouch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0) || (navigator.maxTouchPoints));
-  
+
   container = document.body;
-  
+
   disabled = false;
-  
-  
+
+
   //mode: 'v' — vertical, 'h' — horizontal
   constructor(moveNextAction, movePrevAction, mode = 'v') {
     this['next'] = moveNextAction;
@@ -41,21 +41,21 @@ export default class ScrollHandler {
     this.destroyScrollListener();
     this.removeTouchHandler();
   }
-  
-  scrollHandler = e => {
-    this.preventDefault(e);
-    if (this.disabled)
-      return;
-    
-    e = e || window.event;
 
-    let scrollInfo = lethargy.check(e);
-    if (scrollInfo != false) {
-      if (scrollInfo === -1)
-        this.move('next');
-      else
-        this.move('prev');
-    }
+  scrollHandler = e => {
+    // this.preventDefault(e);
+    // if (this.disabled)
+    //   return;
+    //
+    // e = e || window.event;
+    //
+    // let scrollInfo = lethargy.check(e);
+    // if (scrollInfo != false) {
+    //   if (scrollInfo === -1)
+    //     this.move('next');
+    //   else
+    //     this.move('prev');
+    // }
   };
 
   createScrollListener () {
@@ -67,7 +67,7 @@ export default class ScrollHandler {
         return elem.addEventListener("mousewheel", this.scrollHandler);
       else
         return elem.addEventListener("MozMousePixelScroll", this.scrollHandler);
-      
+
     } else {
       return elem.attachEvent("onmousewheel", this.scrollHandler);
     }
@@ -82,7 +82,7 @@ export default class ScrollHandler {
         return elem.removeEventListener("mousewheel", this.scrollHandler);
       else
         return elem.removeEventListener("MozMousePixelScroll", this.scrollHandler);
-      
+
     } else {
       return elem.detachEvent("onmousewheel", this.scrollHandler);
     }
@@ -92,10 +92,10 @@ export default class ScrollHandler {
     let touchEvents = this.getEventsPage(e);
     this.touchEndY = touchEvents.y;
     this.touchEndX = touchEvents.x;
-    
+
     let dX = Math.abs(this.touchStartX - this.touchEndX);
     let dY = Math.abs(this.touchStartY - this.touchEndY);
-    
+
     if (this.mode == 'h') {
       let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
       if (dX > dY && dX > (w / 100) * 5) {
@@ -122,7 +122,7 @@ export default class ScrollHandler {
   touchStartHandler = event => {
     if (this.disabled)
       return;
-    
+
     let e = event || window.event || e || e.originalEvent;
     if (this.isReallyTouch(e)) {
       let touchEvents = this.getEventsPage(e);
@@ -130,7 +130,7 @@ export default class ScrollHandler {
       this.touchStartX = touchEvents.x;
     }
   };
-  
+
   touchMoveHandler = event => {
     let e = event || window.event || e || e.originalEvent;
     this.preventDefault(e);
@@ -196,7 +196,7 @@ export default class ScrollHandler {
         el.addEventListener(evts[i], fn, false);
       else
         el.attachEvent(evts[i], fn, false);
-      
+
       //IE 6/7/8
       i++;
     }
@@ -211,7 +211,7 @@ export default class ScrollHandler {
         el.removeEventListener(evts[i], fn, false);
       else
         el.deattachEvent(evts[i], fn, false);
-      
+
       //IE 6/7/8
       i++;
     }
