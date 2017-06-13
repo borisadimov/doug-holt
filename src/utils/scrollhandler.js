@@ -21,7 +21,7 @@ export default class ScrollHandler {
 
 
   //mode: 'v' — vertical, 'h' — horizontal
-  constructor(moveNextAction, movePrevAction, mode = 'v') {
+  constructor(moveNextAction, movePrevAction, mode = 'h') {
     this['next'] = moveNextAction;
     this['prev'] = movePrevAction;
     this.mode = mode;
@@ -43,19 +43,20 @@ export default class ScrollHandler {
   }
 
   scrollHandler = e => {
-    // this.preventDefault(e);
-    // if (this.disabled)
-    //   return;
-    //
-    // e = e || window.event;
-    //
-    // let scrollInfo = lethargy.check(e);
-    // if (scrollInfo != false) {
-    //   if (scrollInfo === -1)
-    //     this.move('next');
-    //   else
-    //     this.move('prev');
-    // }
+    this.preventDefault(e);
+    console.log()
+    if (this.disabled)
+      return;
+
+    e = e || window.event;
+
+    let scrollInfo = lethargy.check(e);
+    if (scrollInfo != false) {
+      if (scrollInfo === -1)
+        this.move('next');
+      else
+        this.move('prev');
+    }
   };
 
   createScrollListener () {

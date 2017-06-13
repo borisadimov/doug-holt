@@ -16,6 +16,8 @@
       v-on:before-enter="scrollBeforeEnter"
       v-on:enter="scrollEnter"
       v-on:leave="scrollLeave"
+      name="slide"
+      appear
       )
       router-link.category(
         v-for="(category, catIndex) of categories"
@@ -132,16 +134,17 @@
       },
 
       scrollBeforeEnter (el) {
-        let value = this.portfolio.direction === 'down' ? '100%' : "-100%";
+        let value = this.portfolio.direction === 'down' ? '145px' : "-145px";
         el.style.transform = `translate3d(${value}, 0, 0)`;
+        el.style.opacity = '0';
       },
       scrollEnter (el, done) {
-        let value = this.portfolio.direction === 'down' ? '99%' : "-99%";
-        Velocity(el, { translateX: [0, value], translateZ: 0 }, { duration: 400, complete: done });
+        let value = this.portfolio.direction === 'down' ? '145px' : "-145px";
+        Velocity(el, { translateX: [0, value], translateZ: 0, opacity: 1}, { duration: 800, complete: done });
       },
       scrollLeave (el, done) {
-        let value = this.portfolio.direction === 'down' ? '-100%' : "100%";
-        Velocity(el, { translateX: value, translateZ: 0 }, { duration: 400, complete: done });
+        let value = this.portfolio.direction === 'down' ? '-145px' : "145px";
+        Velocity(el, { translateX: value, translateZ: 0, opacity: 0 }, { duration: 800, complete: done });
       },
 
       onDotClick (catIndex) {
@@ -329,18 +332,20 @@
 
 
   .scroll-enter-active {
-    transition: transform 2s linear;
+    transition: opacity 1s ease-in, transform 2s linear;
   }
 
   .scroll-leave-active {
-    transition: transform 2s linear .05s;
+    transition: opacity 1s ease-in, transform 2s linear .05s;
   }
 
   .scroll-enter {
     transform: translate3d(0, 100%, 0);
+    opacity: 0;
   }
 
   .scroll-leave-active {
     transform: translate3d(0, -100%, 0);
+    opacity: 0;
   }
 </style>
