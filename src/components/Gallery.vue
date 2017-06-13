@@ -147,6 +147,7 @@
         };
         img.src = '/assets/categories/' + this.category.name + '/items/' + item.image;
       }
+
     },
 
     beforeDestroy () {
@@ -191,11 +192,15 @@
       },
 
       onMenuToggle () {
-        if (this.nav.menuRightOpened)
+        if (this.nav.menuRightOpened) {
           store.actions.nav.menuRightClose();
-        else
+          this.scrollHandler = new ScrollHandler(this.itemNext, this.itemPrev, 'h');
+        }
+        else {
           store.actions.nav.menuRightOpen();
           this.hideInfo();
+          this.scrollHandler.destroy();
+        }
       },
 
       onCurtainClick () {
