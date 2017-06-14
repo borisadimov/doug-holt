@@ -230,7 +230,7 @@
 
 
   //images on page
-  const IMG_CNT = 8;
+  const IMG_CNT = 1;
 
   export default {
     name: "AboutComponent",

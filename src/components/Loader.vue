@@ -95,6 +95,7 @@
     watch: {
       'nav.loadProgress': {
         handler() {
+
           if (this.nav.loadProgress < 100) {
             if (this.loaderShow)
               return;
