@@ -1,0 +1,73 @@
+.page-enter-active .curtain, .page-leave-active .curtain {
+  transition: transform 1s ease;
+}
+.page-enter .curtain, .page-leave-active .curain {
+  transform:  translate3d(0, -100%, 0);
+  opacity: 0;
+}
+.curtain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  opacity: 1;
+  z-index: 999999;
+  transition: transform 1s;
+  transform: translate3d(0, -100%, 0);
+  will-change: transform;
+}
+
+/*.page-enter-active .curtain {
+  transform: translate3d(0,0,0);
+}
+
+.page-leave-active .curtain {
+  transition: translate3d(0, -100%, 0);
+}*/
+
+
+.menu-leave-active {
+  transition: transform .5s;
+}
+.menu-enter, .menu-leave-active {
+  transform: translate3d(-100%, 0, 0);
+}
+.menu-active-norm {
+  transition: transform .5s;
+}
+.menu-active-lv-norm {
+  transition: transform .5s;
+  transform: translate3d(-100%, 0, 0);
+}
+.menu-active-dly {
+  transition: transform 1.5s step-end;
+}
+
+.menu-burger-enter-active, .menu-burger-leave-active {
+  transition: opacity 1s step-end;
+}
+.menu-burger-enter, .menu-burger-leave-active {
+  opacity: .01
+}
+
+.loader-enter-active, .loader-leave-active {
+  transition: transform 1s ease-in-out .4s;
+}
+.loader-enter, .loader-leave-active {
+  transform: translate3d(0, -100%, 0);
+}
+
+.view-enter, .view-leave-active {
+  transform: translate3d(0, 100%, 0);
+}
+.view-active-none {
+  transition: none;
+}
+.view-active-long {
+  transition: transform .5s;
+}
+.view-active-dly {
+  transition: transform 1.5s step-end;
+}

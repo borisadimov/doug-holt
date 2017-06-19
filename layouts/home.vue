@@ -1,18 +1,7 @@
 <template lang="pug">
   .inner
-    //loader-component
-    transition(name="curtain")
-      .curtain(
-        v-if="nav.menuOpened && !nav.menuFixed"
-        @click="onCurtainClick"
-        )
-    transition(
-      name="view"
-      v-bind:mode="RTMode"
-      v-bind:enter-active-class="RTEntActClass"
-      v-bind:leave-active-class="RTLeaActClass"
-      )
-      nuxt.router-view(v-bind:class="{'router-view-menu': nav.menuOpened && !nav.menuFixed}")
+    .curtain
+    nuxt.router-view(v-bind:class="{'router-view-menu': nav.menuOpened && !nav.menuFixed}")
     transition(
       name="menu"
       v-bind:enter-active-class="MEntActClass"
@@ -251,17 +240,6 @@
     right: 0;
     bottom: 0;
   }
-
-  .curtain {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
-    opacity: .4;
-    z-index: 3;
-  }
   .secret {
     position: absolute;
     bottom: 0;
@@ -292,57 +270,6 @@
 
   .router-view-menu {
     transform: translate3d(175px, 0, 0);
-  }
-
-  .menu-leave-active {
-    transition: transform .5s;
-  }
-  .menu-enter, .menu-leave-active {
-    transform: translate3d(-100%, 0, 0);
-  }
-  .menu-active-norm {
-    transition: transform .5s;
-  }
-  .menu-active-lv-norm {
-    transition: transform .5s;
-    transform: translate3d(-100%, 0, 0);
-  }
-  .menu-active-dly {
-    transition: transform 1.5s step-end;
-  }
-
-  .menu-burger-enter-active, .menu-burger-leave-active {
-    transition: opacity 1s step-end;
-  }
-  .menu-burger-enter, .menu-burger-leave-active {
-    opacity: .01
-  }
-
-  .curtain-enter-active, .curtain-leave-active {
-    transition: opacity .5s;
-  }
-  .curtain-enter, .curtain-leave-active {
-    opacity: .01;
-  }
-
-  .loader-enter-active, .loader-leave-active {
-    transition: transform 1s ease-in-out .4s;
-  }
-  .loader-enter, .loader-leave-active {
-    transform: translate3d(0, -100%, 0);
-  }
-
-  .view-enter, .view-leave-active {
-    transform: translate3d(0, 100%, 0);
-  }
-  .view-active-none {
-    transition: none;
-  }
-  .view-active-long {
-    transition: transform .5s;
-  }
-  .view-active-dly {
-    transition: transform 1.5s step-end;
   }
 
 </style>

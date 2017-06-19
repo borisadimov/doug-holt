@@ -20,6 +20,8 @@ module.exports = {
   /*
   ** Build configuration
   */
+  css: ['assets/main.css'],
+
   build: {
     /*
     ** Run ESLINT on save

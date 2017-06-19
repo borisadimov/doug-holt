@@ -8,8 +8,12 @@
 <script>
 import NuxtLoading from './components/nuxt-loading.vue'
 
+import 'assets/main.css'
+
 
 let layouts = {
+
+  "_admin": () => import('/Users/valery/Developer/nuxt-doug-holt/layouts/admin.vue'  /* webpackChunkName: "layouts/admin" */),
 
   "_home": () => import('/Users/valery/Developer/nuxt-doug-holt/layouts/home.vue'  /* webpackChunkName: "layouts/home" */),
 

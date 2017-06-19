@@ -77,6 +77,8 @@
       this.menuOpen();
       this.onCatUpdate();
 
+      console.log(this.$store)
+
       this.scrollHandler = new ScrollHandler(
         this.categoryNext,
         this.categoryPrev
