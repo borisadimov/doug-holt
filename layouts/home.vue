@@ -39,6 +39,10 @@
   import MenuComponent from '~/components/Menu';
   import LoaderComponent from '~/components/Loader';
   import {mapMutations} from 'vuex';
+  import { db } from '~/db'
+
+  const $categories = db.ref('categories')
+
   const PAGE_CONTACTS = '/contacts';
   const PAGE_HOME = '/';
 
@@ -49,6 +53,10 @@
     components: {
       MenuComponent,
       LoaderComponent
+    },
+
+    fetch ({ store }) {
+      return store.dispatch('setCategoriesRef', $categories)
     },
 
     data () {

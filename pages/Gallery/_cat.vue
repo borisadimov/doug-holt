@@ -116,15 +116,19 @@
 <script>
   var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null;
 
-  //import {store} from 'index';
-  //import {onLoad} from 'ducks/nav';
-  import { categories }   from '~/store/fixtures';
   import ScrollHandler    from '~/utils/scrollhandler';
-  import { mapMutations } from 'vuex';
+  import { mapMutations, mapGetters } from 'vuex';
+  import { db } from '~/db'
+
+  const $categories = db.ref('categories')
 
   export default {
     name: "CatComponent",
     layout: 'home',
+
+    fetch ({ store }) {
+      return store.dispatch('setCategoriesRef', $categories)
+    },
 
     data () {
       return {
@@ -138,6 +142,7 @@
     },
 
     mounted () {
+      console.log(this.category)
       this.scrollHandler = new ScrollHandler(this.itemNext, this.itemPrev, 'h');
 
       if (this.category.items.length > 9)
@@ -261,6 +266,8 @@
     },
 
     computed: {
+      ...mapGetters(['categories']),
+
       nav() {
         return this.$store.state.nav;
       },
@@ -271,7 +278,7 @@
 
       category() {
         this.itemNum = 0;
-        return categories[this.$store.state.portfolio.category];
+        return this.categories[this.portfolio.category];
       }
     },
 

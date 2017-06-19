@@ -24,8 +24,6 @@ export const mutations = {
     state.category = ++state.category;
     state.direction = 'down';
     state.showContacts = showContacts;
-
-    console.log('categoryNext', state);
   },
 
   categoryPrev(state) {
@@ -36,8 +34,6 @@ export const mutations = {
     state.category = --state.category;
     state.direction = 'up';
     state.showContacts = showContacts;
-
-    console.log('categoryPrev', state);
   }
 
 }

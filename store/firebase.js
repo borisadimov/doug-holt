@@ -2,7 +2,9 @@ import { firebase } from '~/db'
 import { firebaseMutations, firebaseAction } from 'vuexfire'
 
 export const state = {
-  user: !!firebase.auth().currentUser
+  user: !!firebase.auth().currentUser,
+  categories: [],
+  posts: []
 }
 
 export const mutations = {
@@ -49,5 +51,7 @@ export const actions = {
 }
 
 export const getters = {
-  user: state => state.user
+  user: state => state.user,
+  categories: state => state.categories,
+  posts: state => state.posts
 }

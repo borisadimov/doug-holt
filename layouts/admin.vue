@@ -14,6 +14,10 @@ export default {
     box-sizing: border-box;
   }
 
+  body {
+    margin: 0;
+  }
+
   .page-enter-active, .page-leave-active {
     transition: opacity .5s ease;
   }

@@ -10,7 +10,7 @@
           | Log in
 
     div(v-if="user")
-      | Hello {{user}} !
+      | Hello {{user}}!
 </template>
 
 <!-- <style src="vue-multiselect/dist/vue-multiselect.min.css"></style> -->
@@ -28,7 +28,7 @@ export default {
   name: 'Admin',
   layout: 'admin',
   head: {
-    title: 'StateBird | Admin'
+    title: 'DougHolt | Admin'
   },
 
   components: {

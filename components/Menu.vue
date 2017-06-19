@@ -32,15 +32,21 @@
 <script>
   var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null
 
-  import {categories} from '~/store/fixtures';
+  //import {categories} from '~/store/fixtures';
+  import { mapGetters } from 'vuex';
+  import { db } from '~/db'
+
+  const $categories = db.ref('categories')
 
   export default {
     name: "MenuComponent",
 
+    fetch ({ store }) {
+      return store.dispatch('setCategoriesRef', $categories)
+    },
+
     data () {
       return {
-        categories,
-
         showCats: false,
 
         catsHeight: 0,
@@ -90,6 +96,8 @@
     },
 
     computed: {
+      ...mapGetters(['categories']),
+
       nav() {
         return this.$store.state.nav;
       },
@@ -99,7 +107,7 @@
       },
 
       category() {
-        return categories[this.$store.state.portfolio.category];
+        return this.categories[this.$store.state.portfolio.category];
       }
     }
   }

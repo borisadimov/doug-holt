@@ -68,16 +68,22 @@
 </template>
 
 <script>
-  import {posts, getPost} from '~/store/fixtures';
-  import {mapMutations} from 'vuex';
+  import { getPost } from '~/store/fixtures';
+  import { mapMutations, mapGetters } from 'vuex';
+  import { db } from '~/db'
+
+  const $posts = db.ref('posts')
 
   export default {
     name: "JournalItemComponent",
     layout: 'home',
 
+    fetch ({ store }) {
+      return store.dispatch('setPostsRef', $posts)
+    },
+
     data () {
       return {
-        posts: posts.slice(),
         post: getPost(this.$route.params.post),
 
         burgerLines13: null,
@@ -124,7 +130,9 @@
     computed: {
       nav() {
         return this.$store.state.nav;
-      }
+      },
+
+      ...mapGetters(['posts'])
     },
 
     watch: {

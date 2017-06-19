@@ -46,10 +46,12 @@
 <script>
   var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null
 
-  import {categories} from '~/store/fixtures';
   import ScrollHandler from '~/utils/scrollhandler';
-  import { mapMutations } from 'vuex';
+  import { mapMutations, mapGetters } from 'vuex';
   import ContactsComponent from '~/components/Contacts';
+  import { db } from '~/db'
+
+  const $categories = db.ref('categories')
 
   export default {
     name: "HomeComponent",
@@ -59,10 +61,14 @@
       ContactsComponent
     },
 
+    fetch ({ store }) {
+      return store.dispatch('setCategoriesRef', $categories)
+    },
+
+
     data () {
       return {
-        categories,
-
+        baseCats: null,
         category: null,
         slideNum: 0,
         slidesLength: 1,
@@ -77,17 +83,19 @@
       this.menuOpen();
       this.onCatUpdate();
 
-      console.log(this.$store)
+
 
       this.scrollHandler = new ScrollHandler(
         this.categoryNext,
         this.categoryPrev
       );
 
+
+
       let loadCnt = 0;
 
-      categories.forEach((cat) => {
-        cat.slides.forEach((slide) => {
+      this.categories.forEach((cat) => {
+        cat.slides && cat.slides.forEach((slide) => {
           let img = new Image();
           // img.onload = () => {
           //   loadCnt++;
@@ -174,7 +182,7 @@
         return this.$store.state.portfolio.category
       },
 
-
+      ...mapGetters(['categories'])
     },
 
     watch: {
@@ -185,7 +193,6 @@
         }
       }
     }
-
 
   }
 </script>

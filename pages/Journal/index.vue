@@ -36,12 +36,18 @@
 </template>
 
 <script>
-  import {posts} from '~/store/fixtures';
-  import { mapMutations } from 'vuex';
+  import { mapMutations, mapGetters } from 'vuex';
+  import { db } from '~/db'
+
+  const $posts = db.ref('posts')
 
   export default {
     name: "JournalComponent",
     layout: 'home',
+
+    fetch ({ store }) {
+      return store.dispatch('setPostsRef', $posts)
+    },
 
     data () {
       return {
@@ -52,7 +58,7 @@
     },
 
     mounted () {
-      let postsRev = posts.slice();
+      let postsRev = this.posts.slice();
       postsRev.reverse();
       for (let i = 0; i < postsRev.length; i++) {
         let post = postsRev[i];
@@ -66,15 +72,19 @@
     methods: {
       onImgLoaded () {
         this.imgLoaded++;
-        if (this.imgLoaded == posts.length)
+        if (this.imgLoaded == this.posts.length)
           this.onLoad(100);
         else
-          this.onLoad(this.imgLoaded * 100 / posts.length);
+          this.onLoad(this.imgLoaded * 100 / this.posts.length);
       },
 
       ...mapMutations([
         'onLoad'
       ])
+    },
+
+    computed: {
+      ...mapGetters(['posts'])
     }
   }
 </script>
