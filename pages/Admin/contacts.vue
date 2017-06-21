@@ -166,7 +166,10 @@
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     position: relative;
-    
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   
   .portfolio {

@@ -202,6 +202,9 @@
 
     &-column {
       flex: 1;
+      display: flex;
+      flex-flow: column wrap;
+      max-height: 1045px;
 
       &:first-child {
         flex: 0 0 25%;

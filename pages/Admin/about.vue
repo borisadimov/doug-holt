@@ -30,37 +30,15 @@
                     span.remove(@click="removeClient(index)")
                       span ❌
                   
-                input(v-model="newClients" placeholder="Write new client")
-                button(@click="addClient") Add new client
+                input.add-client(v-model="newClients" placeholder="Write new client")
+                button.button(@click="addClient") Add new client
 
-            //-   a.editing-title__open(v-if="portfolioItem.name !== ''" :href="'/gallery/' + portfolioItem.name")
-            //-     | open link
-            //- .editing-field
-            //-   .editing-label Title
-            //-   input(type="text" placeholder="The Project Name" @input="inputChange" v-model="portfolioItem.name")
-            //- .editing-field
-            //-   .editing-label Info
-            //-   input(type="text" placeholder="Any description" @input="inputChange" v-model="portfolioItem.info")
-            //- .editing-field
-            //-   .editing-label Cover Image URL
-            //-   input(type="text" placeholder="http://path/to/image/url" v-model="portfolioItem.slides")
-            //- .editing-field
-            //-   .editing-label Slides
-            //-   .editing-field__new-slide
-            //-     input(type="text" placeholder="Title" @input="inputChange" v-model="newSlide.title")
-            //-     input(type="text" placeholder="Image" @input="inputChange" v-model="newSlide.image")
-            //-     input(type="text" placeholder="Client" @input="inputChange" v-model="newSlide.client")
-            //-     .button.save(@click="addNewSlide(portfolioItem.items)")
-            //-         span ✅
-            //-         | Add new slide
-
+           
             .buttons
               .button.save(@click="save")
                 span ✅
                 | Save
-            //-   .button.cancel(@click="cancel")
-            //-     span ❌
-            //-     | Cancel
+
 </template>
 
 <!--<style src="vue-multiselect/dist/vue-multiselect.min.css">
@@ -329,6 +307,7 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    margin-top: 50px;
   }
   
   .button {
@@ -350,6 +329,10 @@
       margin-right: 10px;
       font-size: 20px;
     }
+  }
+
+  .add-client {
+    margin-top: 20px;
   }
   
   .add {
@@ -403,7 +386,9 @@
       color: #FFFFFF;
     }
   }
-  
+  button {
+    background: none;
+  }
   textarea {
     min-height: 200px;
     resize: vertical;
@@ -526,6 +511,14 @@
       margin-bottom: 11px;
       max-width: 600px;
     }
+  }
+
+  .client-block {
+  }
+
+  .client {
+    margin-right: 10px;
+    display: inline-block;
   }
   
   .mark__title {

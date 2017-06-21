@@ -280,18 +280,18 @@
     }
     .dots {
       position: absolute;
-      top: 50%;
-      right: 36px;
-      transform: translateY(-50%);
+      bottom: 36px;
+      left: calc(50% + 108px);
+      transform: translateX(-50%);
       z-index: 10;
       .dot {
         border: 1px solid #FFFFFF;
         height: 8px;
         width: 8px;
+        display: inline-block;
         cursor: pointer;
         border-radius: 100px;
-        margin-bottom: 24px;
-        display: block;
+        margin-right: 24px;
         transition: background-color .5s, border-color .5s;
         &.dot-square {
           margin-bottom: 0;
