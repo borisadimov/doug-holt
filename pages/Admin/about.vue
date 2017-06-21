@@ -13,7 +13,6 @@
               textarea(v-model="about.text_block1.text1")
               textarea(v-model="about.text_block1.text2")
               textarea(v-model="about.text_block2.text1")
-              textarea(v-model="about.text_block2.text2")
               textarea(v-model="about.text_block3.text1")
               textarea(v-model="about.text_block3.text2")
               textarea(v-model="about.text_block4.text1")
@@ -25,14 +24,14 @@
                 | Edit clients
               
               .editing-clients
-                .client-block(v-for="(client, clientId) in clients")
-                  span.client(v-for="(clientName, id) in client.items")
-                    | {{ clientName }}
-                    span.remove(@click="removeClient(clientId, id)")
+                span.client-block(v-for="(client, index) in clients")
+                  span.client
+                    | {{ client }}
+                    span.remove(@click="removeClient(index)")
                       span ❌
                   
-                input(v-model="newClients" placeholder="Write new clients")
-                button(@click="addClients") Add new clients
+                input(v-model="newClients" placeholder="Write new client")
+                button(@click="addClient") Add new client
 
             //-   a.editing-title__open(v-if="portfolioItem.name !== ''" :href="'/gallery/' + portfolioItem.name")
             //-     | open link
@@ -107,22 +106,7 @@
         hasFilledField: false,
         isDeploying: false,
         deployFailed: false,
-        newClients: [],
-        // text_block1: {
-        //   text1: this.about.text_block1.text1,
-        //   text2: this.about.text_block1.text2
-        // },
-        // text_block2: {
-        //   text1: this.about.text_block2.text1,
-        // },
-        // text_block3: {
-        //   text1: this.about.text_block3.text1,
-        //   text2: this.about.text_block3.text2
-        // },
-        // text_block4: {
-        //   text1: this.about.text_block4.text1,
-        //   text2: this.about.text_block4.text2
-        // }
+        newClients: []
       }
     },
   
@@ -140,34 +124,27 @@
         this.hasFilledField = event.target.value !== ''
       },
   
-      addClients() {
-        let clientsArr = null;
-        this.newClients.split(',').map((client, id) => {
-          const firstLetter = client[0].toLowerCase();
-
-          this.clients.map((item, id) => {
-            if(firstLetter === item.letter.toLowerCase) {
-              item.items.push(client);
-            }
-          });
-
-        });
-
+      addClient() {
+        const newClientsArr = this.newClients.split(' ').join('').split(',');
+        this.clients.push(...newClientsArr);
         console.log(this.clients)
       },
 
-      removeClient(clientId, nameId) {
-        this.clients[clientId].items.splice(nameId, 1);
+      removeClient(index) {
+        this.clients.splice(index, 1);
         $about.child('clients').set([...this.clients]);
       },
 
       save: function () {
-
+        $about.child('text_block1').set(this.about.text_block1);
+        $about.child('text_block2').set(this.about.text_block2);
+        $about.child('text_block3').set(this.about.text_block3);
+        $about.child('text_block4').set(this.about.text_block4);
+        $about.child('clients').set(this.clients);
       }
     },
   
     created() {
-      console.log(this.clients)
       if (process.BROWSER_BUILD) {
         setTimeout(() => {
           this.$store.dispatch('setAboutRef', $about)
@@ -214,7 +191,7 @@
   
   .admin {
     padding: 0 50px;
-    min-height: 100vh;
+    height: calc(100vh - 43px);
     background: $primary-color;
     width: 100%;
     font-family: 'Source Sans Pro', sans-serif;
@@ -222,6 +199,10 @@
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     position: relative;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   
   .portfolio {

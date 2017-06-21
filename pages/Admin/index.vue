@@ -398,7 +398,7 @@ $primary-color: #EBC8B2;
 
   .admin {
     padding: 0 50px;
-    min-height: 100vh;
+    height: calc(100vh - 43px);
     background: $primary-color;
     width: 100%;
 
@@ -407,6 +407,10 @@ $primary-color: #EBC8B2;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     position: relative;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .portfolio {

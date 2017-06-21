@@ -38,10 +38,10 @@
           .clients-letter
             | SELECTED CLIENTS
       .clients-column
-        .clients-item(v-for="client in about.clients")
+        .clients-item(v-for="(client, key) in clients")
           .clients-letter
-            | {{ client.letter }}
-          span(v-for="item in client.items")
+            | {{ key }}
+          span(v-for="item in client")
             | {{ item }}
 </template>
 
@@ -68,7 +68,7 @@
     },
 
     mounted() {
-      console.log('about', this.about)
+      console.log(this.clients)
     },
 
     methods: {
@@ -86,7 +86,18 @@
     },
 
     computed: {
-      ...mapGetters(['about'])
+      ...mapGetters(['about']),
+
+      clients() { 
+        return this.about.clients.reduce((res, curr) => {
+          const firstLetter = curr[0].toLowerCase();
+          if (!res.hasOwnProperty(firstLetter)) {
+            res[firstLetter] = [];
+          }
+          res[firstLetter].push(curr)
+          return res;
+        }, {})
+      }
     }
   }
 </script>

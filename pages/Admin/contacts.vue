@@ -158,7 +158,7 @@
   
   .admin {
     padding: 0 50px;
-    min-height: 100vh;
+    height: calc(100vh - 43px);
     background: $primary-color;
     width: 100%;
     font-family: 'Source Sans Pro', sans-serif;
@@ -166,6 +166,7 @@
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     position: relative;
+    
   }
   
   .portfolio {
