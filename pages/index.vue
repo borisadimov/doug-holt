@@ -57,7 +57,8 @@
     db
   } from '~/db'
   
-  const $categories = db.ref('categories')
+  const $categories = db.ref('categories');
+  const $contacts = db.ref('contacts');
   
   export default {
     name: "HomeComponent",
@@ -70,7 +71,8 @@
     fetch({
       store
     }) {
-      return store.dispatch('setCategoriesRef', $categories)
+      store.dispatch('setCategoriesRef', $categories)
+      store.dispatch('setContactsRef', $contacts)
     },
   
   
@@ -90,9 +92,7 @@
       this.makeMenuFixed();
       this.menuOpen();
       this.onCatUpdate();
-  
-  
-  
+    
       this.scrollHandler = new ScrollHandler(
         this.categoryNext,
         this.categoryPrev
@@ -204,7 +204,7 @@
         return this.$store.state.portfolio.category
       },
   
-      ...mapGetters(['categories'])
+      ...mapGetters(['categories', 'contacts'])
     },
   
     watch: {

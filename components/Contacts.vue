@@ -1,37 +1,32 @@
 <template lang="pug">
   .contacts
     .contacts-close(@click="onClose" v-if="!!nav.pagePrev")
-    .contacts-studio
-      | Doug Holt Photography Studio
+    .contacts-studio(@click="test")
+      | {{contacts.name}}
     .contacts-address
-      | 51-02 21st Street Studio 3E
-      br
-      | Long Island City, NY 1110
+      | {{contacts.address}}
+
 
     .contacts-info
       | Contact
       a.contacts-infoItem(href="tel:+19176501132")
-        | +1 (917) 650 1132
+        | {{contacts.phone}}
       a.contacts-infoItem(href="mailto:douglasleeholt@gmail.com")
-        | douglasleeholt@gmail.com
+        | {{contacts.email}}
 
     .contacts-follow
       | Follow
       .contacts-socials
-        a.contacts-ig(href="http://instagram.com/dougholtstudios" target="_blank")
+        a.contacts-ig(:href="contacts.instagram" target="_blank")
         | /
-        a.contacts-fb(href="https://www.facebook.com/douglasleeholt" target="_blank")
+        a.contacts-fb(:href="contacts.facebook" target="_blank")
         | /
-        a.contacts-tw(href="https://twitter.com/dougholt" target="_blank")
+        a.contacts-tw(:href="contacts.twitter" target="_blank")
 </template>
 
 <script>
-  // import {onLoad} from 'ducks/nav';
-  // import {categorySet} from 'ducks/portfolio';
-  // import {store, router} from 'index';
-  import { mapMutations } from 'vuex';
-
-
+  import { mapMutations, mapGetters } from 'vuex';
+  
   export default {
     name: "ContactsComponent",
 
@@ -43,7 +38,9 @@
 
     mounted () {
       this.onLoad(100);
+      console.log(this.contacts)
     },
+
 
     methods: {
       onClose () {
@@ -54,6 +51,11 @@
         }
       },
 
+      test() {
+        this.$store.dispatch('setContactsRef', $contacts)
+        console.log(this.contacts)
+      },
+
       ...mapMutations([
         'onLoad',
         'categorySet'
@@ -61,6 +63,8 @@
     },
 
     computed: {
+      ...mapGetters(['contacts']),
+
       nav() {
         return this.$store.state.nav
       },
@@ -68,6 +72,8 @@
       portfolio() {
         return this.$store.state.portfolio
       },
+
+      
     }
   }
 </script>

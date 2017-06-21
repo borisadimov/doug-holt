@@ -5,7 +5,8 @@ export const state = {
   user: !!firebase.auth().currentUser,
   categories: [],
   posts: [],
-  about: {}
+  about: {},
+  contacts: {}
 }
 
 export const mutations = {
@@ -59,6 +60,17 @@ export const actions = {
         cancelCallback: reject
       })
     })
+  }),
+
+  setContactsRef: firebaseAction(({
+      bindFirebaseRef
+    }, ref) => {
+    return new Promise((resolve, reject) => {
+      bindFirebaseRef('contacts', ref, {
+        readyCallback: resolve,
+        cancelCallback: reject
+      })
+    })
   })
 }
 
@@ -66,5 +78,6 @@ export const getters = {
   user: state => state.user,
   categories: state => state.categories,
   posts: state => state.posts,
-  about: state => state.about
+  about: state => state.about,
+  contacts: state => state.contacts
 }

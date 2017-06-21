@@ -1,8 +1,9 @@
 <template lang="pug">
   .inner
     .header
-      nuxt-link(to="/admin") Home
-      nuxt-link(to="/admin/about") About
+      nuxt-link(to="/admin").link Home
+      nuxt-link(to="/admin/about").link About
+      nuxt-link(to="/admin/contacts").link Contacts
     nuxt-container
       nuxt
 </template>
@@ -42,4 +43,25 @@ export default {
     position: relative;
   }
 
+</style>
+
+<<style scoped lang="scss">
+$primary-color: #EBC8B2;
+
+  .header {
+    background: $primary-color;
+    padding: 10px 20px;
+    
+    a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 10px;
+      font-size: 20px;
+      font-family: sans-serif;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 </style>

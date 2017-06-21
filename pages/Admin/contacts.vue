@@ -6,55 +6,40 @@
           .editing-inner
             .editing-title
               span 🗒
-              | Edit about page
+              | Edit contacts
             .editing-field
               .editing-label
-                | Edit texts
-              textarea(v-model="about.text_block1.text1")
-              textarea(v-model="about.text_block1.text2")
-              textarea(v-model="about.text_block2.text1")
-              textarea(v-model="about.text_block2.text2")
-              textarea(v-model="about.text_block3.text1")
-              textarea(v-model="about.text_block3.text2")
-              textarea(v-model="about.text_block4.text1")
-              textarea(v-model="about.text_block4.text2")
-      
-            
+                | Edit name
+              input(v-model="contacts.name")
             .editing-field
               .editing-label
-                | Edit clients
+                | Edit address
+              input(v-model="contacts.address")
+            .editing-field
+              .editing-label
+                | Edit phone
+              input(v-model="contacts.phone")
+            .editing-field
+              .editing-label
+                | Edit email
+              input(v-model="contacts.email")
+            .editing-field
+              .editing-label
+                | Edit instagram link
+              input(v-model="contacts.instagram")
               
-              .editing-clients
-                .client-block(v-for="(client, clientId) in clients")
-                  span.client(v-for="(clientName, id) in client.items")
-                    | {{ clientName }}
-                    span.remove(@click="removeClient(clientId, id)")
-                      span ❌
-                  
-                input(v-model="newClients" placeholder="Write new clients")
-                button(@click="addClients") Add new clients
-
-            //-   a.editing-title__open(v-if="portfolioItem.name !== ''" :href="'/gallery/' + portfolioItem.name")
-            //-     | open link
-            //- .editing-field
-            //-   .editing-label Title
-            //-   input(type="text" placeholder="The Project Name" @input="inputChange" v-model="portfolioItem.name")
-            //- .editing-field
-            //-   .editing-label Info
-            //-   input(type="text" placeholder="Any description" @input="inputChange" v-model="portfolioItem.info")
-            //- .editing-field
-            //-   .editing-label Cover Image URL
-            //-   input(type="text" placeholder="http://path/to/image/url" v-model="portfolioItem.slides")
-            //- .editing-field
-            //-   .editing-label Slides
-            //-   .editing-field__new-slide
-            //-     input(type="text" placeholder="Title" @input="inputChange" v-model="newSlide.title")
-            //-     input(type="text" placeholder="Image" @input="inputChange" v-model="newSlide.image")
-            //-     input(type="text" placeholder="Client" @input="inputChange" v-model="newSlide.client")
-            //-     .button.save(@click="addNewSlide(portfolioItem.items)")
-            //-         span ✅
-            //-         | Add new slide
-
+            .editing-field
+              .editing-label
+                | Edit facebook link
+              input(v-model="contacts.facebook")
+              
+            .editing-field
+              .editing-label
+                | Edit twitter link
+              input(v-model="contacts.twitter")
+              
+              
+              
             .buttons
               .button.save(@click="save")
                 span ✅
@@ -79,7 +64,7 @@
   
   var Multiselect = process.BROWSER_BUILD ? Multiselect = require('vue-multiselect') : null
   
-  const $about = db.ref('about')
+  const $contacts = db.ref('contacts')
   
   export default {
     name: 'AdminAbout',
@@ -96,42 +81,17 @@
     fetch({
       store
     }) {
-      store.dispatch('about', $about)
+      store.dispatch('contacts', $contacts)
     },
   
     data() {
       return {
-        email: '',
-        password: '',
-        editing: false,
-        hasFilledField: false,
-        isDeploying: false,
-        deployFailed: false,
-        newClients: [],
-        // text_block1: {
-        //   text1: this.about.text_block1.text1,
-        //   text2: this.about.text_block1.text2
-        // },
-        // text_block2: {
-        //   text1: this.about.text_block2.text1,
-        // },
-        // text_block3: {
-        //   text1: this.about.text_block3.text1,
-        //   text2: this.about.text_block3.text2
-        // },
-        // text_block4: {
-        //   text1: this.about.text_block4.text1,
-        //   text2: this.about.text_block4.text2
-        // }
+
       }
     },
   
     computed: {
-      ...mapGetters(['about']),
-  
-      clients() {
-        return this.about.clients;
-      }
+      ...mapGetters(['contacts']),
     },
   
     methods: {
@@ -139,41 +99,25 @@
         console.log(this, event)
         this.hasFilledField = event.target.value !== ''
       },
-  
-      addClients() {
-        let clientsArr = null;
-        this.newClients.split(',').map((client, id) => {
-          const firstLetter = client[0].toLowerCase();
-
-          this.clients.map((item, id) => {
-            if(firstLetter === item.letter.toLowerCase) {
-              item.items.push(client);
-            }
-          });
-
-        });
-
-        console.log(this.clients)
-      },
-
-      removeClient(clientId, nameId) {
-        this.clients[clientId].items.splice(nameId, 1);
-        $about.child('clients').set([...this.clients]);
-      },
 
       save: function () {
-
+        $contacts.child('name').set(this.contacts.name)
+        $contacts.child('email').set(this.contacts.email)
+        $contacts.child('facebook').set(this.contacts.facebook)
+        $contacts.child('instagram').set(this.contacts.instagram)
+        $contacts.child('address').set(this.contacts.address)
+        $contacts.child('twitter').set(this.contacts.twitter)
+        $contacts.child('phone').set(this.contacts.phone)
       }
     },
   
     created() {
-      console.log(this.clients)
       if (process.BROWSER_BUILD) {
         setTimeout(() => {
-          this.$store.dispatch('setAboutRef', $about)
+          this.$store.dispatch('setContactsRef', $contacts)
         }, 10)
       } else {
-        this.$store.dispatch('setAboutRef', $about)
+        this.$store.dispatch('setContactsRef', $contacts)
       }
     }
   
