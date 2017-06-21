@@ -14,6 +14,8 @@ const _33617149 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Abo
 
 const _3d41b24e = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Admin/index.vue' /* webpackChunkName: "pages/Admin" */)
 
+const _1d89d789 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Admin/about.vue' /* webpackChunkName: "pages/Admin-about" */)
+
 const _1dabf35e = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Gallery/gallery.vue' /* webpackChunkName: "pages/Gallery-gallery" */)
 
 const _761c7a28 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Gallery/_cat.vue' /* webpackChunkName: "pages/Gallery-cat" */)
@@ -73,6 +75,11 @@ export function createRouter () {
 			path: "/Admin",
 			component: _3d41b24e,
 			name: "Admin"
+		},
+		{
+			path: "/Admin/about",
+			component: _1d89d789,
+			name: "Admin-about"
 		},
 		{
 			path: "/Gallery/gallery",

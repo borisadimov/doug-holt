@@ -1,138 +1,45 @@
 <template lang="pug">
   .admin
     .container
-      .portfolio(v-if="editingId === undefined && editingPostId === undefined")
-        .portfolio-title
-          span 📋
-          | Portfolios list:
-        .portfolio-list
-          .portfolio-item(v-for="item in categories")
-            a(:href="'/gallery/' + item.name" target="_blank") {{ item.name }}
-            .portfolio-controls
-              span.portfolio-edit(v-if="editingId !== item['.key']" @click="edit(item['.key'])")
-                | ✏️
-              span.portfolio-delete(@click="remove(item['.key'])")
-                | ❌
+      .form(:class="{'form-centered': isAllEmpties}")
+        div
+          .editing
+            .editing-inner
+              .editing-title(v-if="!editing")
+                span 🗒
+                | Create Portfolio
+              .editing-title(v-if="editing")
+                .editing-title__inner
+                  span ️️️️️✏️
+                  | Edit Project
+                a.editing-title__open(v-if="portfolioItem.name !== ''" :href="'/gallery/' + portfolioItem.name")
+                  | open link
+              .editing-field
+                .editing-label Title
+                input(type="text" placeholder="The Project Name" @input="inputChange" v-model="portfolioItem.name")
+              .editing-field
+                .editing-label Info
+                input(type="text" placeholder="Any description" @input="inputChange" v-model="portfolioItem.info")
+              .editing-field
+                .editing-label Cover Image URL
+                input(type="text" placeholder="http://path/to/image/url" v-model="portfolioItem.slides")
+              .editing-field
+                .editing-label Slides
+                .editing-field__new-slide
+                  input(type="text" placeholder="Title" @input="inputChange" v-model="newSlide.title")
+                  input(type="text" placeholder="Image" @input="inputChange" v-model="newSlide.image")
+                  input(type="text" placeholder="Client" @input="inputChange" v-model="newSlide.client")
+                  .button.save(@click="addNewSlide(portfolioItem.items)")
+                      span ✅
+                      | Add new slide
 
-          .buttons(v-if="editingId === undefined")
-            .button.add(@click="add")
-              span 🗒
-              | Add new
-
-      .portfolio(v-if="editingId === undefined && editingPostId === undefined")
-        .portfolio-title
-          span 📋
-          | Posts list:
-
-        .portfolio-list
-          .portfolio-item(v-for="item in posts")
-            a(:href="'/journal/' + item.name" target="_blank") {{ item.title }}
-            .portfolio-controls
-              span.portfolio-edit(v-if="editingId !== item['.key']" @click="editPost(item['.key'])")
-                | ✏️
-              span.portfolio-delete(@click="removePost(item['.key'])")
-                | ❌
-
-          .buttons(v-if="editingPostId === undefined")
-            .button.add(@click="addPost")
-              span 🗒
-              | Add new
-
-    .form(v-if="editingId !== undefined", :class="{'form-centered': isAllEmpties}")
-      div
-        .editing
-          .editing-inner
-            .editing-title(v-if="!editing")
-              span 🗒
-              | Create Portfolio
-            .editing-title(v-if="editing")
-              .editing-title__inner
-                span ️️️️️✏️
-                | Edit Project
-              a.editing-title__open(v-if="portfolioItem.name !== ''" :href="'/gallery/' + portfolioItem.name")
-                | open link
-            .editing-field
-              .editing-label Title
-              input(type="text" placeholder="The Project Name" @input="inputChange" v-model="portfolioItem.name")
-            .editing-field
-              .editing-label Info
-              input(type="text" placeholder="Any description" @input="inputChange" v-model="portfolioItem.info")
-            .editing-field
-              .editing-label Cover Image URL
-              input(type="text" placeholder="http://path/to/image/url" v-model="portfolioItem.slides")
-            .editing-field
-              .editing-label Slides
-              .editing-field__new-slide
-                input(type="text" placeholder="Title" @input="inputChange" v-model="newSlide.title")
-                input(type="text" placeholder="Image" @input="inputChange" v-model="newSlide.image")
-                input(type="text" placeholder="Client" @input="inputChange" v-model="newSlide.client")
-                .button.save(@click="addNewSlide(portfolioItem.items)")
-                    span ✅
-                    | Add new slide
-
-            .buttons
-              .button.save(@click="save")
-                span ✅
-                | Save
-              .button.cancel(@click="cancel")
-                span ❌
-                | Cancel
-
-
-    .form(v-if="editingPostId !== undefined", :class="{'form-centered': isAllEmpties}")
-      div
-        .editing
-          .editing-inner
-            .editing-title(v-if="!editing")
-              span 🗒
-              | Create Post
-            .editing-title(v-if="editing")
-              .editing-title__inner
-                span ️️️️️✏️
-                | Edit post
-              a.editing-title__open(v-if="postItem.name !== ''" :href="'/journal/' + postItem.id")
-                | open link
-            .editing-field
-              .editing-label Title
-              input(type="text" placeholder="The Project Name" @input="inputChange" v-model="postItem.title")
-            .editing-field
-              .editing-label Text
-              input(type="text" placeholder="Text" @input="inputChange" v-model="postItem.text")
-            .editing-field
-              .editing-label Post Image
-              input(type="text" placeholder="http://path/to/image/url" v-model="postItem.image")
-            .editing-field
-              .editing-label Author
-              input(type="text" placeholder="Author" v-model="postItem.author")
-            .editing-field
-              .editing-label Date
-              input(type="text" placeholder="http://path/to/image/url" v-model="postItem.date")
-            .editing-field
-              .editing-label Post id
-              input(type="text" placeholder="http://path/to/image/url" v-model="postItem.id")
-
-            .buttons
-              .button.save(@click="savePost")
-                span ✅
-                | Save
-              .button.cancel(@click="cancel")
-                span ❌
-                | Cancel
-
-    .buttons(v-if="editingId === undefined && editingPostId === undefined")
-      .button.deploy(@click="deploy")
-        span(v-if="isDeploying === false && deployFailed === false") 🚀
-        span(v-if="isDeploying === true").deploying 🤙
-        span(v-if="deployFailed === true") 👎
-        | Deploy
-
-    .login(v-if="false")
-      .login-inner
-        .login-title Welcome to Doug Holt Admin
-        input(type='text' placeholder="Email" v-model="email")
-        input(type='password' placeholder="Password"  v-model="password")
-        .button(@click="login")
-          | Log in
+              .buttons
+                .button.save(@click="save")
+                  span ✅
+                  | Save
+                .button.cancel(@click="cancel")
+                  span ❌
+                  | Cancel
 </template>
 
 <!-- <style src="vue-multiselect/dist/vue-multiselect.min.css"></style> -->
@@ -140,33 +47,13 @@
 import { db, firebase } from '~/db';
 import { mapGetters } from 'vuex';
 import VueMarkdown from 'vue-markdown';
-//import Multiselect from 'vue-multiselect';
 
 var Multiselect = process.BROWSER_BUILD ? Multiselect = require('vue-multiselect') : null
 
-const $categories = db.ref('categories')
-const $posts = db.ref('posts')
 const $about = db.ref('about')
 
-const emptyItem = {
-  index: '',
-  info: '',
-  items: [],
-  name: '',
-  slides: []
-}
-
-const emptyPost = {
-  author: '',
-  date: '',
-  id: '',
-  image: '',
-  text: '',
-  title: ''
-}
-
 export default {
-  name: 'Admin',
+  name: 'AdminAbout',
   layout: 'admin',
   head: {
     title: 'DougHolt | Admin'
@@ -178,8 +65,7 @@ export default {
   },
 
   fetch ({ store }) {
-    store.dispatch('setCategoriesRef', $categories)
-    store.dispatch('setPostsRef', $posts)
+    store.dispatch('about', $about)
   },
 
   data () {
@@ -187,164 +73,23 @@ export default {
       selectedTags: [],
       newItemText: '',
       editingId: undefined,
-      editingPostId: undefined,
-      portfolioItem: emptyItem,
-      postItem: emptyPost,
       email: '',
       password: '',
       editing: false,
       hasFilledField: false,
       isDeploying: false,
       deployFailed: false,
-      newSlide: {}
     }
   },
 
   computed: {
-    ...mapGetters(['user', 'categories', 'posts']),
-
-    isAllEmpties () {
-      console.log('isAllEmpties', this.portfolioItem)
-      return Object.keys(this.portfolioItem)
-        .every(key => this.portfolioItem[key] === '')
-    },
-
-    lastProjectId () {
-      return this.categories.slice(-1)[0] ? this.categories.slice(-1)[0].index : 0
-    }
+    ...mapGetters(['about']),
   },
 
   methods: {
     inputChange: function (event) {
       console.log(this, event)
       this.hasFilledField = event.target.value !== ''
-    },
-
-    customLabel ({ type }) {
-      return `${type}`
-    },
-
-    addNewSlide(cat) {
-      cat.push(this.newSlide);
-      return this.newSlide = {};
-    },
-
-    updateSelected: function (newSelected) {
-      this.selected = newSelected
-    },
-
-    addTag: function (newTag) {
-      this.options.push(newTag)
-      this.selected.push(newTag)
-    },
-
-    edit: function (key) {
-      console.log('edit', key)
-      this.editing = true
-      this.editingId = key
-      $categories.child(key).once('value')
-        .then(d => { this.portfolioItem = d.val() })
-    },
-
-    editPost: function(key) {
-      this.editing = true
-      this.editingPostId = key
-      $posts.child(key).once('value')
-        .then(d => { this.postItem = d.val() })
-    },
-
-    savePost: function() {
-      if (this.editingPostId !== 'defined') {
-        $posts.child(this.editingPostId).set(this.postItem)
-      } else {
-        $posts.push(this.postItem)
-      }
-
-      this.editing = false
-      this.editingPostId = undefined
-      this.postItem = emptyItem
-    },
-
-    save: function () {
-      if (this.editingId !== 'defined') {
-        let res = this.selectedTags.reduce(function (obj, item) {
-          console.log(obj, item)
-          obj[item.type] = true
-          return obj
-        }, {})
-        this.portfolioItem.tags = res
-        $categories.child(this.editingId).set(this.portfolioItem)
-      } else {
-        let res = this.selectedTags.reduce(function (obj, item) {
-          obj[item.type] = true
-          return obj
-        }, {})
-        this.portfolioItem.tags = res
-        this.portfolioItem.index = this.lastProjectId + 1
-        $categories.push(this.portfolioItem)
-      }
-
-      this.editing = false
-      this.editingId = undefined
-      this.portfolioItem = emptyItem
-    },
-
-    cancel: function () {
-      this.editing = false
-      this.editingId = undefined
-      this.editingPostId = undefined
-      this.portfolioItem = emptyItem
-      this.postItem = emptyPost
-    },
-
-    add: function () {
-      this.editingId = 'defined'
-      this.portfolioItem = emptyItem
-    },
-
-    addPost: function () {
-      this.editingPostId = 'defined'
-      this.postItem = emptyPost
-    },
-
-    remove: function (key) {
-      $categories.child(key).remove()
-    },
-
-    removePost: function (key) {
-      $posts.child(key).remove()
-    },
-
-    deploy: function () {
-      this.deployFailed = false
-      this.isDeploying = true
-
-      fetch('https://api.netlify.com/build_hooks/5942ceca8ebdd929d962e243', {
-        method: 'POST'
-      })
-        .then(setTimeout(() => {
-          this.isDeploying = false
-        }, 10000))
-        .catch(() => {
-          this.isDeploying = false
-          this.deployFailed = true
-
-          setTimeout(() => {
-            this.deployFailed = false
-          }, 1000)
-        })
-    },
-
-    login: function () {
-      const { email, password } = this
-
-      firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
-        this.$store.dispatch('login', { user })
-      }).catch((error) => {
-        const errorMessage = error.message
-        alert(errorMessage)
-      });
-
     }
   },
 
@@ -352,10 +97,10 @@ export default {
     console.log(this.posts)
     if (process.BROWSER_BUILD) {
       setTimeout(() => {
-        this.$store.dispatch('setCategoriesRef', $categories)
+        this.$store.dispatch('setAboutRef', $about)
       }, 10)
     } else {
-      this.$store.dispatch('setPortfolioRef', $categories)
+      this.$store.dispatch('setAboutRef', $about)
     }
   }
 

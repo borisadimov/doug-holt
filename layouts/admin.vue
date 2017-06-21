@@ -1,6 +1,10 @@
 <template lang="pug">
-  nuxt-container
-    nuxt
+  .inner
+    .header
+      nuxt-link(to="/admin") Home
+      nuxt-link(to="/admin/about") About
+    nuxt-container
+      nuxt
 </template>
 
 <script>

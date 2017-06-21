@@ -4,7 +4,8 @@ import { firebaseMutations, firebaseAction } from 'vuexfire'
 export const state = {
   user: !!firebase.auth().currentUser,
   categories: [],
-  posts: []
+  posts: [],
+  about: {}
 }
 
 export const mutations = {
@@ -48,10 +49,22 @@ export const actions = {
       })
     })
   }),
+
+  setAboutRef: firebaseAction(({
+      bindFirebaseRef
+    }, ref) => {
+    return new Promise((resolve, reject) => {
+      bindFirebaseRef('about', ref, {
+        readyCallback: resolve,
+        cancelCallback: reject
+      })
+    })
+  })
 }
 
 export const getters = {
   user: state => state.user,
   categories: state => state.categories,
-  posts: state => state.posts
+  posts: state => state.posts,
+  about: state => state.about
 }
