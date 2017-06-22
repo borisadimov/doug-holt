@@ -1,7 +1,7 @@
 <template lang="pug">
   .inner
-    .curtain
     nuxt.router-view(v-bind:class="{'router-view-menu': nav.menuOpened && !nav.menuFixed}")
+    .curtain
     transition(
       name="menu"
       v-bind:enter-active-class="MEntActClass"
