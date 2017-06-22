@@ -79,5 +79,21 @@ export const getters = {
   categories: state => state.categories,
   posts: state => state.posts,
   about: state => state.about,
-  contacts: state => state.contacts
+  contacts: state => state.contacts,
+
+  getCatByName: (state, getters) => (name) => {
+    for (let cat of state.categories) {
+      if (cat.name === name)
+        return cat;
+    }
+    return null;
+  },
+
+  getPost: (state, getters) => (id) => {
+    for (let post of state.posts) {
+      if (post.id === id)
+        return post;
+    }
+    return null;
+  }
 }

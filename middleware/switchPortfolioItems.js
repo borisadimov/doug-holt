@@ -15,12 +15,11 @@ export default function({app, route, store}) {
     store.commit('pageOpen', {to, from, next});
 
     if (to.name == 'Gallery-cat') {
-      let cat = getCatByName(to.params.cat);
+      let cat = store.getters.getCatByName(to.params.cat);
       store.commit('categorySet', cat.index);
     } else if (to.name !== 'contacts' && to.name !== from.name) {
       store.commit('categorySet', 0);
     }
-
     next();
   });
 

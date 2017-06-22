@@ -28,19 +28,10 @@
 
 
         .bg
-        .slide(
-          v-for="(slide, slIndex) of category.slides"
-          v-bind:key="slIndex"
-          )
-          transition(name="title" appear)
-            .slide-title(v-show="slIndex == slideNum")
-              | {{category.name}}
-              span {{slide.name}}
-          transition(name="slide")
-            .slide-img(
-              v-show="slIndex == slideNum"
-              v-bind:style="{ backgroundImage: 'url(assets/categories/' + category.name + '/slides/' + slide.image + ')' }"
-              )
+        .slide
+          .slide-img(
+            v-bind:style="{ backgroundImage: 'url(' + category.cover + ')' }"
+            )
       contacts-component(v-if="portfolio.showContacts", key="contacts")
 </template>
 
@@ -102,20 +93,6 @@
   
       let loadCnt = 0;
   
-      this.categories.forEach((cat) => {
-        cat.slides && cat.slides.forEach((slide) => {
-          let img = new Image();
-          // img.onload = () => {
-          //   loadCnt++;
-          //   if (loadCnt == this.slidesLength)
-          //     store.dispatch(onLoad(100));
-          //   else
-          //     store.dispatch(onLoad(loadCnt * 100 / this.slidesLength));
-          // };
-          img.src = 'assets/categories/' + cat.name + '/slides/' + slide.image;
-        })
-      })
-  
     },
   
     beforeDestroy() {
@@ -127,17 +104,7 @@
       onCatUpdate() {
         if (this.portfolio.showContacts)
           return;
-  
         this.category = this.categories[this.categoryId];
-        this.slidesLength = this.category.slides.length;
-        this.timer = setInterval(() => this.slideNext(), 5000);
-      },
-      //
-      slideNext() {
-        if (this.slideNum >= this.slidesLength - 1)
-          this.slideNum = 0;
-        else
-          this.slideNum++;
       },
   
       scrollBeforeEnter(el) {

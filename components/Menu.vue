@@ -12,7 +12,7 @@
           .nav-workLabel
             | Portfolios
             .nav-arrow(v-bind:class="{'arrow-up': showCats}")
-          .nav-inner(ref="cats")
+          .nav-inner(ref="cats" )
             .nav-innerItem(
               v-for="(category, index) of categories"
               v-bind:key="index")
@@ -24,7 +24,7 @@
           .nav-item
             nuxt-link(to="/journal") Journal
           .nav-item(v-bind:class="{disabled: !!portfolio.showContacts}")
-            nuxt-link(to="/contacts") Contact
+            a(@click="toContacts") Contact
 
       .lock
 </template>
@@ -36,14 +36,8 @@
   import { mapGetters } from 'vuex';
   import { db } from '~/db'
 
-  const $categories = db.ref('categories')
-
   export default {
     name: "MenuComponent",
-
-    fetch ({ store }) {
-      return store.dispatch('setCategoriesRef', $categories)
-    },
 
     data () {
       return {
@@ -93,6 +87,10 @@
           }
         );
       },
+
+      toContacts() {
+        this.$store.commit('categorySet', this.categories.length + 1)
+      }
     },
 
     computed: {
@@ -107,7 +105,7 @@
       },
 
       category() {
-        return this.categories[this.$store.state.portfolio.category];
+        return this.categories[this.portfolio.category];
       }
     }
   }

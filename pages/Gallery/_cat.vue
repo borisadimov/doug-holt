@@ -142,7 +142,6 @@
     },
 
     mounted () {
-      console.log(this.category)
       this.scrollHandler = new ScrollHandler(this.itemNext, this.itemPrev, 'h');
 
       if (this.category.items.length > 9)

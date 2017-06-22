@@ -52,7 +52,7 @@
     .journal-content(v-bind:class="{'content-menu': nav.menuRightOpened}")
       .journal-content-image
         img(
-          v-bind:src="'/assets/posts/' + post.id + '/' + post.image"
+          v-bind:src="post.image"
           v-on:load="onImgLoaded"
           )
       .journal-content-info
@@ -68,7 +68,6 @@
 </template>
 
 <script>
-  import { getPost } from '~/store/fixtures';
   import { mapMutations, mapGetters } from 'vuex';
   import { db } from '~/db'
 
@@ -79,13 +78,11 @@
     layout: 'home',
 
     fetch ({ store }) {
-      return store.dispatch('setPostsRef', $posts)
+      store.dispatch('setPostsRef', $posts)
     },
 
     data () {
       return {
-        post: getPost(this.$route.params.post),
-
         burgerLines13: null,
         burgerArrow: null
       }
@@ -94,7 +91,7 @@
     mounted () {
       this.burgerLines13 = this.$refs.burgerRight.querySelectorAll('.line13');
       this.burgerArrow = this.$refs.burgerRight.querySelector('.arrow');
-
+      console.log('post', this.post)
       this.posts.reverse();
     },
 
@@ -132,7 +129,11 @@
         return this.$store.state.nav;
       },
 
-      ...mapGetters(['posts'])
+      ...mapGetters(['posts', 'getPost']),
+
+      post() {
+        return this.getPost(this.$route.params.post);
+      }
     },
 
     watch: {

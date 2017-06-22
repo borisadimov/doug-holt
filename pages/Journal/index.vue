@@ -12,7 +12,7 @@
 
           )
           img.journal-image(
-            v-bind:src="'assets/posts/' + post.id + '/' + post.image"
+            v-bind:src="post.image"
             v-on:load="onImgLoaded"
             )
           .journal-date
@@ -26,7 +26,7 @@
           v-bind:to="'/journal/' + post.id"
           )
           img.journal-image(
-            v-bind:src="'assets/posts/' + post.id + '/' + post.image"
+            v-bind:src="post.image"
             v-on:load="onImgLoaded"
             )
           .journal-date

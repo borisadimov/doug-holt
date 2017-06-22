@@ -9,9 +9,9 @@
           .portfolio-item(v-for="item in categories")
             a(:href="'/gallery/' + item.name" target="_blank") {{ item.name }}
             .portfolio-controls
-              span.portfolio-edit(v-if="editingId !== item['.key']" @click="edit(item['.key'])")
+              span.portfolio-edit(v-if="editingId !== item['index']" @click="edit(item['index'])")
                 | ✏️
-              span.portfolio-delete(@click="remove(item['.key'])")
+              span.portfolio-delete(@click="remove(item['index'])")
                 | ❌
 
           .buttons(v-if="editingId === undefined")
@@ -59,7 +59,7 @@
               input(type="text" placeholder="Any description" @input="inputChange" v-model="portfolioItem.info")
             .editing-field
               .editing-label Cover Image URL
-              input(type="text" placeholder="http://path/to/image/url" v-model="portfolioItem.slides")
+              input(type="text" placeholder="http://path/to/image/url" v-model="portfolioItem.cover")
             .editing-field
               .editing-label Slides
               .editing-field__new-slide
@@ -153,8 +153,9 @@ const emptyItem = {
   info: '',
   items: [],
   name: '',
-  slides: []
+  cover: ''
 }
+
 
 const emptyPost = {
   author: '',
@@ -239,9 +240,9 @@ export default {
     },
 
     edit: function (key) {
-      console.log('edit', key)
       this.editing = true
       this.editingId = key
+      console.log('this.editingId', this.editingId)
       $categories.child(key).once('value')
         .then(d => { this.portfolioItem = d.val() })
     },
@@ -257,7 +258,8 @@ export default {
       if (this.editingPostId !== 'defined') {
         $posts.child(this.editingPostId).set(this.postItem)
       } else {
-        $posts.push(this.postItem)
+        this.editingPostId = this.posts.length;
+        $posts.child(this.editingPostId).set(this.postItem)
       }
 
       this.editing = false
@@ -267,21 +269,10 @@ export default {
 
     save: function () {
       if (this.editingId !== 'defined') {
-        let res = this.selectedTags.reduce(function (obj, item) {
-          console.log(obj, item)
-          obj[item.type] = true
-          return obj
-        }, {})
-        this.portfolioItem.tags = res
         $categories.child(this.editingId).set(this.portfolioItem)
       } else {
-        let res = this.selectedTags.reduce(function (obj, item) {
-          obj[item.type] = true
-          return obj
-        }, {})
-        this.portfolioItem.tags = res
         this.portfolioItem.index = this.lastProjectId + 1
-        $categories.push(this.portfolioItem)
+        $categories.child(this.lastProjectId + 1).set(this.portfolioItem)
       }
 
       this.editing = false
