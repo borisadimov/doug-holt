@@ -1,5 +1,6 @@
 <template lang="pug">
-  .gallery(@keydown="handleKey")
+  .gallery(@keydown="handleKey" )
+    .curtain(:class="active && 'active-curtain'")
     .menu-burger(
       ref="burgerGallery"
       @click="onMenuToggle"
@@ -132,7 +133,7 @@
 
     data () {
       return {
-
+        active: false,
         showInfo: false,
         itemNum: 0,
         direction: 'right',
@@ -141,7 +142,8 @@
       }
     },
 
-    mounted () {
+    mounted () {   
+      this.active = false;
       this.scrollHandler = new ScrollHandler(this.itemNext, this.itemPrev, 'h');
 
       if (this.category.items.length > 9)
@@ -164,8 +166,19 @@
       }
     },
 
+    beforeUpdate() {
+      // this.active = !this.active;
+      // console.log('before updated', this.active)
+    },
+
+    updated() {
+      // this.active = false;
+      // console.log('updated', this.active)
+    },
+
     beforeDestroy() {
       this.scrollHandler.destroy();
+      this.active = true;
       if (process.BROWSER_BUILD)
         window.removeEventListener('keydown', this.handleKey);
     },
@@ -315,6 +328,10 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .gallery {
+    .active-curtain {
+      transform: translate3d(0,0,0);
+    }
+
     .menu-burger {
       position: absolute;
       top: 24px;
