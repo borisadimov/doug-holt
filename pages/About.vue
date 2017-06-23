@@ -58,7 +58,7 @@
     layout: 'home',
 
     fetch ({ store }) {
-      store.dispatch('setAboutRef', $about)
+      return store.dispatch('setAboutRef', $about)
     },
 
     data () {
@@ -68,7 +68,6 @@
     },
 
     mounted() {
-      console.log(this.clients)
     },
 
     methods: {

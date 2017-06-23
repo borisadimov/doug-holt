@@ -2,6 +2,7 @@
   .inner
     nuxt.router-view(v-bind:class="{'router-view-menu': nav.menuOpened && !nav.menuFixed}")
     .curtain
+    .blackCurtain(:class="{'active': nav.menuOpened && !nav.menuFixed}")
     transition(
       name="menu"
       v-bind:enter-active-class="MEntActClass"
@@ -202,6 +203,23 @@
 </style>
 
 <style lang="scss" rel="stylesheet/scss">
+  .blackCurtain {
+    background: #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity .2s ease;
+    will-change: opacity;
+    pointer-events: none;
+
+    &.active {
+      opacity: .2;
+      pointer-events: initial;
+    }
+  }
   .app-menu-burger {
     position: absolute;
     top: 26px;

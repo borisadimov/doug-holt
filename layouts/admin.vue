@@ -1,16 +1,51 @@
 <template lang="pug">
-  .inner
-    .header
-      nuxt-link(to="/admin").link Home
-      nuxt-link(to="/admin/about").link About
-      nuxt-link(to="/admin/contacts").link Contacts
-    nuxt-container
-      nuxt
+  div
+    .login(v-if="!user")
+      .login-inner
+        .login-title Welcome to Doug Holt Admin
+        input(type='text' placeholder="Email" v-model="email")
+        input(type='password' placeholder="Password"  v-model="password")
+        .button(@click="login")
+          | Log in
+    .inner(v-if="user")
+      .header
+        nuxt-link(to="/admin").link Home
+        nuxt-link(to="/admin/about").link About
+        nuxt-link(to="/admin/contacts").link Contacts
+      nuxt-container
+        nuxt
 </template>
 
 <script>
-export default {
+import { mapGetters } from 'vuex';
+import { firebase } from '~/db';
 
+export default {
+  name: 'adminLayout',
+
+  data() {
+    return {
+      email: null,
+      password: null
+    }
+  },
+
+  methods: {
+    login: function () {
+      const { email, password } = this
+
+      firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
+        this.$store.dispatch('login', { user })
+      }).catch((error) => {
+        const errorMessage = error.message
+        alert(errorMessage)
+      });
+    }
+  },
+
+  computed: {
+    ...mapGetters(['user'])
+  }
 }
 </script>
 

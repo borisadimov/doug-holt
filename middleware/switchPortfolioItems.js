@@ -1,5 +1,3 @@
-import {getCatByName} from '~/store/fixtures'
-
 export default function({app, route, store}) {
 
   if (route.name !== 'index') {
@@ -17,9 +15,8 @@ export default function({app, route, store}) {
     if (to.name == 'Gallery-cat') {
       let cat = store.getters.getCatByName(to.params.cat);
       store.commit('categorySet', cat.index);
-    } else if (to.name !== 'contacts' && to.name !== from.name) {
-      store.commit('categorySet', 0);
     }
+
     next();
   });
 

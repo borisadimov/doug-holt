@@ -11,7 +11,7 @@
         @click="onDotClick(categories.length)"
       )
 
-    transition(
+    transition-group(
       v-bind:css="false"
       v-on:before-enter="scrollBeforeEnter"
       v-on:enter="scrollEnter"
@@ -62,10 +62,7 @@
     fetch({
       store
     }) {
-      return[
-        store.dispatch('setCategoriesRef', $categories),
-        store.dispatch('setContactsRef', $contacts)
-      ]
+      return store.dispatch('setCategoriesRef', $categories).then(() => store.dispatch('setContactsRef', $contacts))
     },
   
   
@@ -85,13 +82,11 @@
       this.makeMenuFixed();
       this.menuOpen();
       this.onCatUpdate();
-    
+      
       this.scrollHandler = new ScrollHandler(
         this.categoryNext,
         this.categoryPrev
       );
-  
-  
   
       let loadCnt = 0;
   
@@ -162,7 +157,7 @@
   
     computed: {
       portfolio() {
-        return this.$store.state.portfolio
+        return this.$store.state.firebase
       },
   
       nav() {
@@ -170,14 +165,18 @@
       },
   
       categoryId() {
-        return this.$store.state.portfolio.category
+        return this.$store.state.firebase.category
+      },
+
+      isContactsOpen() {
+        return this.portfolio.showContacts;
       },
   
       ...mapGetters(['categories', 'contacts'])
     },
   
     watch: {
-      'portfolio.category': {
+      'firebase.category': {
         handler() {
           clearInterval(this.timer);
           this.onCatUpdate();

@@ -81,7 +81,7 @@
     fetch({
       store
     }) {
-      store.dispatch('contacts', $contacts)
+      return store.dispatch('contacts', $contacts)
     },
   
     data() {

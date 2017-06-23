@@ -1,6 +1,6 @@
 <template lang="pug">
   .gallery(@keydown="handleKey" )
-    .curtain(:class="active && 'active-curtain'")
+    
     .menu-burger(
       ref="burgerGallery"
       @click="onMenuToggle"
@@ -55,7 +55,7 @@
             .menu-client
               | {{ item.client }}
 
-    .content(v-bind:class="{'content-menu': nav.menuRightOpened}")
+    .content(v-bind:class="{'content-menu': nav.menuRightOpened}" v-if="category")
       .title
         | {{ category.name }}
 
@@ -70,7 +70,7 @@
           v-bind:key="i"
           v-if="i == itemNum"
           )
-          .item-pic(v-bind:style="{ backgroundImage: 'url(/assets/categories/' + category.name + '/items/' + item.image + ')' }")
+          .item-pic(v-bind:style="{ backgroundImage: 'url(' + item.image + ')' }")
           .nav-left(@click="itemPrev" v-if="!(itemNum <= 0)")
           .nav-right(@click="itemNext")
       .arrow-left
@@ -102,7 +102,7 @@
               v-if="i == itemNum"
               ) {{ item.title }}
     .info-icon(v-on:click="toggleInfo")
-    .info-block(v-bind:class="{shown: showInfo}")
+    .info-block(v-bind:class="{shown: showInfo}" v-if="category")
       .info-block-cross(v-on:click="toggleInfo")
       .info-block-label
         | CATEGORY
@@ -285,7 +285,7 @@
       },
 
       portfolio() {
-        return this.$store.state.portfolio;
+        return this.$store.state.firebase;
       },
 
       category() {

@@ -73,7 +73,7 @@
     fetch({
       store
     }) {
-      store.dispatch('about', $about)
+      return store.dispatch('about', $about)
     },
   
     data() {
@@ -654,6 +654,12 @@
   .container {
     display: flex;
     flex-flow: row nowrap;
+  }
+
+  .editing-clients {
+    .remove {
+      cursor: pointer;
+    }
   }
   
   @media (max-width: 768px) {

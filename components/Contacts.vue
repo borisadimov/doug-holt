@@ -44,11 +44,7 @@
 
     methods: {
       onClose () {
-        if (this.nav.pageCurrent === "home") {
-          this.categorySet(0);
-        } else {
-          router.push({name: this.nav.pagePrev, params: this.nav.prevParams});
-        }
+        this.categorySet(0);
       },
 
       test() {

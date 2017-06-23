@@ -6,7 +6,10 @@ export const state = {
   categories: [],
   posts: [],
   about: {},
-  contacts: {}
+  contacts: {},
+  category: 0,
+  showContacts: false,
+  direction: 'down'
 }
 
 export const mutations = {
@@ -17,6 +20,39 @@ export const mutations = {
 
   logout (state) {
     state.user = null
+  },
+
+  categorySet(state, category) {
+    const direction = category < state.category ? 'up' : 'down';
+    const showContacts = category === state.categories.length;
+
+    state.category = category;
+    state.direction = direction;
+    state.showContacts = showContacts;
+  },
+
+  categoryNext(state) {
+    if (state.category === state.categories.length)
+      return state;
+    const showContacts = state.category === state.categories.length - 1;
+
+    state.category = ++state.category;
+    state.direction = 'down';
+    state.showContacts = showContacts;
+  },
+
+  categoryPrev(state) {
+    if (state.category === 0)
+      return state;
+    const showContacts = false;
+
+    state.category = --state.category;
+    state.direction = 'up';
+    state.showContacts = showContacts;
+  },
+
+  setContacts(state) {
+    state.showContacts = true;
   }
 }
 

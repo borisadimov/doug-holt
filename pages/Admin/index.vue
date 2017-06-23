@@ -38,6 +38,23 @@
               span 🗒
               | Add new
 
+    .mark(v-if="!isAllEmpties && editingId !== undefined")
+      .mark__title(v-if="portfolioItem.name !== ''")
+        | {{ portfolioItem.name }}
+      .mark__subtitle
+        vue-markdown(v-if="portfolioItem.info !== ''", :source="portfolioItem.info")
+      .mark__subtitle(v-if="portfolioItem.cover !== ''")
+        img(:src="portfolioItem.cover", alt="")
+      
+      .mark__slides(v-if="portfolioItem.items.length > 0")
+        .mark__slide(v-for="slide in portfolioItem.items")
+          .mark__slideImg
+            img(:src="slide.image", :key="slide.index")
+          .mark__slideTitle
+            | {{ slide.title }}
+          .mark__slideClient
+            | {{ slide.client }}
+
     .form(v-if="editingId !== undefined", :class="{'form-centered': isAllEmpties}")
       div
         .editing
@@ -119,6 +136,8 @@
                 span ❌
                 | Cancel
 
+        
+
     .buttons(v-if="editingId === undefined && editingPostId === undefined")
       .button.deploy(@click="deploy")
         span(v-if="isDeploying === false && deployFailed === false") 🚀
@@ -126,13 +145,6 @@
         span(v-if="deployFailed === true") 👎
         | Deploy
 
-    .login(v-if="false")
-      .login-inner
-        .login-title Welcome to Doug Holt Admin
-        input(type='text' placeholder="Email" v-model="email")
-        input(type='password' placeholder="Password"  v-model="password")
-        .button(@click="login")
-          | Log in
 </template>
 
 <!-- <style src="vue-multiselect/dist/vue-multiselect.min.css"></style> -->
@@ -179,8 +191,7 @@ export default {
   },
 
   fetch ({ store }) {
-    store.dispatch('setCategoriesRef', $categories)
-    store.dispatch('setPostsRef', $posts)
+    return store.dispatch('setCategoriesRef', $categories).then(() => store.dispatch('setPostsRef', $posts))
   },
 
   data () {
@@ -244,7 +255,11 @@ export default {
       this.editingId = key
       console.log('this.editingId', this.editingId)
       $categories.child(key).once('value')
-        .then(d => { this.portfolioItem = d.val() })
+        .then(d => { 
+          this.portfolioItem = d.val() 
+          console.log('portfolio-item', this.portfolioItem);
+        })
+      
     },
 
     editPost: function(key) {
@@ -324,23 +339,15 @@ export default {
             this.deployFailed = false
           }, 1000)
         })
-    },
-
-    login: function () {
-      const { email, password } = this
-
-      firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
-        this.$store.dispatch('login', { user })
-      }).catch((error) => {
-        const errorMessage = error.message
-        alert(errorMessage)
-      });
-
     }
   },
 
+  mounted() {
+    
+  },
+
   created () {
-    console.log(this.posts)
+    
     if (process.BROWSER_BUILD) {
       setTimeout(() => {
         this.$store.dispatch('setCategoriesRef', $categories)
@@ -357,6 +364,21 @@ export default {
 $primary-color: #EBC8B2;
   * {
     box-sizing: border-box;
+  }
+
+  .mark__slides {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .mark__slide {
+    width: 33%;
+    padding: 10px;
+
+    img {
+      display: block;
+      width: 100%;
+    }
   }
 
   .login {

@@ -33,7 +33,7 @@
   var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null
 
   //import {categories} from '~/store/fixtures';
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapMutations } from 'vuex';
   import { db } from '~/db'
 
   export default {
@@ -89,8 +89,11 @@
       },
 
       toContacts() {
-        this.$store.commit('categorySet', this.categories.length + 1)
-      }
+        this.$store.commit('setContacts')
+        this.$router.push('/')
+      },
+
+      ...mapMutations(['setContacts'])
     },
 
     computed: {
@@ -101,7 +104,7 @@
       },
 
       portfolio() {
-        return this.$store.state.portfolio;
+        return this.$store.state.firebase;
       },
 
       category() {
