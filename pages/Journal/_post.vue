@@ -46,25 +46,25 @@
               | 2016
             .menu-name
               .menu-dot
-                .menu-dotBg(v-if="tempPost.id == post.id")
+                .menu-dotBg(v-if="tempPost.id == activePost.id")
               | {{tempPost.title}}
 
     .journal-content(v-bind:class="{'content-menu': nav.menuRightOpened}")
       .journal-content-image
         img(
-          v-bind:src="post.image"
+          v-bind:src="activePost.image"
           v-on:load="onImgLoaded"
           )
       .journal-content-info
         .journal-content-title
-          | {{post.title}}
+          | {{activePost.title}}
         .journal-content-date
-          | {{post.date}}
+          | {{activePost.date}}
         .journal-content-titleBig
-          | {{post.title}}
+          | {{activePost.title}}
         .journal-content-author
-          | By {{post.author}}
-        .journal-content-text(v-html="post.text")
+          | By {{activePost.author}}
+        .journal-content-text(v-html="activePost.text")
 </template>
 
 <script>
@@ -78,21 +78,25 @@
     layout: 'home',
 
     fetch ({ store }) {
-      store.dispatch('setPostsRef', $posts)
+      return store.dispatch('setPostsRef', $posts)
     },
 
     data () {
       return {
         burgerLines13: null,
-        burgerArrow: null
+        burgerArrow: null,
+        activePost: this.post
       }
     },
 
     mounted () {
       this.burgerLines13 = this.$refs.burgerRight.querySelectorAll('.line13');
       this.burgerArrow = this.$refs.burgerRight.querySelector('.arrow');
-      console.log('post', this.post)
       this.posts.reverse();
+    },
+
+    created() {
+      this.activePost = this.post;
     },
 
     methods: {
@@ -113,8 +117,8 @@
 
       onMenuItemClick (post) {
         this.menuRightClose();
-        this.post = post;
-        history.replaceState({path: "/journal/" + this.post.id}, "post.id", "/journal/" + this.post.id);
+        this.activePost = post;
+        history.replaceState({path: "/journal/" + post.id}, "post.id", "/journal/" + post.id);
       },
 
       ...mapMutations([
@@ -131,9 +135,24 @@
 
       ...mapGetters(['posts', 'getPost']),
 
-      post() {
-        return this.getPost(this.$route.params.post);
+      post: {
+        get() {
+          return this.getPost(this.$route.params.post)
+        },
+
+        set(post) {
+          return post;
+        }
       }
+      // post: function () {
+      //   return this.getPost();
+      // },
+
+      // postSet: function (post) {
+      //   console.log('setter', post)
+      //   this.post = post;
+      // }
+      
     },
 
     watch: {
