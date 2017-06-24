@@ -1,17 +1,23 @@
-
-
 .curtain {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: #ccc;
   opacity: 1;
   z-index: 999999;
   transition: transform .8s;
   transform: translate3d(0, -100%, 0);
   will-change: transform;
+}
+
+.page-leave-active ~ .menu-leave-active {
+  transition-delay: 1s !important;
+}
+
+.gallery.page-leave-active {
+  transition-delay: 1s !important;
 }
 
 .page-enter-active + .curtain {
@@ -22,9 +28,22 @@
   transform: translate3d(0, 0, 0);
 }
 
+.menuRight {
+  transition: transform .5s ease;
+}
+
+.menuRight-enter .menuRight-leave-active {
+  transform: translate3d(100%, 0, 0);
+}
+
+.menuRight-enter-active {
+  transform: translate3d(0, 0, 0)
+}
+
 .menu-leave-active {
   transition: transform .5s;
 }
+
 .menu-enter, .menu-leave-active {
   transform: translate3d(-100%, 0, 0);
 }

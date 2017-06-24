@@ -1,7 +1,7 @@
 <template lang="pug">
   .inner
     nuxt.router-view(v-bind:class="{'router-view-menu': nav.menuOpened && !nav.menuFixed}")
-    .curtain
+    .curtain(:class="{'activeCurtain': showCurtain}")
     .blackCurtain(:class="{'active': nav.menuOpened && !nav.menuFixed}")
     transition(
       name="menu"
@@ -39,7 +39,7 @@
   import 'whatwg-fetch';
   import MenuComponent from '~/components/Menu';
   import LoaderComponent from '~/components/Loader';
-  import {mapMutations} from 'vuex';
+  import {mapMutations, mapGetters} from 'vuex';
   import { db } from '~/db'
 
   const $categories = db.ref('categories')
@@ -82,7 +82,8 @@
 
         loaderShow: true,
         loaderCan1: true,
-        loaderCan2: false
+        loaderCan2: false,
+        showCurtain: false
 
       }
     },
@@ -114,7 +115,7 @@
     computed: {
       nav() {
         return this.$store.state.nav;
-      }
+      },
     },
 
     watch: {
@@ -203,6 +204,10 @@
 </style>
 
 <style lang="scss" rel="stylesheet/scss">
+  .home {
+    display: block;
+  }
+
   .blackCurtain {
     background: #000;
     position: fixed;

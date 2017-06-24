@@ -479,13 +479,6 @@
       transform: translate3d(-175px, 0, 0);
     }
 
-    .menu-enter-active, .menu-leave-active {
-      transition: transform .5s;
-    }
-    .menu-enter, .menu-leave-active {
-      transform: translate3d(100%, 0, 0);
-    }
-
     .menu-curtain {
       position: absolute;
       left: 0;

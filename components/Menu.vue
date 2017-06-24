@@ -32,7 +32,6 @@
 <script>
   var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null
 
-  //import {categories} from '~/store/fixtures';
   import { mapGetters, mapMutations } from 'vuex';
   import { db } from '~/db'
 

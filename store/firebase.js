@@ -9,7 +9,7 @@ export const state = {
   contacts: {},
   category: 0,
   showContacts: false,
-  direction: 'down'
+  direction: 'down',
 }
 
 export const mutations = {
@@ -116,6 +116,7 @@ export const getters = {
   posts: state => state.posts,
   about: state => state.about,
   contacts: state => state.contacts,
+  showCurtain: state => state.showCurtain,
 
   getCatByName: (state, getters) => (name) => {
     for (let cat of state.categories) {
