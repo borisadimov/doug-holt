@@ -7,7 +7,7 @@
             .editing-title
               span 🗒
               | Edit about page
-            .editing-field
+            .editing-field(v-if="about.text_block1")
               .editing-label
                 | Edit texts
               textarea(v-model="about.text_block1.text1")
@@ -69,11 +69,9 @@
       Multiselect,
       VueMarkdown
     },
-  
-    // fetch({
-    //   store
-    // }) {
-    //   return store.dispatch('about', $about)
+
+    // fetch ({ store }) {
+    //   return store.dispatch('setAboutRef', $about)
     // },
   
     data() {
@@ -85,15 +83,21 @@
         isDeploying: false,
         deployFailed: false,
         newClients: []
+        // about: null
       }
     },
   
     computed: {
-      ...mapGetters(['about']),
+      // ...mapGetters(['about']),
   
       clients() {
         return this.about.clients;
+      },
+
+      about() {
+        return this.$store.getters.about
       }
+
     },
   
     methods: {
@@ -121,15 +125,11 @@
         $about.child('clients').set(this.clients);
       }
     },
-  
+
     created() {
-      if (process.BROWSER_BUILD) {
-        setTimeout(() => {
-          this.$store.dispatch('setAboutRef', $about)
-        }, 10)
-      } else {
-        this.$store.dispatch('setAboutRef', $about)
-      }
+      console.log(this.$store.getters, "getters")
+      this.$store.dispatch('setAboutRef', $about);
+      // this.about = this.$store.getters.about;
     }
   
   }

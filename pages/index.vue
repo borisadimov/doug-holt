@@ -185,10 +185,6 @@
           this.onCatUpdate();
         }
       }
-    },
-  
-    created() {
-      console.log('index page store', this.$store)
     }
   
   }

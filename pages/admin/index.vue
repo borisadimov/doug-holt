@@ -158,7 +158,6 @@ var Multiselect = process.BROWSER_BUILD ? Multiselect = require('vue-multiselect
 
 const $categories = db.ref('categories')
 const $posts = db.ref('posts')
-const $about = db.ref('about')
 
 const emptyItem = {
   index: '',
@@ -190,10 +189,6 @@ export default {
     VueMarkdown
   },
 
-  // fetch ({ store }) {
-  //   return store.dispatch('setCategoriesRef', $categories).then(() => store.dispatch('setPostsRef', $posts))
-  // },
-
   data () {
     return {
       selectedTags: [],
@@ -208,12 +203,14 @@ export default {
       hasFilledField: false,
       isDeploying: false,
       deployFailed: false,
-      newSlide: {}
+      newSlide: {},
+      categories: [],
+      posts: []
     }
   },
 
   computed: {
-    ...mapGetters(['user', 'categories', 'posts']),
+    ...mapGetters(['user']),
 
     isAllEmpties () {
       console.log('isAllEmpties', this.portfolioItem)
@@ -346,15 +343,13 @@ export default {
     
   },
 
-  created () {
-    
-    if (process.BROWSER_BUILD) {
-      setTimeout(() => {
-        this.$store.dispatch('setCategoriesRef', $categories)
-      }, 10)
-    } else {
-      this.$store.dispatch('setPortfolioRef', $categories)
-    }
+  created() {
+
+    this.$store.dispatch('setPostsRef', $posts);
+    this.$store.dispatch('setCategoriesRef', $categories);
+    this.categories = this.$store.getters.categories;
+    this.posts = this.$store.getters.posts;
+    console.log(this.$store)
   }
 
 }

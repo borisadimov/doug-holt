@@ -2,6 +2,7 @@
   .admin
     .container
       .form
+        button(@click="getContactsRef") test
         .editing
           .editing-inner
             .editing-title
@@ -41,7 +42,7 @@
               
               
             .buttons
-              .button.save(@click="save")
+              .button.save(@click="save" )
                 span ✅
                 | Save
             //-   .button.cancel(@click="cancel")
@@ -81,7 +82,7 @@
     // fetch({
     //   store
     // }) {
-    //   return store.dispatch('contacts', $contacts)
+    //   return store.dispatch('setContactsRef', $contacts)
     // },
   
     data() {
@@ -100,6 +101,10 @@
         this.hasFilledField = event.target.value !== ''
       },
 
+      getContactsRef() {
+        this.$store.dispatch('setContactsRef', $contacts);
+      },
+
       save: function () {
         $contacts.child('name').set(this.contacts.name)
         $contacts.child('email').set(this.contacts.email)
@@ -110,16 +115,6 @@
         $contacts.child('phone').set(this.contacts.phone)
       }
     },
-  
-    created() {
-      if (process.BROWSER_BUILD) {
-        setTimeout(() => {
-          this.$store.dispatch('setContactsRef', $contacts)
-        }, 10)
-      } else {
-        this.$store.dispatch('setContactsRef', $contacts)
-      }
-    }
   
   }
 </script>

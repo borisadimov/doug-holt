@@ -12,7 +12,6 @@
         nuxt-link(to="/admin").link Home
         nuxt-link(to="/admin/about").link About
         nuxt-link(to="/admin/contacts").link Contacts
-      nuxt-container
         nuxt
 </template>
 
