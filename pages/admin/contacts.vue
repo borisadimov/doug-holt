@@ -2,7 +2,6 @@
   .admin
     .container
       .form
-        button(@click="getContactsRef") test
         .editing
           .editing-inner
             .editing-title
@@ -115,6 +114,10 @@
         $contacts.child('phone').set(this.contacts.phone)
       }
     },
+
+    beforeMount() {
+      this.getContactsRef();
+    }
   
   }
 </script>
