@@ -8,22 +8,22 @@ Vue.use(Router)
 
 const _48b1a7a4 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/index.vue' /* webpackChunkName: "pages/index" */)
 
-const _23eb8336 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Journal/index.vue' /* webpackChunkName: "pages/Journal" */)
+const _39274356 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/journal/index.vue' /* webpackChunkName: "pages/journal" */)
 
 const _33617149 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/About.vue' /* webpackChunkName: "pages/About" */)
 
-const _3d41b24e = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Admin/index.vue' /* webpackChunkName: "pages/Admin" */)
+const _78aefa6e = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/admin/index.vue' /* webpackChunkName: "pages/admin" */)
 
-const _86cb31f2 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Admin/contacts.vue' /* webpackChunkName: "pages/Admin-contacts" */)
+const _4ed6aae7 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/admin/contacts.vue' /* webpackChunkName: "pages/admin-contacts" */)
 
-const _1d89d789 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Admin/about.vue' /* webpackChunkName: "pages/Admin-about" */)
+const _58f71fa9 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/admin/about.vue' /* webpackChunkName: "pages/admin-about" */)
 
-const _1dabf35e = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Gallery/gallery.vue' /* webpackChunkName: "pages/Gallery-gallery" */)
-
+const _b313831e = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/gallery/gallery.vue' /* webpackChunkName: "pages/gallery-gallery" */)
 
 const _7b11a059 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/gallery/_id.vue' /* webpackChunkName: "pages/gallery-id" */)
 
 const _218bb984 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/journal/_id.vue' /* webpackChunkName: "pages/journal-id" */)
+
 
 
 const scrollBehavior = (to, from, savedPosition) => {
@@ -64,9 +64,9 @@ export function createRouter () {
 			name: "index"
 		},
 		{
-			path: "/Journal",
-			component: _23eb8336,
-			name: "Journal"
+			path: "/journal",
+			component: _39274356,
+			name: "journal"
 		},
 		{
 			path: "/About",
@@ -74,37 +74,27 @@ export function createRouter () {
 			name: "About"
 		},
 		{
-			path: "/Admin",
-			component: _3d41b24e,
-			name: "Admin"
+			path: "/admin",
+			component: _78aefa6e,
+			name: "admin"
 		},
 		{
-			path: "/Admin/contacts",
-			component: _86cb31f2,
-			name: "Admin-contacts"
+			path: "/admin/contacts",
+			component: _4ed6aae7,
+			name: "admin-contacts"
 		},
 		{
-			path: "/Admin/about",
-			component: _1d89d789,
-			name: "Admin-about"
+			path: "/admin/about",
+			component: _58f71fa9,
+			name: "admin-about"
 		},
 		{
-			path: "/Gallery/gallery",
-			component: _1dabf35e,
-			name: "Gallery-gallery"
+			path: "/gallery/gallery",
+			component: _b313831e,
+			name: "gallery-gallery"
 		},
 		{
-<<<<<<< HEAD
-			path: "/Gallery/:cat?",
-			component: _761c7a28,
-			name: "Gallery-cat"
-		},
-		{
-			path: "/Journal/:post",
-			component: _f2dce53a,
-			name: "Journal-post"
-=======
-			path: "/gallery/:id",
+			path: "/gallery/:id?",
 			component: _7b11a059,
 			name: "gallery-id"
 		},
@@ -112,7 +102,6 @@ export function createRouter () {
 			path: "/journal/:id",
 			component: _218bb984,
 			name: "journal-id"
->>>>>>> 56e9962... fix categories, clear code, delete assets
 		}
     ]
   })

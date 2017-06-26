@@ -31,12 +31,6 @@
 
 <script>
   var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null
-<<<<<<< HEAD
-
-  import { mapGetters, mapMutations } from 'vuex';
-  import { db } from '~/db'
-
-=======
   
   import {
     mapGetters,
@@ -46,7 +40,6 @@
     db
   } from '~/db'
   
->>>>>>> 56e9962... fix categories, clear code, delete assets
   export default {
     name: "MenuComponent",
 
@@ -55,11 +48,8 @@
         showCats: false,
 
         catsHeight: 0,
-<<<<<<< HEAD
         bottomCont: null
-=======
-        bottomCont: null,
->>>>>>> 56e9962... fix categories, clear code, delete assets
+
       }
     },
 
@@ -113,11 +103,7 @@
 
     computed: {
       ...mapGetters(['categories']),
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 56e9962... fix categories, clear code, delete assets
       nav() {
         return this.$store.state.nav;
       },
@@ -125,12 +111,7 @@
       portfolio() {
         return this.$store.state.firebase;
       },
-<<<<<<< HEAD
 
-      category() {
-        return this.categories[this.portfolio.category];
-      }
-=======
   
       category() {
         return this.categories[this.portfolio.category];
@@ -138,7 +119,6 @@
     },
   
     created() {
->>>>>>> 56e9962... fix categories, clear code, delete assets
     }
   }
 </script>
