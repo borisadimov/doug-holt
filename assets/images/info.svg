@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="24px" viewBox="0 0 23 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Category-Gallery" transform="translate(-1382.000000, -749.000000)">
+            <g id="Carousel" transform="translate(36.000000, 36.000000)">
+                <g id="info-icon" transform="translate(1346.000000, 714.000000)">
+                    <g id="info-icon-static">
+                        <g id="Group">
+                            <path d="M10.717,6.975 C10.518999,6.77699901 10.42,6.51600162 10.42,6.192 C10.42,5.86799838 10.518999,5.60700099 10.717,5.409 C10.915001,5.21099901 11.1759984,5.112 11.5,5.112 C11.8240016,5.112 12.084999,5.21099901 12.283,5.409 C12.481001,5.60700099 12.58,5.86799838 12.58,6.192 C12.58,6.51600162 12.481001,6.77699901 12.283,6.975 C12.084999,7.17300099 11.8240016,7.272 11.5,7.272 C11.1759984,7.272 10.915001,7.17300099 10.717,6.975 Z M12.22,18 L10.78,18 L10.78,9 L12.22,9 L12.22,18 Z" id="i" fill-opacity="0.54" fill="#000000"></path>
+                            <circle id="Oval" stroke-opacity="0.38" stroke="#000000" cx="11.5" cy="11" r="11"></circle>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

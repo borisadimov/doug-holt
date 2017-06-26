@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="35px" height="14px" viewBox="0 0 35 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-opacity="0.87">
+        <g id="burger" stroke="#000000">
+            <path class="line1" d="M0,1 L24,1" id="Path-2"></path>
+            <path d="M0,7 L24,7" id="Path-2-Copy"></path>
+            <path class="line3" d="M0,13 L24,13" id="Path-2-Copy-2"></path>
+            <g id="arrow" class="arrow" >
+                <polyline id="sidebar-close-arrow" transform="translate(3.005204, 7.250000) rotate(90.000000) translate(-3.005204, -7.250000) " points="-3 5 3.00520382 9.5 9.01040763 5"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
