@@ -72,13 +72,14 @@
   import { db } from '~/db'
 
   const $posts = db.ref('posts')
+  const $categories = db.ref('categories')
 
   export default {
     name: "JournalItemComponent",
     layout: 'home',
 
     fetch ({ store }) {
-      return store.dispatch('setPostsRef', $posts)
+      return store.dispatch('setPostsRef', $posts).then(() => store.dispatch('setCategoriesRef', $categories))
     },
 
     data () {
@@ -90,6 +91,8 @@
     },
 
     mounted () {
+      this.makeMenuUnfixed();
+      this.menuClose();
       this.burgerLines13 = this.$refs.burgerRight.querySelectorAll('.line13');
       this.burgerArrow = this.$refs.burgerRight.querySelector('.arrow');
       this.posts.reverse();
@@ -124,7 +127,9 @@
       ...mapMutations([
         'onLoad',
         'menuRightClose',
-        'menuRightOpen'
+        'menuRightOpen',
+        'makeMenuUnfixed',
+        'menuClose'
       ])
     },
 
@@ -137,7 +142,7 @@
 
       post: {
         get() {
-          return this.getPost(this.$route.params.post)
+          return this.getPost(this.$route.params.id)
         },
 
         set(post) {

@@ -38,7 +38,6 @@
 
     mounted () {
       this.onLoad(100);
-      console.log(this.contacts)
     },
 
 
@@ -49,7 +48,6 @@
 
       test() {
         this.$store.dispatch('setContactsRef', $contacts)
-        console.log(this.contacts)
       },
 
       ...mapMutations([

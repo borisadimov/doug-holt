@@ -1,5 +1,3 @@
-import {getCatByName} from '~/store/fixtures';
-
 const PAGE_HOME          = 'home';
 const PAGE_GALLERY       = 'gallery';
 const PAGE_CONTACTS      = 'contacts';

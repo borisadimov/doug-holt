@@ -20,10 +20,10 @@ const _1d89d789 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Adm
 
 const _1dabf35e = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Gallery/gallery.vue' /* webpackChunkName: "pages/Gallery-gallery" */)
 
-const _761c7a28 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Gallery/_cat.vue' /* webpackChunkName: "pages/Gallery-cat" */)
 
-const _f2dce53a = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/Journal/_post.vue' /* webpackChunkName: "pages/Journal-post" */)
+const _7b11a059 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/gallery/_id.vue' /* webpackChunkName: "pages/gallery-id" */)
 
+const _218bb984 = () => import('/Users/valery/Developer/nuxt-doug-holt/pages/journal/_id.vue' /* webpackChunkName: "pages/journal-id" */)
 
 
 const scrollBehavior = (to, from, savedPosition) => {
@@ -94,6 +94,7 @@ export function createRouter () {
 			name: "Gallery-gallery"
 		},
 		{
+<<<<<<< HEAD
 			path: "/Gallery/:cat?",
 			component: _761c7a28,
 			name: "Gallery-cat"
@@ -102,6 +103,16 @@ export function createRouter () {
 			path: "/Journal/:post",
 			component: _f2dce53a,
 			name: "Journal-post"
+=======
+			path: "/gallery/:id",
+			component: _7b11a059,
+			name: "gallery-id"
+		},
+		{
+			path: "/journal/:id",
+			component: _218bb984,
+			name: "journal-id"
+>>>>>>> 56e9962... fix categories, clear code, delete assets
 		}
     ]
   })

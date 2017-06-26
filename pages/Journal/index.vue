@@ -40,13 +40,14 @@
   import { db } from '~/db'
 
   const $posts = db.ref('posts')
+  const $categories = db.ref('categories')
 
   export default {
     name: "JournalComponent",
     layout: 'home',
 
     fetch ({ store }) {
-      return store.dispatch('setPostsRef', $posts)
+      return store.dispatch('setPostsRef', $posts).then(() => store.dispatch('setCategoriesRef', $categories))
     },
 
     data () {
@@ -58,6 +59,8 @@
     },
 
     mounted () {
+      this.makeMenuUnfixed();
+      this.menuClose();
       let postsRev = this.posts.slice();
       postsRev.reverse();
       for (let i = 0; i < postsRev.length; i++) {
@@ -79,7 +82,9 @@
       },
 
       ...mapMutations([
-        'onLoad'
+        'onLoad',
+        'makeMenuUnfixed',
+        'menuClose'
       ])
     },
 

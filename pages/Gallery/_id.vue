@@ -145,6 +145,8 @@
     mounted () {   
       this.active = false;
       this.scrollHandler = new ScrollHandler(this.itemNext, this.itemPrev, 'h');
+      this.makeMenuUnfixed();
+      this.menuClose();
 
       if (this.category.items.length > 9)
         this.counterWidth = 24;
@@ -172,8 +174,8 @@
     },
 
     updated() {
-      // this.active = false;
-      // console.log('updated', this.active)
+      this.makeMenuUnfixed();
+      this.menuClose();
     },
 
     beforeDestroy() {
@@ -273,7 +275,9 @@
       ...mapMutations([
         'menuRightClose',
         'menuRightOpen',
-        'onLoad'
+        'onLoad',
+        'makeMenuUnfixed',
+        'menuClose'
       ])
     },
 

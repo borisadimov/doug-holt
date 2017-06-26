@@ -1,5 +1,5 @@
 <template lang="pug">
-  .about
+  .about(v-if="about")
     .about-title
       | About
 
@@ -50,6 +50,7 @@
   import { db } from '~/db';
 
   const $about = db.ref('about')
+  const $categories = db.ref('categories')
   //images on page
   const IMG_CNT = 1;
 
@@ -58,7 +59,7 @@
     layout: 'home',
 
     fetch ({ store }) {
-      return store.dispatch('setAboutRef', $about)
+      return store.dispatch('setAboutRef', $about).then(() => store.dispatch('setCategoriesRef', $categories))
     },
 
     data () {
@@ -68,6 +69,8 @@
     },
 
     mounted() {
+      this.makeMenuUnfixed();
+      this.menuClose();
     },
 
     methods: {
@@ -80,7 +83,9 @@
       },
 
       ...mapMutations([
-        'onLoad'
+        'onLoad',
+        'makeMenuUnfixed',
+        'menuClose'
       ])
     },
 
@@ -97,8 +102,8 @@
           return res;
         }, {})
       }
-    }
-  }
+    },
+
 </script>
 
 <style lang="scss" scoped rel="stylesheet/scss">
