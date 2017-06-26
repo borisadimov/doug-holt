@@ -48,8 +48,7 @@
         showCats: false,
 
         catsHeight: 0,
-        bottomCont: null
-
+        bottomCont: null,
       }
     },
 

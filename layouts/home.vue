@@ -38,7 +38,6 @@
 <script>
   import 'whatwg-fetch';
   import MenuComponent from '~/components/Menu';
-  import LoaderComponent from '~/components/Loader';
   import {mapMutations, mapGetters} from 'vuex';
   import { db } from '~/db'
 
@@ -52,8 +51,7 @@
     middleware: 'switchPortfolioItems',
 
     components: {
-      MenuComponent,
-      LoaderComponent
+      MenuComponent
     },
 
     fetch ({ store }) {

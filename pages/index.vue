@@ -62,7 +62,10 @@
     fetch({
       store
     }) {
-      return store.dispatch('setCategoriesRef', $categories).then(() => store.dispatch('setContactsRef', $contacts))
+
+      return store.dispatch('setCategoriesRef', $categories).then(() => {
+        store.dispatch('setContactsRef', $contacts)
+      })
     },
   
   
