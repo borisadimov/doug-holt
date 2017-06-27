@@ -71,6 +71,7 @@
     mounted() {
       this.makeMenuUnfixed();
       this.menuClose();
+      this.hideContacts();
     },
 
     methods: {
@@ -85,7 +86,8 @@
       ...mapMutations([
         'onLoad',
         'makeMenuUnfixed',
-        'menuClose'
+        'menuClose',
+        'hideContacts'
       ])
     },
 

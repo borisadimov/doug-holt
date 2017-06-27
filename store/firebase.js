@@ -53,6 +53,10 @@ export const mutations = {
 
   setContacts(state) {
     state.showContacts = true;
+  },
+
+  hideContacts(state) {
+    state.showContacts = false;
   }
 }
 

@@ -96,6 +96,7 @@
       this.burgerLines13 = this.$refs.burgerRight.querySelectorAll('.line13');
       this.burgerArrow = this.$refs.burgerRight.querySelector('.arrow');
       this.posts.reverse();
+      this.hideContacts();
     },
 
     created() {
@@ -129,7 +130,8 @@
         'menuRightClose',
         'menuRightOpen',
         'makeMenuUnfixed',
-        'menuClose'
+        'menuClose',
+        'hideContacts'
       ])
     },
 
@@ -149,14 +151,6 @@
           return post;
         }
       }
-      // post: function () {
-      //   return this.getPost();
-      // },
-
-      // postSet: function (post) {
-      //   console.log('setter', post)
-      //   this.post = post;
-      // }
       
     },
 

@@ -59,6 +59,8 @@
 
 <script>
 
+  import { mapGetters } from 'vuex';
+
   export default {
     name: "GalleryComponent",
     layout: 'home',
@@ -81,6 +83,10 @@
       category() {
         this.itemNum = 0;
         return this.categories[this.portfolio.category];
+      },
+
+      nav() {
+        return this.$store.state.nav;
       }
     }
   }

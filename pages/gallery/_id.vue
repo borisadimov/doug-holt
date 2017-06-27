@@ -93,8 +93,8 @@
       this.scrollHandler = new ScrollHandler(this.itemNext, this.itemPrev, 'h');
       this.makeMenuUnfixed();
       this.menuClose();
-      this.onLoad(100)
-
+      this.onLoad(100);
+      this.hideContacts();
       
 
       if (this.category.items.length > 9)
@@ -221,7 +221,8 @@
         'menuRightOpen',
         'onLoad',
         'makeMenuUnfixed',
-        'menuClose'
+        'menuClose',
+        'hideContacts'
       ])
     },
 

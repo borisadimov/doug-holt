@@ -61,6 +61,7 @@
     mounted () {
       this.makeMenuUnfixed();
       this.menuClose();
+      this.hideContacts();
       let postsRev = this.posts.slice();
       postsRev.reverse();
       for (let i = 0; i < postsRev.length; i++) {
@@ -84,7 +85,8 @@
       ...mapMutations([
         'onLoad',
         'makeMenuUnfixed',
-        'menuClose'
+        'menuClose',
+        'hideContacts'
       ])
     },
 
