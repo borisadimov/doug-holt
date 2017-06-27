@@ -16,8 +16,7 @@ export const state = {
 export const mutations = {
   pageOpen(state, payload) {
     const to = payload.to;
-    const from = payload.from;
-    const next = payload.next;
+    const from = payload.from || {};
 
     let menuOpened = false;
     if (to.name == PAGE_HOME || to.name == PAGE_CONTACTS)

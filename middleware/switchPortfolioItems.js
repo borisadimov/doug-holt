@@ -1,14 +1,15 @@
-export default function({app, route, store}) {
+export default function(context) {
+  const {app, route, store} = context;
 
-  app.router.beforeEach((to, from, next) => {
-    store.commit('pageOpen', {to, from, next});
-    if (to.name == 'gallery-id') {
-      let cat = store.getters.getCatByName(to.params.id);
-      store.commit('categorySet', cat.index);
-      // console.log('middleware')
-    }
+  const to = route;
 
-    next();
-  });
+  store.commit('pageOpen', {to});
+
+  if (to.name == 'gallery-id') {
+    let cat = store.getters.getCatByName(to.params.id);
+    store.commit('categorySet', cat.index);
+  }
+
+
 
 }
