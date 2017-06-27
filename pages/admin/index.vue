@@ -47,13 +47,15 @@
         img(:src="portfolioItem.cover", alt="")
       
       .mark__slides(v-if="portfolioItem.items.length > 0")
-        .mark__slide(v-for="slide in portfolioItem.items")
+        .mark__slide(v-for="(slide, id) in portfolioItem.items")
           .mark__slideImg
             img(:src="slide.image", :key="slide.index")
           .mark__slideTitle
             | {{ slide.title }}
           .mark__slideClient
             | {{ slide.client }}
+          .mark__remove(@click="removeCatSlide(portfolioItem.items, id)")
+            | ❌
 
     .form(v-if="editingId !== undefined", :class="{'form-centered': isAllEmpties}")
       div
@@ -316,6 +318,10 @@ export default {
 
     removePost: function (key) {
       $posts.child(key).remove()
+    },
+
+    removeCatSlide(cat, id) {
+      cat.splice(id, 1);
     },
 
     deploy: function () {
