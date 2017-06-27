@@ -13,6 +13,7 @@
     "node-sass": "^4.5.3",
     "normalize.css": "^7.0.0",
     "nuxt": "latest",
+    "promise-polyfill": "^6.0.2",
     "pug": "^2.0.0-rc.2",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.6",
