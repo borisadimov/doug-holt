@@ -24,11 +24,11 @@ export const mutations = {
       menuOpened = true;
 
     let loadProgress = 0;
-    if ((to.name == PAGE_CONTACTS && !!from.name) || from.name == PAGE_CONTACTS)
-      loadProgress = 100;
-
-    if (from.name == PAGE_GALLERY && to.name == PAGE_GALLERY)
-      loadProgress = 100;
+    // if ((to.name == PAGE_CONTACTS && !!from.name) || from.name == PAGE_CONTACTS)
+    //   loadProgress = 100;
+    //
+    // if (from.name == PAGE_GALLERY && to.name == PAGE_GALLERY)
+    //   loadProgress = 100;
 
     let pagePrev = from.name ? from.name : state.pagePrev;
     let prevParams = from.params ? from.params : state.prevParams;

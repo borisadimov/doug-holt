@@ -5,7 +5,7 @@ export default function({app, route, store}) {
     if (to.name == 'gallery-id') {
       let cat = store.getters.getCatByName(to.params.id);
       store.commit('categorySet', cat.index);
-      console.log('middleware')
+      // console.log('middleware')
     }
 
     next();

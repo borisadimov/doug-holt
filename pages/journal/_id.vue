@@ -53,6 +53,7 @@
       .journal-content-image
         img(
           v-bind:src="activePost.image"
+          v-on:error="onImgLoaded"
           v-on:load="onImgLoaded"
           )
       .journal-content-info
@@ -151,7 +152,7 @@
           return post;
         }
       }
-      
+
     },
 
     watch: {

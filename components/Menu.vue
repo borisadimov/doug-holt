@@ -31,7 +31,7 @@
 
 <script>
   var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null
-  
+
   import {
     mapGetters,
     mapMutations
@@ -39,23 +39,23 @@
   import {
     db
   } from '~/db'
-  
+
   export default {
     name: "MenuComponent",
-  
+
     data() {
       return {
         showCats: false,
-  
+
         catsHeight: 0,
         bottomCont: null,
       }
     },
-  
+
     mounted() {
       this.catsHeight = this.$refs.cats.getBoundingClientRect().height;
     },
-  
+
     methods: {
       onWorksEnter() {
         if (!this.showCats) {
@@ -63,14 +63,14 @@
           this.catsOpen();
         }
       },
-  
+
       onNavLeave() {
         if (this.showCats) {
           this.showCats = false;
           this.catsClose();
         }
       },
-  
+
       catsOpen() {
         Velocity(this.$refs.bottom, "stop");
         Velocity(
@@ -90,6 +90,7 @@
         );
       },
       catsClose(el, done) {
+        if(!this.$refs.bottom) return
         Velocity(this.$refs.bottom, "stop");
         Velocity(
           this.$refs.bottom, {
@@ -97,37 +98,39 @@
             marginTop: 0
           }, {
             duration: 30,
-            complete: () =>
-              Velocity(this.$refs.bottom, {
+            complete: () => {
+              if(!this.$refs.bottom) return
+              return Velocity(this.$refs.bottom, {
                 translateY: 0,
                 translateZ: 0
               }, {
                 duration: 300
               })
+            }
           }
         );
       },
-  
+
       toContacts() {
         this.$store.commit('setContacts')
         this.$router.push('/')
       },
-  
+
       ...mapMutations(['setContacts'])
     },
-  
+
     computed: {
       ...mapGetters(['categories']),
-  
+
       nav() {
         return this.$store.state.nav;
       },
-  
+
       showContacts() {
         return this.$store.state.firebase.showContacts;
       },
     },
-  
+
     created() {
     }
   }

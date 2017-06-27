@@ -37,7 +37,7 @@
 
 <script>
   var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null
-  
+
   import ScrollHandler from '~/utils/scrollhandler';
   import {
     mapMutations,
@@ -49,41 +49,40 @@
   } from '~/db'
 
   import firebase from 'firebase';
-  
+
   const $categories = db.ref('categories');
   const $contacts = db.ref('contacts');
   const $about = db.ref('about');
-  
+
   export default {
     name: "HomeComponent",
     layout: 'home',
     middleware: ['switchPortfolioItems'],
-  
+
     components: {
       ContactsComponent
     },
-  
+
     fetch({
       store
     }) {
-      return store.dispatch('setCategoriesRef', $categories).then(() => {
-        store.dispatch('setContactsRef', $contacts)
-      })
+      return store.dispatch('setCategoriesRef', $categories)
+        .then(() => store.dispatch('setContactsRef', $contacts))
     },
-  
-  
+
+
     data() {
       return {
         baseCats: null,
         category: null,
         slideNum: 0,
         slidesLength: 1,
-  
+
         timer: 0,
-  
+
       }
     },
-  
+
     mounted() {
       this.makeMenuFixed();
       this.menuOpen();
@@ -94,20 +93,20 @@
         this.categoryPrev
       );
     },
-  
+
     beforeDestroy() {
       this.scrollHandler.destroy();
     },
-  
+
     methods: {
-  
+
       onCatUpdate() {
         if (this.portfolio.showContacts)
           return;
         this.category = this.categories[this.categoryId];
-        
+
       },
-  
+
       scrollBeforeEnter(el) {
         let value = this.portfolio.direction === 'down' ? '145px' : "-145px";
         el.style.transform = `translate3d(${value}, 0, 0)`;
@@ -135,7 +134,7 @@
           complete: done
         });
       },
-  
+
       onDotClick(catIndex) {
         let diff = catIndex - this.categoryId;
         if (diff < 0) {
@@ -147,9 +146,9 @@
             setTimeout(this.categoryNext, i * 400);
           }
         }
-  
+
       },
-  
+
       ...mapMutations([
         'categoryNext',
         'categoryPrev',
@@ -157,29 +156,29 @@
         'menuOpen',
         'onLoad'
       ])
-  
+
     },
-  
+
     computed: {
       portfolio() {
         return this.$store.state.firebase
       },
-  
+
       nav() {
         return this.$store.state.nav
       },
-  
+
       categoryId() {
         return this.$store.state.firebase.category
       },
-  
+
       isContactsOpen() {
         return this.portfolio.showContacts;
       },
-  
+
       ...mapGetters(['categories', 'contacts'])
     },
-  
+
     watch: {
       'firebase.category': {
         handler() {
@@ -188,7 +187,7 @@
         }
       }
     }
-  
+
   }
 </script>
 
@@ -284,7 +283,7 @@
       }
     }
   }
-  
+
   @keyframes starting {
     0% {
       transform: translate3d(-175px, 0, 0);
@@ -293,53 +292,53 @@
       transform: translate3d(0, 0, 0);
     }
   }
-  
+
   .slide-enter-active {
     transition: opacity 1s ease, transform 4s ease;
   }
-  
+
   .slide-leave-active {
     transition: opacity 1s ease-in, transform 4s ease;
   }
-  
+
   .slide-enter {
     opacity: 0;
     transform: translate3d(-175px, 0, 0);
   }
-  
+
   .slide-leave-active {
     opacity: 0;
   }
-  
+
   .title-enter-active {
     transition: opacity 1s ease 1s, transform 1s ease 1s;
   }
-  
+
   .title-leave-active {
     transition: opacity 1s;
   }
-  
+
   .title-enter {
     opacity: 0;
     transform: translate3d(0, 50px, 0);
   }
-  
+
   .title-leave-active {
     opacity: 0;
   }
-  
+
   .scroll-enter-active {
     transition: transform 2s linear;
   }
-  
+
   .scroll-leave-active {
     transition: transform 2s linear .05s;
   }
-  
+
   .scroll-enter {
     transform: translate3d(0, 100%, 0);
   }
-  
+
   .scroll-leave-active {
     transform: translate3d(0, -100%, 0);
   }

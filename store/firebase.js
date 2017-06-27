@@ -7,6 +7,12 @@ export const state = {
   posts: [],
   about: {},
   contacts: {},
+  isSet: {
+    categories: false,
+    posts: false,
+    about: false,
+    contacts: false,
+  },
   category: 0,
   showContacts: false,
   direction: 'down'
@@ -20,6 +26,10 @@ export const mutations = {
 
   logout (state) {
     state.user = null
+  },
+
+  setRef (state, ref) {
+    state.isSet[ref] = true;
   },
 
   categorySet(state, category) {
@@ -70,9 +80,13 @@ export const actions = {
   },
 
   setCategoriesRef: firebaseAction(({
+      state,
+      commit,
       bindFirebaseRef
     }, ref) => {
+    if (state.isSet.categories) return Promise.resolve()
     return new Promise((resolve, reject) => {
+      commit('setRef', 'categories')
       bindFirebaseRef('categories', ref, {
         readyCallback: resolve,
         cancelCallback: reject
@@ -81,9 +95,13 @@ export const actions = {
   }),
 
   setPostsRef: firebaseAction(({
+      state,
+      commit,
       bindFirebaseRef
     }, ref) => {
+    if (state.isSet.posts) return Promise.resolve()
     return new Promise((resolve, reject) => {
+      commit('setRef', 'posts')
       bindFirebaseRef('posts', ref, {
         readyCallback: resolve,
         cancelCallback: reject
@@ -92,9 +110,13 @@ export const actions = {
   }),
 
   setAboutRef: firebaseAction(({
+      state,
+      commit,
       bindFirebaseRef
     }, ref) => {
+    if (state.isSet.about) return Promise.resolve()
     return new Promise((resolve, reject) => {
+      commit('setRef', 'about')
       bindFirebaseRef('about', ref, {
         readyCallback: resolve,
         cancelCallback: reject
@@ -103,9 +125,13 @@ export const actions = {
   }),
 
   setContactsRef: firebaseAction(({
+      state,
+      commit,
       bindFirebaseRef
     }, ref) => {
+    if (state.isSet.contacts) return Promise.resolve()
     return new Promise((resolve, reject) => {
+      commit('setRef', 'contacts')
       bindFirebaseRef('contacts', ref, {
         readyCallback: resolve,
         cancelCallback: reject

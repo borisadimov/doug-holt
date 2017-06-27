@@ -60,8 +60,7 @@
 </template>
 
 <script>
-  var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null;
-
+  const Velocity = process.BROWSER_BUILD ? require('velocity-animate') : null;
   import ScrollHandler    from '~/utils/scrollhandler';
   import { mapMutations, mapGetters } from 'vuex';
   import { db } from '~/db'
@@ -87,30 +86,18 @@
       }
     },
 
-    mounted () {   
+    mounted () {
       this.active = false;
       this.scrollHandler = new ScrollHandler(this.itemNext, this.itemPrev, 'h');
       this.makeMenuUnfixed();
       this.menuClose();
-      this.onLoad(100);
       this.hideContacts();
-      
+      this.handleUpdate()
 
-      if (this.category.items.length > 9)
+
+      if (this.category && this.category.items.length > 9)
         this.counterWidth = 24;
 
-      //let loadCnt = 0;
-      // for (let item of this.category.items) {
-      //   let img = new Image();
-      //   img.onload = () => {
-      //     loadCnt++;
-      //     if (loadCnt == this.category.slides.length)
-      //       this.onLoad(100);
-      //     else
-      //       this.onLoad(loadCnt * 100 / this.category.slides.length);
-      //   };
-        //img.src = '/assets/categories/' + this.category.name + '/items/' + item.image;
-      //}
     },
 
     beforeUpdate() {
@@ -119,6 +106,7 @@
     updated() {
       this.makeMenuUnfixed();
       this.menuClose();
+      this.handleUpdate()
     },
 
     beforeDestroy() {
@@ -133,6 +121,24 @@
         window.addEventListener('keydown', this.handleKey);
     },
     methods: {
+      handleUpdate() {
+        if (this.$store.state.nav.loadProgress === 100) return
+        let loadCnt = 0;
+        const loadHandler = () => {
+          loadCnt++;
+          if (loadCnt == this.category.items.length)
+            this.onLoad(100);
+          else
+            this.onLoad(loadCnt * 100 / this.category.items.length);
+        };
+
+        for (let item of this.category.items) {
+          let img = new Image();
+          img.onerror = loadHandler;
+          img.onload = loadHandler;
+          img.src = item.image;
+        }
+      },
       handleKey(e) {
         if (e.keyCode == 37) {
           this.itemPrev();
@@ -238,7 +244,7 @@
 
       category() {
         this.itemNum = 0;
-        console.log('category')
+        // console.log('category')
         return this.categories[this.portfolio.category];
       }
     },

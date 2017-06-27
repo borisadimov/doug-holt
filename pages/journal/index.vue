@@ -14,6 +14,7 @@
           img.journal-image(
             v-bind:src="post.image"
             v-on:load="onImgLoaded"
+            v-on:error="onImgLoaded"
             )
           .journal-date
             | {{post.date}}
@@ -28,6 +29,7 @@
           img.journal-image(
             v-bind:src="post.image"
             v-on:load="onImgLoaded"
+            v-on:error="onImgLoaded"
             )
           .journal-date
             | {{post.date}}

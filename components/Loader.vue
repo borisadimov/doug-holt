@@ -4,7 +4,7 @@
     v-bind:enter-class="enterClass"
     v-bind:leave-active-class="leaveActClass"
     )
-    .loader(v-show="loading")
+    .loader(v-show="loadProgress!=100")
       .curtain
       transition(name="content")
         .loader-content(v-if="true")
@@ -13,11 +13,12 @@
           .loader-subtitle
             | Photography
 
-          .loader-bar(v-bind:style="{width: progress + '%'}")
+          .loader-bar(v-bind:style="{'width': loadProgress+'%'}")
             .loader-bar-line
 </template>
 
 <script>
+  import Vue from 'vue'
   import {PAGE_HOME} from '~/store/nav';
 
   export default {
@@ -25,12 +26,14 @@
 
     data () {
       return {
-        loading: false,
-        // firstRun: true,
-
-        // loaderShow: true,
-        // loaderCan1: true,
-        // loaderCan2: false,
+        show: false,
+        percent: 0,
+        show: false,
+        canSuccess: true,
+        color: 'black',
+        failedColor: 'red',
+        height: '2px',
+        duration: 5000,
         progress: 0,
         // contentShow: false,
         // timeout: 0,
@@ -46,59 +49,73 @@
     },
 
     methods: {
-      start() {
-        setTimeout(() => this.loading = true, 1000)
-        this.progress = 0;
-      },
-
-      finish() {
-        setTimeout(() => this.loading = false, 1000)
-        this.progress = this.loadProgress;
-      }
-      
-      // onPageUpd () {
-      //   console.log(this.nav.pageCurrent)
-      //   if (this.nav.pageCurrent == PAGE_HOME)
-      //     this.leaveActClass = 'main-leave-active-menu';
-      //   else
-      //     this.leaveActClass = 'main-leave-active-norm';
+      // start() {
+      //   this.loading = true
       // },
-
-      // show () {
-      //   this.loaderShow = true;
-        
-      //   if (this.firstRun) {
-      //     this.showContent();
-      //     this.enterClass = 'main-enter-norm';
-      //   } else {
-      //     this.timeout = setTimeout(() => this.showContent(), 1500);
-      //   }
-      // },
-
-      // showContent () {
-      //   this.contentShow = true;
-      //   if (process.BROWSER_BUILD && window.requestAnimationFrame) {
-      //     let animate = () => {
-           
-      //       if (!this.loaderShow)
-      //         return;
-      //       if (this.progress < this.loadProgress)
-      //         this.progress++;
-      //       window.requestAnimationFrame(animate);
-      //     };
-      //     animate();
-      //   }
-      // },
-
-      // hide () {
-      //   this.firstRun = false;
-      //   this.contentShow = false;
-      //   this.loaderShow = false;
-      //   this.loaderCan1 = false;
-      //   this.loaderCan2 = false;
-      //   this.progress = 0;
-      //   clearTimeout(this.timeout);
+      //
+      // finish() {
+      //   this.loading = false
       // }
+
+      start () {
+        this.show = true
+        this.canSuccess = true
+        if (this._timer) {
+          clearInterval(this._timer)
+          this.percent = 0
+        }
+        this._cut = 10000 / Math.floor(this.duration)
+        this._timer = setInterval(() => {
+          this.increase(this._cut * Math.random())
+          if (this.percent > 95) {
+            this.finish()
+          }
+        }, 100)
+        return this
+      },
+      set (num) {
+        this.show = true
+        this.canSuccess = true
+        this.percent = Math.floor(num)
+        return this
+      },
+      get () {
+        return Math.floor(this.percent)
+      },
+      increase (num) {
+        this.percent = this.percent + Math.floor(num)
+        return this
+      },
+      decrease (num) {
+        this.percent = this.percent - Math.floor(num)
+        return this
+      },
+      finish () {
+        this.percent = 100
+        this.hide()
+        return this
+      },
+      pause () {
+        clearInterval(this._timer)
+        return this
+      },
+      hide () {
+        clearInterval(this._timer)
+        this._timer = null
+        setTimeout(() => {
+          this.show = false
+          Vue.nextTick(() => {
+            setTimeout(() => {
+              this.percent = 0
+            }, 200)
+          })
+        }, 500)
+        return this
+      },
+      fail () {
+        this.canSuccess = false
+        return this
+      }
     },
 
     computed: {
@@ -107,12 +124,11 @@
       // },
 
       loadProgress() {
-        console.log('loadProgress', this.$store.state.nav.loadProgress)
         return this.$store.state.nav.loadProgress
       },
 
       // loadProgress() {
-        
+
       //   if (this.$store.state.nav.loadProgress < 100) {
       //     if (this.loaderShow)
       //       return;
@@ -150,7 +166,7 @@
     //         }, 1500);
     //       } else {
     //         this.loaderCan2 = true;
-            
+
     //         if (this.loaderCan1)
     //           this.hide();
     //       }
@@ -210,6 +226,7 @@
       width: 30%;
       height: 10px;
       background: #000;
+      transition: width 0.4s ease;
     }
   }
 

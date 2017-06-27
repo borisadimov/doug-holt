@@ -5,7 +5,7 @@
 
     .about-item
       .about-image
-        img(:src="about.image" v-on:load="onImgLoaded")
+        img(:src="about.image" v-on:load="onImgLoaded"  v-on:error="onImgLoaded")
       .about-copy
         | THE STUDIO
         .about-largeText.about-margin-1vw
@@ -94,7 +94,7 @@
     computed: {
       ...mapGetters(['about']),
 
-      clients() { 
+      clients() {
         return this.about.clients.reduce((res, curr) => {
           const firstLetter = curr[0].toLowerCase();
           if (!res.hasOwnProperty(firstLetter)) {
