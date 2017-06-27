@@ -47,6 +47,8 @@
   import {
     db
   } from '~/db'
+
+  import firebase from 'firebase';
   
   const $categories = db.ref('categories');
   const $contacts = db.ref('contacts');
@@ -85,14 +87,13 @@
       this.makeMenuFixed();
       this.menuOpen();
       this.onCatUpdate();
-  
+      this.onLoad(100);
       this.scrollHandler = new ScrollHandler(
         this.categoryNext,
         this.categoryPrev
       );
-  
+
       let loadCnt = 0;
-  
     },
   
     beforeDestroy() {
@@ -153,7 +154,8 @@
         'categoryNext',
         'categoryPrev',
         'makeMenuFixed',
-        'menuOpen'
+        'menuOpen',
+        'onLoad'
       ])
   
     },

@@ -4,9 +4,10 @@
     v-bind:enter-class="enterClass"
     v-bind:leave-active-class="leaveActClass"
     )
-    .loader(v-show="loaderShow")
+    .loader(v-show="loading")
+      .curtain
       transition(name="content")
-        .loader-content(v-if="contentShow")
+        .loader-content(v-if="true")
           .loader-title
             | Doug Holt
           .loader-subtitle
@@ -24,16 +25,16 @@
 
     data () {
       return {
+        loading: false,
+        // firstRun: true,
 
-        firstRun: true,
+        // loaderShow: true,
+        // loaderCan1: true,
+        // loaderCan2: false,
 
-        loaderShow: true,
-        loaderCan1: true,
-        loaderCan2: false,
-
-        contentShow: false,
+        // contentShow: false,
         progress: 0,
-        timeout: 0,
+        // timeout: 0,
 
         leaveActClass: 'main-leave-active-menu',
         enterClass: ''
@@ -41,86 +42,102 @@
     },
 
     mounted () {
-      this.onPageUpd();
-      this.show();
+      // this.onPageUpd();
+      // this.show();
     },
 
     methods: {
-      onPageUpd () {
-        if (this.nav.pageCurrent == PAGE_HOME)
-          this.leaveActClass = 'main-leave-active-menu';
-        else
-          this.leaveActClass = 'main-leave-active-norm';
+      start() {
+        setTimeout(() => this.loading = true, 1000)
       },
-
-      show () {
-        this.loaderShow = true;
-
-        if (this.firstRun) {
-          this.showContent();
-          this.enterClass = 'main-enter-norm';
-        } else {
-          this.timeout = setTimeout(() => this.showContent(), 1500);
-        }
+      finish() {
+        setTimeout(() => this.loading = false, 1000)
+        
       },
-
-      showContent () {
-        this.contentShow = true;
-
-        if (process.BROWSER_BUILD && window.requestAnimationFrame) {
-          let animate = () => {
-
-            if (!this.loaderShow)
-              return;
-            if (this.progress < this.loadProgress)
-              this.progress++;
-            window.requestAnimationFrame(animate);
-          };
-          animate();
-        }
-      },
-
-      hide () {
-        this.firstRun = false;
-        this.contentShow = false;
-        this.loaderShow = false;
-        this.loaderCan1 = false;
-        this.loaderCan2 = false;
-        this.progress = 0;
-        clearTimeout(this.timeout);
+      increase(num) {
+        this.progress = num;
       }
+      // onPageUpd () {
+      //   console.log(this.nav.pageCurrent)
+      //   if (this.nav.pageCurrent == PAGE_HOME)
+      //     this.leaveActClass = 'main-leave-active-menu';
+      //   else
+      //     this.leaveActClass = 'main-leave-active-norm';
+      // },
+
+      // show () {
+      //   this.loaderShow = true;
+        
+      //   if (this.firstRun) {
+      //     this.showContent();
+      //     this.enterClass = 'main-enter-norm';
+      //   } else {
+      //     this.timeout = setTimeout(() => this.showContent(), 1500);
+      //   }
+      // },
+
+      // showContent () {
+      //   this.contentShow = true;
+      //   if (process.BROWSER_BUILD && window.requestAnimationFrame) {
+      //     let animate = () => {
+           
+      //       if (!this.loaderShow)
+      //         return;
+      //       if (this.progress < this.loadProgress)
+      //         this.progress++;
+      //       window.requestAnimationFrame(animate);
+      //     };
+      //     animate();
+      //   }
+      // },
+
+      // hide () {
+      //   this.firstRun = false;
+      //   this.contentShow = false;
+      //   this.loaderShow = false;
+      //   this.loaderCan1 = false;
+      //   this.loaderCan2 = false;
+      //   this.progress = 0;
+      //   clearTimeout(this.timeout);
+      // }
     },
 
     computed: {
-      nav() {
-        return this.$store.state.nav;
-      },
+      // nav() {
+      //   return this.$store.state.nav;
+      // },
 
-      loadProgress() {
-        if (this.$store.state.nav.loadProgress < 100) {
-          if (this.loaderShow)
-            return;
-          this.show();
-          setTimeout(() => {
-            this.loaderCan1 = true;
-            if (this.loaderCan2)
-              this.hide();
-          }, 1500);
+      // loadProgress() {
+      //   console.log('loadProgress', this.$store.state.nav.loadProgress)
+      //   return this.$store.state.nav.loadProgress
+      // },
 
-        } else {
-          this.loaderCan2 = true;
-          if (this.loaderCan1)
-            this.hide();
-        }
-      },
+      // loadProgress() {
+        
+      //   if (this.$store.state.nav.loadProgress < 100) {
+      //     if (this.loaderShow)
+      //       return;
+      //     this.show();
+      //     setTimeout(() => {
+      //       this.loaderCan1 = true;
+      //       if (this.loaderCan2)
+      //         this.hide();
+      //     }, 1500);
 
-      pageCurrent() {
-        this.onPageUpd();
-        return this.nav.pageCurrent
-      }
+      //   } else {
+      //     this.loaderCan2 = true;
+      //     if (this.loaderCan1)
+      //       this.hide();
+      //   }
+      // },
+
+      // pageCurrent() {
+      //   this.onPageUpd();
+      //   return this.nav.pageCurrent
+      // }
     },
 
-    watch: {
+    // watch: {
     //   'nav.loadProgress': {
     //     handler() {
     //       if (this.nav.loadProgress < 100) {
@@ -132,20 +149,20 @@
     //           if (this.loaderCan2)
     //             this.hide();
     //         }, 1500);
-    //
     //       } else {
     //         this.loaderCan2 = true;
+            
     //         if (this.loaderCan1)
     //           this.hide();
     //       }
     //     }
     //   },
-      // 'nav.pageCurrent': {
-      //   handler() {
-      //
-      //   }
-      // }
-    }
+    //   'nav.pageCurrent': {
+    //     handler() {
+    //       this.onPageUpd();
+    //     }
+    //   }
+    // }
   }
 </script>
 
@@ -158,7 +175,7 @@
     height: 100%;
     background: #fff;
 
-    z-index: 9999;
+    z-index: 9999999;
 
     &-content {
       position: absolute;
@@ -198,24 +215,24 @@
   }
 
   .main-enter-active {
-    transition: transform 1s ease-in-out;
+    transition: opacity .5s ease;
   }
   .main-enter-norm {
-    transform: translate3d(0, -100%, 0);
+    opacity: 1;
   }
 
   .main-leave-active-menu {
-    transition: transform 1s ease;
-    transform: translate3d(-100%, 0, 0);
+    transition: opacity .5s ease;
+    opacity: 0;
     z-index: 20;
   }
   .main-leave-active-norm {
-    transition: transform 1s ease-in-out;
-    transform: translate3d(0, -100%, 0);
+    transition: opacity 1s;
+    opacity: 0;
   }
 
   .content-enter-active {
-    transition: opacity .5s, transform .5s;
+    transition: opacity 1s, transform 1s;
   }
   .content-leave-active {
     transition: opacity .2s, transform .2s;

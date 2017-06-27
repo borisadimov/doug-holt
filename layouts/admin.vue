@@ -82,6 +82,35 @@ export default {
 <<style scoped lang="scss">
 $primary-color: #EBC8B2;
 
+  .login {
+    width: 100%;
+    height: 100vh;
+    background: $primary-color;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-inner {
+    width: 100%;
+    max-width: 600px;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-title {
+    font-size: 30px;
+    color: #FFFFFF;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
   .header {
     background: $primary-color;
     padding: 10px 20px;
@@ -97,5 +126,63 @@ $primary-color: #EBC8B2;
         text-decoration: underline;
       }
     }
+  }
+
+  .button {
+    padding: 10px 16px;
+    border: 1px solid #FFFFFF;
+    border-radius: 4px;
+    color: #FFFFFF;
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: background .2s ease, color .2s ease;
+    will-change: background, color;
+
+    &:hover {
+      background: #FFF;
+      color: #000;
+    }
+
+    span {
+      margin-right: 10px;
+      font-size: 20px;
+    }
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    margin-bottom: 20px;
+    background: none;
+    outline: none;
+
+    padding: 10px 16px;
+    border: 1px solid #FFFFFF;
+    border-radius: 4px;
+    color: #FFFFFF;
+
+    transition: background .2s ease, color .2s ease;
+    will-change: background, color;
+
+    &:hover,
+    &:focus {
+      background: #FFF;
+      color: #000;
+
+      &::-webkit-input-placeholder {color: #A3A3A3;}
+      &::-moz-placeholder {color: #A3A3A3;}
+      &:-moz-placeholder {color: #A3A3A3;}
+      &:-ms-input-placeholder {color: #A3A3A3;}
+    }
+
+    &::-webkit-input-placeholder {color: #FFFFFF;}
+    &::-moz-placeholder {color: #FFFFFF;}
+    &:-moz-placeholder {color: #FFFFFF;}
+    &:-ms-input-placeholder {color: #FFFFFF;}
   }
 </style>

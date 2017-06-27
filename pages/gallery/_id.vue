@@ -1,60 +1,6 @@
 <template lang="pug">
-  .gallery(@keydown="handleKey" )
-    
-    .menu-burger(
-      ref="burgerGallery"
-      @click="onMenuToggle"
-      )
-      |<svg width="35px" height="14px" viewBox="0 0 35 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      |    <defs></defs>
-      |    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      |        <g id="burger-right" transform="translate(0.000000, 1.000000)" stroke="#000000">
-      |            <path class="line13" d="M15,0 L35,0" id="Path-2"></path>
-      |            <path d="M15,6 L35,6" id="Path-2-Copy"></path>
-      |            <path class="line13" d="M15,12 L35,12" id="Path-2-Copy-2"></path>
-      |            <path class="line13" d="M11,0 L13,0" id="Path-2-Copy-5"></path>
-      |            <path d="M11,6 L13,6" id="Path-2-Copy-4"></path>
-      |            <path class="line13" d="M11,12 L13,12" id="Path-2-Copy-3"></path>
-      |            <g id="arrow" class="arrow">
-      |                <polyline id="sidebar-right-close-arrow" transform="translate(33.010000, 6.250000) rotate(270.000000) translate(-33.010000, -6.250000) " points="27.0047964 4.0000002 33.0100002 8.5000002 39.015204 4.0000002"></polyline>
-      |            </g>
-      |        </g>
-      |    </g>
-      |</svg>
-    transition(name="curtain")
-      .menu-curtain(
-        v-if="nav.menuRightOpened"
-        @click="onCurtainClick"
-        )
-
-    transition(name="menu")
-      .menu(v-if="nav.menuRightOpened")
-        .menu-title
-          | {{ category.name }} List
-        .menu-list
-          .menu-header
-            .menu-order
-              | Order
-            .menu-name
-              | Title
-            .menu-client
-              | Client
-          .menu-item(
-            v-for="(item, i) of category.items"
-            @click="onMenuItemClick(i)"
-            )
-            .menu-order
-              | {{ i + 1 }}
-            .menu-name
-              .menu-dot
-                .menu-dotBg(
-                  v-bind:key="i"
-                  v-if="i == itemNum"
-                  )
-              | {{ item.title }}
-            .menu-client
-              | {{ item.client }}
-
+  
+  .gallery
     .content(v-bind:class="{'content-menu': nav.menuRightOpened}" v-if="category")
       .title
         | {{ category.name }}
@@ -137,7 +83,7 @@
         showInfo: false,
         itemNum: 0,
         direction: 'right',
-
+        active: false,
         counterWidth: 13
       }
     },
@@ -147,30 +93,28 @@
       this.scrollHandler = new ScrollHandler(this.itemNext, this.itemPrev, 'h');
       this.makeMenuUnfixed();
       this.menuClose();
+      this.onLoad(100)
+
+      
 
       if (this.category.items.length > 9)
         this.counterWidth = 24;
 
-      this.burgerLines13 = this.$refs.burgerGallery.querySelectorAll('.line13');
-      this.burgerArrow = this.$refs.burgerGallery.querySelector('.arrow');
-
       let loadCnt = 0;
-      for (let item of this.category.items) {
-        let img = new Image();
-        img.onload = () => {
-          loadCnt++;
-          if (loadCnt == this.category.items.length)
-            this.onLoad(100);
-          else
-            this.onLoad(loadCnt * 100 / this.category.items.length);
-        };
-        img.src = '/assets/categories/' + this.category.name + '/items/' + item.image;
-      }
+      // for (let item of this.category.items) {
+      //   let img = new Image();
+      //   img.onload = () => {
+      //     loadCnt++;
+      //     if (loadCnt == this.category.items.length)
+      //       this.onLoad(100);
+      //     else
+      //       this.onLoad(loadCnt * 100 / this.category.items.length);
+      //   };
+      //   img.src = '/assets/categories/' + this.category.name + '/items/' + item.image;
+      //}
     },
 
     beforeUpdate() {
-      // this.active = !this.active;
-      // console.log('before updated', this.active)
     },
 
     updated() {
@@ -332,6 +276,14 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .gallery {
+    .preloader {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: #fff;
+    }
     .active-curtain {
       transform: translate3d(0,0,0);
     }

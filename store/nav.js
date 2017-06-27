@@ -1,5 +1,5 @@
-const PAGE_HOME          = 'home';
-const PAGE_GALLERY       = 'gallery';
+const PAGE_HOME          = 'index';
+const PAGE_GALLERY       = 'gallery-id';
 const PAGE_CONTACTS      = 'contacts';
 
 export const state = {

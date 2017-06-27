@@ -1,4 +1,5 @@
 var firebase = require('firebase')
+var _ = require('lodash')
 
 var firebaseConfig = {
   apiKey: "AIzaSyD8vphZVMMcWIhNwe8okN2Tj5JgQASXYdg",
@@ -14,7 +15,20 @@ var firebaseApp = firebase.apps.length === 0
 
 var db = firebaseApp.database()
 
+// var getPortfolioRoutes = function () {
+//   return firebase.database()
+//     .ref('categories')
+//     .once('value')
+//     .then(i => i.val())
+//     .then(_.values)
+//     .then(items => _.sortBy(items, 'priority'))
+//     .then(items => items.map((item, index) => {
+//       return '/gallery/' + item.name
+//     }))
+// }
+
 module.exports = {
   db: db,
-  firebase: firebase
+  firebase: firebase,
+  // getPortfolioRoutes: getPortfolioRoutes
 }

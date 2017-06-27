@@ -9,6 +9,7 @@
     "ducks": "^0.1.2",
     "firebase": "^4.1.2",
     "lethargy": "^1.0.4",
+    "lodash": "^4.17.4",
     "node-sass": "^4.5.3",
     "normalize.css": "^7.0.0",
     "nuxt": "latest",

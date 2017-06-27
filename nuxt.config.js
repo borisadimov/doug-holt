@@ -1,3 +1,5 @@
+var getPortfolioRoutes = require('./db.js').getPortfolioRoutes;
+
 module.exports = {
   /*
   ** Headers of the page
@@ -16,7 +18,7 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: false,
+  loading:'~components/Loader.vue',
   /*
   ** Build configuration
   */
@@ -41,5 +43,8 @@ module.exports = {
 
       }
     }
-  }
+  },
+  // generate: {
+  //   routes: getPortfolioRoutes
+  // }
 }
