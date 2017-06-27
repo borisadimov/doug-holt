@@ -78,12 +78,12 @@
     },
 
     computed: {
-      ...mapGetters(['categories']),
+      ...mapGetters(['category']),
 
-      category() {
-        this.itemNum = 0;
-        return this.categories[this.portfolio.category];
-      },
+      // category() {
+      //   this.itemNum = 0;
+      //   return this.categories[this.portfolio.category];
+      // },
 
       nav() {
         return this.$store.state.nav;

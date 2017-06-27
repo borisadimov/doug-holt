@@ -31,9 +31,8 @@
         // loaderShow: true,
         // loaderCan1: true,
         // loaderCan2: false,
-
-        // contentShow: false,
         progress: 0,
+        // contentShow: false,
         // timeout: 0,
 
         leaveActClass: 'main-leave-active-menu',
@@ -49,14 +48,14 @@
     methods: {
       start() {
         setTimeout(() => this.loading = true, 1000)
+        this.progress = 0;
       },
+
       finish() {
         setTimeout(() => this.loading = false, 1000)
-        
-      },
-      increase(num) {
-        this.progress = num;
+        this.progress = this.loadProgress;
       }
+      
       // onPageUpd () {
       //   console.log(this.nav.pageCurrent)
       //   if (this.nav.pageCurrent == PAGE_HOME)
@@ -107,10 +106,10 @@
       //   return this.$store.state.nav;
       // },
 
-      // loadProgress() {
-      //   console.log('loadProgress', this.$store.state.nav.loadProgress)
-      //   return this.$store.state.nav.loadProgress
-      // },
+      loadProgress() {
+        console.log('loadProgress', this.$store.state.nav.loadProgress)
+        return this.$store.state.nav.loadProgress
+      },
 
       // loadProgress() {
         

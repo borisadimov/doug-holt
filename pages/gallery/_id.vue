@@ -1,5 +1,4 @@
 <template lang="pug">
-  
   .gallery
     .content(v-bind:class="{'content-menu': nav.menuRightOpened}" v-if="category")
       .title
@@ -100,17 +99,17 @@
       if (this.category.items.length > 9)
         this.counterWidth = 24;
 
-      let loadCnt = 0;
+      //let loadCnt = 0;
       // for (let item of this.category.items) {
       //   let img = new Image();
       //   img.onload = () => {
       //     loadCnt++;
-      //     if (loadCnt == this.category.items.length)
+      //     if (loadCnt == this.category.slides.length)
       //       this.onLoad(100);
       //     else
-      //       this.onLoad(loadCnt * 100 / this.category.items.length);
+      //       this.onLoad(loadCnt * 100 / this.category.slides.length);
       //   };
-      //   img.src = '/assets/categories/' + this.category.name + '/items/' + item.image;
+        //img.src = '/assets/categories/' + this.category.name + '/items/' + item.image;
       //}
     },
 
@@ -239,6 +238,7 @@
 
       category() {
         this.itemNum = 0;
+        console.log('category')
         return this.categories[this.portfolio.category];
       }
     },

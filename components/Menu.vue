@@ -126,10 +126,6 @@
       showContacts() {
         return this.$store.state.firebase.showContacts;
       },
-  
-      category() {
-        return this.categories[this.portfolio.category];
-      }
     },
   
     created() {

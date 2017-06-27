@@ -120,6 +120,7 @@ export const getters = {
   posts: state => state.posts,
   about: state => state.about,
   contacts: state => state.contacts,
+  category: state => state.categories[state.category],
 
   getCatByName: (state, getters) => (name) => {
     for (let cat of state.categories) {

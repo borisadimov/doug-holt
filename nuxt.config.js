@@ -35,7 +35,7 @@ module.exports = {
     },
 
     router: {
-      middleware: ['toggleMenu']
+      middleware: 'switchPortfolioItems'
     },
 
     extend (config, ctx) {
@@ -44,7 +44,7 @@ module.exports = {
       }
     }
   },
-  // generate: {
-  //   routes: getPortfolioRoutes
-  // }
+  generate: {
+    routes: getPortfolioRoutes
+  }
 }

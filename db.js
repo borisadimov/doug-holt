@@ -15,20 +15,19 @@ var firebaseApp = firebase.apps.length === 0
 
 var db = firebaseApp.database()
 
-// var getPortfolioRoutes = function () {
-//   return firebase.database()
-//     .ref('categories')
-//     .once('value')
-//     .then(i => i.val())
-//     .then(_.values)
-//     .then(items => _.sortBy(items, 'priority'))
-//     .then(items => items.map((item, index) => {
-//       return '/gallery/' + item.name
-//     }))
-// }
+var getPortfolioRoutes = function () {
+  return firebase.database()
+    .ref('categories')
+    .once('value')
+    .then(i => i.val())
+    .then(_.values)
+    .then(items => items.map((item, index) => {
+      return '/gallery/' + item.name
+    }))
+}
 
 module.exports = {
   db: db,
   firebase: firebase,
-  // getPortfolioRoutes: getPortfolioRoutes
+  getPortfolioRoutes: getPortfolioRoutes
 }

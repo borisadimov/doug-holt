@@ -57,6 +57,7 @@
   export default {
     name: "HomeComponent",
     layout: 'home',
+    middleware: ['switchPortfolioItems'],
   
     components: {
       ContactsComponent
@@ -92,8 +93,6 @@
         this.categoryNext,
         this.categoryPrev
       );
-
-      let loadCnt = 0;
     },
   
     beforeDestroy() {
@@ -106,6 +105,7 @@
         if (this.portfolio.showContacts)
           return;
         this.category = this.categories[this.categoryId];
+        
       },
   
       scrollBeforeEnter(el) {
