@@ -1,6 +1,6 @@
 <template lang="pug">
   .inner
-    loader-component
+    //- loader-component
     nuxt.router-view(v-bind:class="{'router-view-menu': nav.menuOpened && !nav.menuFixed}")
     //- .curtain
     .blackCurtain(:class="{'active': nav.menuOpened && !nav.menuFixed}")
@@ -39,7 +39,6 @@
 <script>
   import 'whatwg-fetch';
   import MenuComponent from '~/components/Menu';
-  import LoaderComponent from '~/components/Loader';
   import {mapMutations} from 'vuex';
   import { db } from '~/db'
 
@@ -50,8 +49,7 @@
     middleware: 'switchPortfolioItems',
 
     components: {
-      MenuComponent,
-      LoaderComponent
+      MenuComponent
     },
 
     data () {
