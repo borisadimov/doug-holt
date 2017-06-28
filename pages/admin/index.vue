@@ -328,7 +328,7 @@ export default {
       this.deployFailed = false
       this.isDeploying = true
 
-      fetch('https://api.netlify.com/build_hooks/5942ceca8ebdd929d962e243', {
+      fetch('https://api.netlify.com/build_hooks/594e8a133c1d5e730e2e924a', {
         method: 'POST'
       })
         .then(setTimeout(() => {
