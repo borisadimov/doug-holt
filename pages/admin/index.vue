@@ -75,7 +75,7 @@
               input(type="text" placeholder="The Project Name" @input="inputChange" v-model="portfolioItem.name")
             .editing-field
               .editing-label Info
-              input(type="text" placeholder="Any description" @input="inputChange" v-model="portfolioItem.info")
+              textarea(type="text" placeholder="Any description" @input="inputChange" v-model="portfolioItem.info")
             .editing-field
               .editing-label Cover Image URL
               input(type="text" placeholder="http://path/to/image/url" v-model="portfolioItem.cover")
@@ -493,7 +493,7 @@ $primary-color: #EBC8B2;
   .editing {
     position: fixed;
     left: 50px;
-    top: 0px;
+    top: 35px;
 
     height: 100vh;
     width: 30%;
@@ -692,17 +692,6 @@ $primary-color: #EBC8B2;
 </style>
 
 <style lang="scss">
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .3s
-  }
-
-  .fade-enter-active {
-    transition-delay: .35s;
-  }
-
-  .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
-    opacity: 0
-  }
 
   .mark {
     margin: 50px 0;
@@ -894,6 +883,10 @@ $primary-color: #EBC8B2;
     &:nth-child(even) {
       padding-right: 0;
     }
+  }
+
+  .editing-field__new-slide {
+    margin-bottom: 20px;
   }
 
   .mark-item__image {

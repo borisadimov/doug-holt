@@ -12,7 +12,7 @@
         nuxt-link(to="/admin").link Home
         nuxt-link(to="/admin/about").link About
         nuxt-link(to="/admin/contacts").link Contacts
-        nuxt
+      nuxt
 </template>
 
 <script>
@@ -56,18 +56,6 @@ export default {
 
   body {
     margin: 0;
-  }
-
-  .page-enter-active, .page-leave-active {
-    transition: opacity .5s ease;
-  }
-
-  .page-enter-active {
-    transition-delay: .5s;
-  }
-
-  .page-enter, .page-leave-active {
-    opacity: 0;
   }
 
   #app {
