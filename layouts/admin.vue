@@ -21,6 +21,7 @@ import { firebase } from '~/db';
 
 export default {
   name: 'adminLayout',
+  middleware: 'disableLoader',
 
   data() {
     return {

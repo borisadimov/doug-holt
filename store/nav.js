@@ -10,7 +10,8 @@ export const state = {
 
   menuOpened: true,
   menuFixed: true,
-  menuRightOpened: false
+  menuRightOpened: false,
+  disableLoader: false
 }
 
 export const mutations = {
@@ -48,6 +49,14 @@ export const mutations = {
 
   makeMenuUnfixed(state) {
     state.menuFixed = false;
+  },
+
+  hideLoader(state) {
+    state.disableLoader = false
+  },
+
+  showLoader(state) {
+    state.disableLoader = true;
   },
 
   makeMenuFixed(state) {
