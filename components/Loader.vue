@@ -3,7 +3,7 @@
     name="main"
     v-bind:leave-active-class="leaveActClass"
     )
-    .loader(v-show="loadProgress!=100")
+    .loader(v-show="loadProgress!=100" v-if="disableLoader")
       .curtain
       transition(name="content")
         .loader-content(v-if="true")
@@ -36,6 +36,7 @@
         progress: 0,
         // contentShow: false,
         // timeout: 0,
+
 
         leaveActClass: 'main-leave-active-menu',
       }
@@ -119,6 +120,10 @@
     computed: {
       loadProgress() {
         return this.$store.state.nav.loadProgress
+      },
+
+      disableLoader() {
+        return this.$store.state.nav.disableLoader;
       }
     }
   }
