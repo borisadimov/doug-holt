@@ -87,7 +87,7 @@
       this.makeMenuFixed();
       this.menuOpen();
       this.onCatUpdate();
-      this.onLoad(100);
+      this.handleUpdate()
       this.scrollHandler = new ScrollHandler(
         this.categoryNext,
         this.categoryPrev
@@ -99,6 +99,24 @@
     },
 
     methods: {
+      handleUpdate() {
+        if (this.$store.state.nav.loadProgress === 100) return
+        let loadCnt = 0;
+        const loadHandler = () => {
+          loadCnt++;
+          if (loadCnt == this.categories.length)
+            this.onLoad(100);
+          else
+            this.onLoad(loadCnt * 100 / this.categories.length);
+        };
+
+        for (let category of this.categories) {
+          let img = new Image();
+          img.onerror = loadHandler;
+          img.onload = loadHandler;
+          img.src = category.cover;
+        }
+      },
 
       onCatUpdate() {
         if (this.portfolio.showContacts)
