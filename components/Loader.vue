@@ -32,7 +32,7 @@
         color: 'black',
         failedColor: 'red',
         height: '2px',
-        duration: 10000,
+        duration: 5000,
         progress: 0,
         // contentShow: false,
         // timeout: 0,
@@ -48,73 +48,7 @@
     },
 
     methods: {
-      // start() {
-      //   this.loading = true
-      // },
-      //
-      // finish() {
-      //   this.loading = false
-      // }
 
-      start () {
-        this.show = true
-        this.canSuccess = true
-        if (this._timer) {
-          clearInterval(this._timer)
-          this.percent = 0
-        }
-        this._cut = 10000 / Math.floor(this.duration)
-        this._timer = setInterval(() => {
-          this.increase(this._cut * Math.random())
-          if (this.percent > 95) {
-            this.finish()
-          }
-        }, 100)
-        return this
-      },
-      set (num) {
-        this.show = true
-        this.canSuccess = true
-        this.percent = Math.floor(num)
-        return this
-      },
-      get () {
-        return Math.floor(this.percent)
-      },
-      increase (num) {
-        this.percent = this.percent + Math.floor(num)
-        return this
-      },
-      decrease (num) {
-        this.percent = this.percent - Math.floor(num)
-        return this
-      },
-      finish () {
-        this.percent = 100
-        this.hide()
-        return this
-      },
-      pause () {
-        clearInterval(this._timer)
-        return this
-      },
-      hide () {
-        clearInterval(this._timer)
-        this._timer = null
-        setTimeout(() => {
-          this.show = false
-          Vue.nextTick(() => {
-            setTimeout(() => {
-              this.percent = 0
-            }, 200)
-          })
-        }, 10000)
-        return this
-      },
-      fail () {
-        this.canSuccess = false
-        return this
-      }
     },
 
     computed: {
@@ -152,6 +86,7 @@
       justify-content: center;
       align-items: center;
       z-index: 11;
+      transition-delay: 3s;
 
       font-weight: 500;
       color: rgba(0,0,0,0.87);
@@ -180,23 +115,27 @@
   }
 
   .main-enter-to {
-    transition: opacity 2s ease 2s;
+    transition: opacity 2s ease 0;
     opacity: 1;
 
     .loader-content {
       opacity: 1;
-      transition: opacity .5s ease 3s;
+      transition: opacity .5s ease .5s;
       
     }
   }
 
-  .main-enter-to .loader-content {
-    opacity: 1;
-    transition: opacity .5s ease .5s;
+  .main-enter-active {
+    transition: opacity 2s ease 0s;
   }
 
+  // .main-enter-to .loader-content {
+  //   opacity: 1;
+  //   transition: opacity .5s ease .5s;
+  // }
+
   .main-enter-norm {
-    transition: opacity 2s ease;
+    transition: opacity 2s ease 2s;
     opacity: 1;
   }
 

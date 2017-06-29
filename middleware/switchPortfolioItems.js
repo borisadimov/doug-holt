@@ -3,7 +3,7 @@ export default function(context) {
 
   const to = route;
 
-  store.commit('pageOpen', {to});
+  store.commit('pageOpen', {to})
   store.commit('showLoader');
 
   if (to.name == 'gallery-id') {
