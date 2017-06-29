@@ -4,7 +4,4 @@ export default function(context) {
   const to = route;
 
   store.commit('hideLoader');
-
-  console.log(to)
-
 }

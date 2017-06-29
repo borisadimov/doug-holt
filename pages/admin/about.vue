@@ -30,7 +30,7 @@
                     span.remove(@click="removeClient(index)")
                       span ❌
                   
-                input.add-client(v-model="newClients" placeholder="Write new client")
+                input.add-client(v-model="newClients" placeholder="New client")
                 button.button(@click="addClient") Add new client
 
            

@@ -10,7 +10,4 @@ export default function(context) {
     let cat = store.getters.getCatByName(to.params.id);
     store.commit('categorySet', cat.index);
   }
-
-  console.log(to)
-
 }
