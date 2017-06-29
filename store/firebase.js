@@ -33,7 +33,7 @@ export const mutations = {
   },
 
   categorySet(state, category) {
-    const direction = category < state.category ? 'up' : 'down';
+    const direction = 'up';
     const showContacts = category === state.categories.length;
 
     state.category = category;
@@ -63,9 +63,11 @@ export const mutations = {
 
   setContacts(state) {
     state.showContacts = true;
+    state.direction = 'down';
   },
 
   hideContacts(state) {
+    state.direction = 'up';
     state.showContacts = false;
   }
 }

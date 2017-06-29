@@ -4,7 +4,7 @@
     v-bind:leave-active-class="leaveActClass"
     )
     .loader(v-show="loadProgress!=100" v-if="disableLoader")
-      .curtain
+      //- .curtain
       transition(name="content")
         .loader-content(v-if="true")
           .loader-title
@@ -71,7 +71,7 @@
     width: 100%;
     height: 100vh;
 
-    z-index: 999999999;
+    z-index: 9999;
 
     &-content {
       position: absolute;
@@ -85,7 +85,7 @@
       flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
-      z-index: 11;
+      z-index: 999;
       transition-delay: 3s;
 
       font-weight: 500;
@@ -126,7 +126,7 @@
   }
 
   .main-enter-active {
-    transition: opacity 2s ease 0s;
+    transition: opacity 2s ease 1s;
   }
 
   // .main-enter-to .loader-content {
