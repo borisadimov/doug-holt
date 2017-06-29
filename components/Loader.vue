@@ -1,7 +1,6 @@
 <template lang="pug">
   transition(
     name="main"
-    v-bind:enter-class="enterClass"
     v-bind:leave-active-class="leaveActClass"
     )
     .loader(v-show="loadProgress!=100")
@@ -33,13 +32,12 @@
         color: 'black',
         failedColor: 'red',
         height: '2px',
-        duration: 5000,
+        duration: 10000,
         progress: 0,
         // contentShow: false,
         // timeout: 0,
 
         leaveActClass: 'main-leave-active-menu',
-        enterClass: 'main-enter-active-menu'
       }
     },
 
@@ -119,65 +117,10 @@
     },
 
     computed: {
-      // nav() {
-      //   return this.$store.state.nav;
-      // },
-
       loadProgress() {
         return this.$store.state.nav.loadProgress
-      },
-
-      // loadProgress() {
-
-      //   if (this.$store.state.nav.loadProgress < 100) {
-      //     if (this.loaderShow)
-      //       return;
-      //     this.show();
-      //     setTimeout(() => {
-      //       this.loaderCan1 = true;
-      //       if (this.loaderCan2)
-      //         this.hide();
-      //     }, 1500);
-
-      //   } else {
-      //     this.loaderCan2 = true;
-      //     if (this.loaderCan1)
-      //       this.hide();
-      //   }
-      // },
-
-      // pageCurrent() {
-      //   this.onPageUpd();
-      //   return this.nav.pageCurrent
-      // }
-    },
-
-    // watch: {
-    //   'nav.loadProgress': {
-    //     handler() {
-    //       if (this.nav.loadProgress < 100) {
-    //         if (this.loaderShow)
-    //           return;
-    //         this.show();
-    //         setTimeout(() => {
-    //           this.loaderCan1 = true;
-    //           if (this.loaderCan2)
-    //             this.hide();
-    //         }, 1500);
-    //       } else {
-    //         this.loaderCan2 = true;
-
-    //         if (this.loaderCan1)
-    //           this.hide();
-    //       }
-    //     }
-    //   },
-    //   'nav.pageCurrent': {
-    //     handler() {
-    //       this.onPageUpd();
-    //     }
-    //   }
-    // }
+      }
+    }
   }
 </script>
 
@@ -187,17 +130,17 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: #fff;
+    height: 100vh;
 
-    z-index: 9999999;
+    z-index: 999999999;
 
     &-content {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 100vh;
+      opacity: 0;
 
       display: flex;
       flex-flow: column nowrap;
@@ -231,24 +174,41 @@
     }
   }
 
-  .main-enter-active-menu {
+  .main-enter-to {
+    transition: opacity 2s ease 2s;
+    opacity: 1;
+
+    .loader-content {
+      opacity: 1;
+      transition: opacity .5s ease 3s;
+      
+    }
+  }
+
+  .main-enter-to .loader-content {
+    opacity: 1;
+    transition: opacity .5s ease .5s;
+  }
+
+  .main-enter-norm {
     transition: opacity 2s ease;
     opacity: 1;
   }
-  // .main-enter-norm {
-  //   transition: opacity 2s ease;
-  //   opacity: 1;
-  // }
 
   .main-leave-active-menu {
     transition: opacity .5s ease 2s;
     opacity: 0;
     z-index: 20;
   }
-  .main-leave-active-norm {
-    transition: opacity .5s ease 1s;
+
+  .main-leave-active-menu .loader-content {
     opacity: 0;
+    transition: opacity 1s ease .5s;
   }
+  // .main-leave-active-norm {
+  //   transition: opacity .5s ease 1s;
+  //   opacity: 0;
+  // }
 
   .main-leave-active-menu .curtain {
     transform: translate3d(0, -100%, 0);
@@ -260,7 +220,7 @@
   }
 
   .content-enter-active {
-    transition: opacity 1s, transform 1s;
+    transition: opacity 1s, transform 3s;
   }
   .content-leave-active {
     transition: opacity .2s, transform .2s;
