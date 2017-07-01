@@ -4,11 +4,11 @@ export default function(context) {
   
   store.commit('pageOpen', {to})
   store.dispatch('throttle');
-  
+
   store.commit('showLoader');
 
   if (to.name == 'gallery-id') {
     let cat = store.getters.getCatByName(to.params.id);
-    setTimeout(() => store.commit('categorySet', cat.index), 1000)
+    setTimeout(() => store.commit('categorySet', (cat|| {}).index ), 1000)
   }
 }
