@@ -1,33 +1,25 @@
 
-.curtain {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: #fff;
-  opacity: 1;
-  z-index: 50;
-  transition: transform 1s;
-  transform: translate3d(0, -100%, 0);
-  will-change: transform;
-}
 
-.page-enter-active + .curtain {
+
+/*.curtain.active {
+  transform: translate3d(0,0,0);
+}*/
+
+/*.page-enter-active + .curtain {
   transform: translate3d(0, 0, 0);
 }
 
 .page-leave-active + .curtain {
   transform: translate3d(0, 0, 0);
-}
+}*/
 
-.page-leave-active ~ .menu-leave-active {
+/*.page-leave-active ~ .menu-leave-active {
   transition-delay: 1s;
 }
 
 .page-leave-active.gallery {
   transition-delay: 1s !important;
-}
+}*/
 
 .page-leave .category {
   transform: translateX(0) !important;

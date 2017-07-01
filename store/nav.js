@@ -8,6 +8,9 @@ export const state = {
 
   loadProgress: 0,
 
+  timeoutId: null,
+  ready: null,
+
   menuOpened: true,
   menuFixed: true,
   menuRightOpened: false,
@@ -24,11 +27,6 @@ export const mutations = {
       menuOpened = true;
 
     let loadProgress = 0;
-    // if ((to.name == PAGE_CONTACTS && !!from.name) || from.name == PAGE_CONTACTS)
-    //   loadProgress = 100;
-    //
-    // if (from.name == PAGE_GALLERY && to.name == PAGE_GALLERY)
-    //   loadProgress = 100;
 
     let pagePrev = from.name ? from.name : state.pagePrev;
     let prevParams = from.params ? from.params : state.prevParams;
@@ -76,11 +74,29 @@ export const mutations = {
   },
 
   onLoad(state, progress) {
-    if (progress > state.loadProgress) {
+    if (progress === 100) { 
+      state.ready.then(() => {
+        state.loadProgress = 100
+      })
+    }
+    if (progress > state.loadProgress && progress !== 100) {
       state.loadProgress = progress
     }
     else {
       return state;
     }
   }
+}
+
+export const actions = {
+  throttle({state}) {
+    state.ready = new Promise((res, rej) => {
+      setTimeout(() => res('result'), 3000);
+    })
+  },
+
+  // setThrottle({commit, dispatch}, payload) {
+  //   dispatch('throttle');
+  //   commit('pageOpen', payload);
+  // }
 }
