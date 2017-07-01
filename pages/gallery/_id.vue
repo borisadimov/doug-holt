@@ -1,5 +1,58 @@
 <template lang="pug">
   .gallery
+    .menu-burger(
+      ref="burgerGallery"
+      @click="onMenuToggle"
+      )
+      |<svg width="35px" height="14px" viewBox="0 0 35 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      |    <defs></defs>
+      |    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      |        <g id="burger-right" transform="translate(0.000000, 1.000000)" stroke="#000000">
+      |            <path class="line13" d="M15,0 L35,0" id="Path-2"></path>
+      |            <path d="M15,6 L35,6" id="Path-2-Copy"></path>
+      |            <path class="line13" d="M15,12 L35,12" id="Path-2-Copy-2"></path>
+      |            <path class="line13" d="M11,0 L13,0" id="Path-2-Copy-5"></path>
+      |            <path d="M11,6 L13,6" id="Path-2-Copy-4"></path>
+      |            <path class="line13" d="M11,12 L13,12" id="Path-2-Copy-3"></path>
+      |            <g id="arrow" class="arrow">
+      |                <polyline id="sidebar-right-close-arrow" transform="translate(33.010000, 6.250000) rotate(270.000000) translate(-33.010000, -6.250000) " points="27.0047964 4.0000002 33.0100002 8.5000002 39.015204 4.0000002"></polyline>
+      |            </g>
+      |        </g>
+      |    </g>
+      |</svg>
+    transition(name="curtain")
+      .menu-curtain(
+        v-if="nav.menuRightOpened"
+        @click="onCurtainClick"
+        )
+
+    transition(name="menu")
+      .menu(v-if="nav.menuRightOpened")
+        .menu-title
+          | {{ category.name }} List
+        .menu-list
+          .menu-header
+            .menu-order
+              | Order
+            .menu-name
+              | Title
+            .menu-client
+              | Client
+          .menu-item(
+            v-for="(item, i) of category.items"
+            @click="onMenuItemClick(i)"
+            )
+            .menu-order
+              | {{ i + 1 }}
+            .menu-name
+              .menu-dot
+                .menu-dotBg(
+                  v-bind:key="i"
+                  v-if="i == itemNum"
+                  )
+              | {{ item.title }}
+            .menu-client
+              | {{ item.client }}
     .content(v-bind:class="{'content-menu': nav.menuRightOpened}" v-if="category")
       .title
         | {{ category.name }}
@@ -254,13 +307,17 @@
         handler () {
           //this.scrollHandler.disabled = this.nav.menuRightOpened;
           if (this.nav.menuRightOpened) {
-            this.burgerArrow.classList.add('arrow-show');
-            for (let i = 0; i < this.burgerLines13.length; i++)
-              this.burgerLines13[i].classList.add('line13-show');
+            this.burgerArrow && this.burgerArrow.classList.add('arrow-show');
+            if (this.burgerLines13) {
+              for (let i = 0; i < this.burgerLines13.length; i++)
+                this.burgerLines13[i].classList.add('line13-show');
+            }
           } else {
-            this.burgerArrow.classList.remove('arrow-show');
-            for (let i = 0; i < this.burgerLines13.length; i++)
-              this.burgerLines13[i].classList.remove('line13-show');
+            this.burgerArrow && this.burgerArrow.classList.remove('arrow-show');
+            if (this.burgerLines13) {
+              for (let i = 0; i < this.burgerLines13.length; i++)
+                this.burgerLines13[i].classList.remove('line13-show');
+            }
           }
         }
       },
