@@ -102,14 +102,12 @@
   
     methods: {
       inputChange: function(event) {
-        console.log(this, event)
         this.hasFilledField = event.target.value !== ''
       },
   
       addClient() {
         const newClientsArr = this.newClients.split(' ').join('').split(',');
         this.clients.push(...newClientsArr);
-        console.log(this.clients)
       },
 
       removeClient(index) {
@@ -127,7 +125,6 @@
     },
 
     created() {
-      console.log(this.$store.getters, "getters")
       this.$store.dispatch('setAboutRef', $about);
       // this.about = this.$store.getters.about;
     }

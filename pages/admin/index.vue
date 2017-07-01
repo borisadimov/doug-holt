@@ -116,7 +116,7 @@
               input(type="text" placeholder="The Project Name" @input="inputChange" v-model="postItem.title")
             .editing-field
               .editing-label Text
-              input(type="text" placeholder="Text" @input="inputChange" v-model="postItem.text")
+              textarea(type="text" placeholder="Text" @input="inputChange" v-model="postItem.text")
             .editing-field
               .editing-label Post Image
               input(type="text" placeholder="http://path/to/image/url" v-model="postItem.image")
@@ -215,7 +215,6 @@ export default {
     ...mapGetters(['user']),
 
     isAllEmpties () {
-      console.log('isAllEmpties', this.portfolioItem)
       return Object.keys(this.portfolioItem)
         .every(key => this.portfolioItem[key] === '')
     },
@@ -227,7 +226,6 @@ export default {
 
   methods: {
     inputChange: function (event) {
-      console.log(this, event)
       this.hasFilledField = event.target.value !== ''
     },
 
@@ -252,11 +250,9 @@ export default {
     edit: function (key) {
       this.editing = true
       this.editingId = key
-      console.log('this.editingId', this.editingId)
       $categories.child(key).once('value')
         .then(d => { 
           this.portfolioItem = d.val() 
-          console.log('portfolio-item', this.portfolioItem);
         })
       
     },
@@ -355,7 +351,6 @@ export default {
     this.$store.dispatch('setCategoriesRef', $categories);
     this.categories = this.$store.getters.categories;
     this.posts = this.$store.getters.posts;
-    console.log(this.$store)
   }
 
 }

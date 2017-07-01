@@ -96,7 +96,6 @@
   
     methods: {
       inputChange: function(event) {
-        console.log(this, event)
         this.hasFilledField = event.target.value !== ''
       },
 
