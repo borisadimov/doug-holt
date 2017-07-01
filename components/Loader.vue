@@ -1,5 +1,6 @@
 <template lang="pug">
   transition(
+    appear
     name="main"
     v-bind:leave-active-class="leaveActClass"
     )
