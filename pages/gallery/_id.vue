@@ -297,7 +297,6 @@
 
       category() {
         this.itemNum = 0;
-        // console.log('category')
         return this.categories[this.portfolio.category];
       }
     },
