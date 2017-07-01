@@ -4,7 +4,7 @@
     v-bind:leave-active-class="leaveActClass"
     )
     .loader(v-show="loadProgress!=100" v-if="disableLoader")
-      //- .curtain
+      .curtain
       transition(name="content")
         .loader-content(v-if="true")
           .loader-title
@@ -48,7 +48,73 @@
     },
 
     methods: {
+      // start() {
+      //   this.loading = true
+      // },
+      //
+      // finish() {
+      //   this.loading = false
+      // }
 
+      start () {
+        this.show = true
+        this.canSuccess = true
+        if (this._timer) {
+          clearInterval(this._timer)
+          this.percent = 0
+        }
+        this._cut = 10000 / Math.floor(this.duration)
+        this._timer = setInterval(() => {
+          this.increase(this._cut * Math.random())
+          if (this.percent > 95) {
+            this.finish()
+          }
+        }, 100)
+        return this
+      },
+      set (num) {
+        this.show = true
+        this.canSuccess = true
+        this.percent = Math.floor(num)
+        return this
+      },
+      get () {
+        return Math.floor(this.percent)
+      },
+      increase (num) {
+        this.percent = this.percent + Math.floor(num)
+        return this
+      },
+      decrease (num) {
+        this.percent = this.percent - Math.floor(num)
+        return this
+      },
+      finish () {
+        this.percent = 100
+        this.hide()
+        return this
+      },
+      pause () {
+        clearInterval(this._timer)
+        return this
+      },
+      hide () {
+        clearInterval(this._timer)
+        this._timer = null
+        setTimeout(() => {
+          this.show = false
+          Vue.nextTick(() => {
+            setTimeout(() => {
+              this.percent = 0
+            }, 200)
+          })
+        }, 10000)
+        return this
+      },
+      fail () {
+        this.canSuccess = false
+        return this
+      }
     },
 
     computed: {
@@ -64,6 +130,18 @@
 </script>
 
 <style scoped lang="scss" rel="stylesheet/scss">
+  .curtain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #fff;
+    opacity: 1;
+    z-index: 10;
+    transform: translate3d(0, -100%, 0);
+    will-change: transform;
+  }
   .loader {
     position: absolute;
     top: 0;
@@ -71,7 +149,7 @@
     width: 100%;
     height: 100vh;
 
-    z-index: 9999;
+    z-index: 999999999;
 
     &-content {
       position: absolute;
@@ -85,7 +163,7 @@
       flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
-      z-index: 999;
+      z-index: 11;
       transition-delay: 3s;
 
       font-weight: 500;
@@ -115,62 +193,33 @@
   }
 
   .main-enter-to {
-    transition: opacity 2s ease 0;
-    opacity: 1;
-
-    .loader-content {
-      opacity: 1;
-      transition: opacity .5s ease .5s;
-      
-    }
-  }
-
-  .main-enter-active {
-    transition: opacity 2s ease 1s;
-  }
-
-  // .main-enter-to .loader-content {
-  //   opacity: 1;
-  //   transition: opacity .5s ease .5s;
-  // }
-
-  .main-enter-norm {
-    transition: opacity 2s ease 2s;
+    transition: opacity 1s ease 3s;
     opacity: 1;
   }
 
-  .main-leave-active-menu {
-    transition: opacity .5s ease 2s;
-    opacity: 0;
-    z-index: 20;
+  .main-leave-to {
+    transition: opacity 3s ease;
+    opacity: 1;
+  }
+
+  .main-enter-to .curtain {
+    transform: translate3d(0,0,0);
+    transition: transform .5s ease;
+  }
+
+  .main-leave-active-menu .curtain {
+    transform: translate3d(0,-100%,0);
+    transition: transform .5s ease 2.5s;
+  }
+
+  .main-enter-to .loader-content {
+    opacity: 1;
+    transition: opacity 1s ease .5s;
   }
 
   .main-leave-active-menu .loader-content {
     opacity: 0;
     transition: opacity 1s ease .5s;
   }
-  // .main-leave-active-norm {
-  //   transition: opacity .5s ease 1s;
-  //   opacity: 0;
-  // }
-
-  .main-leave-active-menu .curtain {
-    transform: translate3d(0, -100%, 0);
-    transition-delay: 1s;
-  }
-
-  .main-enter-to .curtain {
-    transform: translate3d(0, 0, 0);
-  }
-
-  .content-enter-active {
-    transition: opacity 1s, transform 3s;
-  }
-  .content-leave-active {
-    transition: opacity .2s, transform .2s;
-  }
-  .content-enter, .content-leave-active {
-    opacity: 0;
-    transform: translate3d(0, 70px, 0);
-  }
+  
 </style>
