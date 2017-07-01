@@ -175,6 +175,7 @@
         'categoryPrev',
         'makeMenuFixed',
         'menuOpen',
+        'menuClose',
         'onLoad'
       ])
 

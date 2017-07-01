@@ -210,7 +210,7 @@
 
   .main-leave-active-menu .curtain {
     transform: translate3d(0,-100%,0);
-    transition: transform .5s ease 1s;
+    transition: transform .5s ease .7s;
   }
 
   .main-enter-to .loader-content {
