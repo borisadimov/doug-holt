@@ -2,6 +2,8 @@ const PAGE_HOME          = 'index';
 const PAGE_GALLERY       = 'gallery-id';
 const PAGE_CONTACTS      = 'contacts';
 
+let ready = Promise.resolve();
+
 export const state = {
   pageCurrent: PAGE_HOME,
   pagePrev: PAGE_HOME,
@@ -9,7 +11,6 @@ export const state = {
   loadProgress: 0,
 
   timeoutId: null,
-  ready: null,
 
   menuOpened: true,
   menuFixed: true,
@@ -22,10 +23,6 @@ export const mutations = {
     const to = payload.to;
     const from = payload.from || {};
 
-    let menuOpened = false;
-    if (to.name == PAGE_HOME || to.name == PAGE_CONTACTS)
-      menuOpened = true;
-
     let loadProgress = 0;
 
     let pagePrev = from.name ? from.name : state.pagePrev;
@@ -35,8 +32,7 @@ export const mutations = {
     state.pagePrev = pagePrev;
     state.prevParams = prevParams;
     state.loadProgress = loadProgress;
-    state.menuOpened = menuOpened;
-    state.menuFixed = menuOpened;
+    state.menuFixed = state.menuOpened;
     state.menuRightOpened = false
   },
 
@@ -75,7 +71,7 @@ export const mutations = {
 
   onLoad(state, progress) {
     if (progress === 100) { 
-      state.ready.then(() => {
+      ready.then(() => {
         state.loadProgress = 100
       })
     }
@@ -90,13 +86,8 @@ export const mutations = {
 
 export const actions = {
   throttle({state}) {
-    state.ready = new Promise((res, rej) => {
-      setTimeout(() => res('result'), 3000);
+    ready = new Promise((res, rej) => {
+      setTimeout(res, 2000);
     })
-  },
-
-  // setThrottle({commit, dispatch}, payload) {
-  //   dispatch('throttle');
-  //   commit('pageOpen', payload);
-  // }
+  }
 }

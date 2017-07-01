@@ -9,6 +9,7 @@ export default function(context) {
 
   if (to.name == 'gallery-id') {
     let cat = store.getters.getCatByName(to.params.id);
-    setTimeout(() => store.commit('categorySet', (cat|| {}).index ), 1000)
+    if (cat)
+      store.commit('categorySet', cat.index )
   }
 }

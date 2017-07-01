@@ -194,12 +194,12 @@
   }
 
   .main-enter-to {
-    transition: opacity 1s ease 3s;
+    transition: opacity 1s ease 2s;
     opacity: 1;
   }
 
   .main-leave-to {
-    transition: opacity 3s ease;
+    transition: opacity 2s ease;
     opacity: 1;
   }
 
@@ -210,17 +210,17 @@
 
   .main-leave-active-menu .curtain {
     transform: translate3d(0,-100%,0);
-    transition: transform .5s ease 1.5s;
+    transition: transform .5s ease 1s;
   }
 
   .main-enter-to .loader-content {
     opacity: 1;
-    transition: opacity 1s ease .5s;
+    transition: opacity .5s ease .5s;
   }
 
   .main-leave-active-menu .loader-content {
     opacity: 0;
-    transition: opacity 1s ease .5s;
+    transition: opacity .5s ease;
   }
   
 </style>
