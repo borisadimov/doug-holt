@@ -97,6 +97,8 @@
 
     beforeDestroy() {
       this.scrollHandler.destroy();
+      this.makeMenuFixed();
+      this.menuOpen();
     },
 
     methods: {
