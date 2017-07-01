@@ -32,7 +32,7 @@ export const mutations = {
     state.pagePrev = pagePrev;
     state.prevParams = prevParams;
     state.loadProgress = loadProgress;
-    state.menuFixed = state.menuOpened;
+    //state.menuFixed = state.menuOpened;
     state.menuRightOpened = false
   },
 

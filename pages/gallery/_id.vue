@@ -147,7 +147,6 @@
       this.hideContacts();
       this.handleUpdate()
 
-
       if (this.category && this.category.items.length > 9)
         this.counterWidth = 24;
 
@@ -159,7 +158,7 @@
     updated() {
       this.makeMenuUnfixed();
       this.menuClose();
-      this.handleUpdate()
+      this.handleUpdate();
     },
 
     beforeDestroy() {
