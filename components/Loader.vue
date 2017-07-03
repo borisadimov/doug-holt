@@ -4,7 +4,7 @@
     name="main"
     v-bind:leave-active-class="leaveActClass"
     )
-    .loader(v-show="loadProgress!=100" v-if="disableLoader")
+    .loader(v-show="loadProgress!=100 && disableLoader")
       .curtain
       transition(name="content")
         .loader-content(v-if="true")

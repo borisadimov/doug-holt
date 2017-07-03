@@ -66,6 +66,10 @@ export default {
     position: relative;
   }
 
+  .loader {
+    display: none !important;
+  }
+
 </style>
 
 <<style scoped lang="scss">

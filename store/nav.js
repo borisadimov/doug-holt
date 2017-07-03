@@ -46,7 +46,7 @@ export const mutations = {
   },
 
   hideLoader(state) {
-    state.disableLoader = false
+    state.disableLoader = false;
   },
 
   showLoader(state) {
