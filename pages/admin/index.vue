@@ -342,7 +342,6 @@ export default {
   },
 
   mounted() {
-    store.commit('hideLoader');
   },
 
   created() {
