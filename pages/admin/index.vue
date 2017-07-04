@@ -26,7 +26,7 @@
 
         .portfolio-list
           .portfolio-item(v-for="item in posts")
-            a(:href="'/journal/' + item.name" target="_blank") {{ item.title }}
+            a(:href="'/journal/' + item.id" target="_blank") {{ item.title }}
             .portfolio-controls
               span.portfolio-edit(v-if="editingId !== item['.key']" @click="editPost(item['.key'])")
                 | ✏️
@@ -205,14 +205,12 @@ export default {
       hasFilledField: false,
       isDeploying: false,
       deployFailed: false,
-      newSlide: {},
-      categories: [],
-      posts: []
+      newSlide: {}
     }
   },
 
   computed: {
-    ...mapGetters(['user']),
+    ...mapGetters(['user', 'categories', 'posts']),
 
     isAllEmpties () {
       return Object.keys(this.portfolioItem)
@@ -346,10 +344,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('setPostsRef', $posts);
-    this.$store.dispatch('setCategoriesRef', $categories);
-    this.categories = this.$store.getters.categories;
-    this.posts = this.$store.getters.posts;
+    
   }
 
 }
