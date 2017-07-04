@@ -101,7 +101,7 @@
     },
 
     created() {
-      this.activePost = this.post;
+      this.activePost = this.post || {};
     },
 
     methods: {
@@ -122,7 +122,7 @@
 
       onMenuItemClick (post) {
         this.menuRightClose();
-        this.activePost = post;
+        this.activePost = post || {};
         history.replaceState({path: "/journal/" + post.id}, "post.id", "/journal/" + post.id);
       },
 
