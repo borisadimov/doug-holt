@@ -87,7 +87,7 @@
       return {
         burgerLines13: null,
         burgerArrow: null,
-        activePost: this.post
+        activePost: this.post || {}
       }
     },
 
