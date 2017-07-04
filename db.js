@@ -16,7 +16,7 @@ var firebaseApp = firebase.apps.length === 0
 var db = firebaseApp.database()
 
 var getPortfolioRoutes = function () {
-  return firebase.database()
+  const categories = firebase.database()
     .ref('categories')
     .once('value')
     .then(i => i.val())
@@ -24,6 +24,22 @@ var getPortfolioRoutes = function () {
     .then(items => items.map((item, index) => {
       return '/gallery/' + item.name
     }))
+
+  const posts = firebase.database()
+    .ref('posts')
+    .once('value')
+    .then(i => i.val())
+    .then(_.values)
+    .then(items => items.map((item, index) => {
+      return '/journal/' + item.id
+    }))
+  
+  return Promise.all([posts, categories]).then(values => {
+    const routes = [];
+    values.map(item => item.map(route => routes.push(route)));
+    console.log(routes);
+    return routes;
+  });
 }
 
 module.exports = {
