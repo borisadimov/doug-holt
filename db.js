@@ -37,7 +37,6 @@ var getPortfolioRoutes = function () {
   return Promise.all([posts, categories]).then(values => {
     const routes = [];
     values.map(item => item.map(route => routes.push(route)));
-    console.log(routes);
     return routes;
   });
 }
