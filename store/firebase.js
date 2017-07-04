@@ -22,6 +22,12 @@ export const mutations = {
   ...firebaseMutations,
   login (state, user) {
     state.user = !!user
+    state.isSet = {
+      categories: false,
+      posts: false,
+      about: false,
+      contacts: false,
+    }
   },
 
   logout (state) {

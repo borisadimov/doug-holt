@@ -45,7 +45,7 @@
         vue-markdown(v-if="portfolioItem.info !== ''", :source="portfolioItem.info")
       .mark__subtitle(v-if="portfolioItem.cover !== ''")
         img(:src="portfolioItem.cover", alt="")
-      
+
       .mark__slides(v-if="portfolioItem.items.length > 0")
         .mark__slide(v-for="(slide, id) in portfolioItem.items")
           .mark__slideImg
@@ -138,7 +138,7 @@
                 span ❌
                 | Cancel
 
-        
+
 
     .buttons(v-if="editingId === undefined && editingPostId === undefined")
       .button.deploy(@click="deploy")
@@ -251,10 +251,10 @@ export default {
       this.editing = true
       this.editingId = key
       $categories.child(key).once('value')
-        .then(d => { 
-          this.portfolioItem = d.val() 
+        .then(d => {
+          this.portfolioItem = d.val()
         })
-      
+
     },
 
     editPost: function(key) {
@@ -342,10 +342,10 @@ export default {
   },
 
   mounted() {
+
   },
 
   created() {
-
     this.$store.dispatch('setPostsRef', $posts);
     this.$store.dispatch('setCategoriesRef', $categories);
     this.categories = this.$store.getters.categories;

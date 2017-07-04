@@ -1,6 +1,5 @@
 <template lang="pug">
   .inner
-    //- loader-component
     nuxt.router-view(v-bind:class="{'router-view-menu': nav.menuOpened && !nav.menuFixed}")
     .curtain
     .blackCurtain(:class="{'active': nav.menuOpened && !nav.menuFixed}")

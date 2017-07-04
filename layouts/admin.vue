@@ -1,13 +1,13 @@
 <template lang="pug">
   div
-    .login(v-if="!user")
+    .login(v-show="!user")
       .login-inner
         .login-title Welcome to Doug Holt Admin
         input(type='text' placeholder="Email" v-model="email")
         input(type='password' placeholder="Password"  v-model="password")
         .button(@click="login")
           | Log in
-    .inner(v-if="user")
+    .inner(v-show="user")
       .header
         nuxt-link(to="/admin").link Home
         nuxt-link(to="/admin/about").link About
@@ -17,7 +17,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { firebase } from '~/db';
+import { firebase, db } from '~/db';
+
+const $categories = db.ref('categories')
+const $posts = db.ref('posts')
 
 export default {
   name: 'adminLayout',
@@ -36,6 +39,8 @@ export default {
 
       firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
         this.$store.dispatch('login', { user })
+        this.$store.dispatch('setPostsRef', $posts);
+        this.$store.dispatch('setCategoriesRef', $categories);
       }).catch((error) => {
         const errorMessage = error.message
         alert(errorMessage)
@@ -107,14 +112,14 @@ $primary-color: #EBC8B2;
   .header {
     background: $primary-color;
     padding: 10px 20px;
-    
+
     a {
       color: #fff;
       text-decoration: none;
       margin-left: 10px;
       font-size: 20px;
       font-family: sans-serif;
-      
+
       &:hover {
         text-decoration: underline;
       }
