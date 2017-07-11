@@ -78,12 +78,18 @@
               textarea(type="text" placeholder="Any description" @input="inputChange" v-model="portfolioItem.info")
             .editing-field
               .editing-label Cover Image URL
-              input(type="text" placeholder="http://path/to/image/url" v-model="portfolioItem.cover")
+              
+              .button.image-content-btn(@click="handleContentModalClick")
+                span 🏞
+                | add image
+
             .editing-field
               .editing-label Slides
               .editing-field__new-slide
                 input(type="text" placeholder="Title" @input="inputChange" v-model="newSlide.title")
-                input(type="text" placeholder="Image" @input="inputChange" v-model="newSlide.image")
+                .button.image-content-btn(@click="handleSlideModalClick")
+                  span 🏞
+                  | add image
                 input(type="text" placeholder="Client" @input="inputChange" v-model="newSlide.client")
                 .button.save(@click="addNewSlide(portfolioItem.items)")
                     span ✅
@@ -119,7 +125,9 @@
               textarea(type="text" placeholder="Text" @input="inputChange" v-model="postItem.text")
             .editing-field
               .editing-label Post Image
-              input(type="text" placeholder="http://path/to/image/url" v-model="postItem.image")
+              .button.image-content-btn(@click="handleContentModalClick")
+                span 🏞
+                | add image
             .editing-field
               .editing-label Author
               input(type="text" placeholder="Author" v-model="postItem.author")
@@ -147,6 +155,34 @@
         span(v-if="deployFailed === true") 👎
         | Deploy
 
+    transition(name='modal' v-if="showModal" @close="showModal = false")
+      .modal-mask
+        .modal-wrapper
+          .modal-container
+            .images(@click="showModal = false")
+              admin-image-card( v-for="(image, index) in images"
+                                v-bind:key="index"
+                                v-bind:image="image"
+                                v-on:on-remove-click="remove"
+                                v-on:on-card-click="addImageToContent")
+            image-uploader
+            .button.modal-default-button(@click="showModal = false")
+              | Close
+
+    transition(name='modal' v-if="showModalSlide" @close="showModalSlide = false")
+      .modal-mask
+        .modal-wrapper
+          .modal-container
+            .images(@click="showModalSlide = false")
+              admin-image-card( v-for="(image, index) in images"
+                                v-bind:key="index"
+                                v-bind:image="image"
+                                v-on:on-remove-click="remove"
+                                v-on:on-card-click="addImageToSlide")
+            image-uploader
+            .button.modal-default-button(@click="showModalSlide = false")
+              | Close
+
 </template>
 
 <!-- <style src="vue-multiselect/dist/vue-multiselect.min.css"></style> -->
@@ -156,10 +192,14 @@ import { mapGetters } from 'vuex';
 import VueMarkdown from 'vue-markdown';
 //import Multiselect from 'vue-multiselect';
 
+import ImageUploader from '~components/ImageUploader'
+import AdminImageCard from '~components/AdminImageCard'
+
 var Multiselect = process.BROWSER_BUILD ? Multiselect = require('vue-multiselect') : null
 
 const $categories = db.ref('categories')
 const $posts = db.ref('posts')
+const $images = db.ref('images')
 
 const emptyItem = {
   index: '',
@@ -188,7 +228,13 @@ export default {
 
   components: {
     Multiselect,
-    VueMarkdown
+    VueMarkdown,
+    ImageUploader,
+    AdminImageCard
+  },
+
+  fetch ({ store }) {
+    return store.dispatch('setImagesRef', $images)
   },
 
   data () {
@@ -205,12 +251,14 @@ export default {
       hasFilledField: false,
       isDeploying: false,
       deployFailed: false,
-      newSlide: {}
+      newSlide: {},
+      showModal: false,
+      showModalSlide: false
     }
   },
 
   computed: {
-    ...mapGetters(['user', 'categories', 'posts']),
+    ...mapGetters(['user', 'categories', 'posts', 'images']),
 
     isAllEmpties () {
       return Object.keys(this.portfolioItem)
@@ -225,6 +273,32 @@ export default {
   methods: {
     inputChange: function (event) {
       this.hasFilledField = event.target.value !== ''
+    },
+
+    addImageToContent: function (params) {
+
+      if (this.editingId !== undefined) {
+        this.portfolioItem.cover = params.url
+      }
+      else if (this.editingPostId !== undefined) {
+        this.postItem.image = params.url
+      }      
+    },
+
+    addImageToSlide: function (params) {
+      this.newSlide.image = params.url
+    },
+
+    handleContentModalClick: function (e) {
+      e.preventDefault()
+      e.stopPropagation()
+      this.showModal = !this.showModal
+    },
+
+    handleSlideModalClick: function (e) {
+      e.preventDefault()
+      e.stopPropagation()
+      this.showModalSlide = !this.showModalSlide
     },
 
     customLabel ({ type }) {
@@ -634,6 +708,10 @@ $primary-color: #EBC8B2;
     min-height: 150px;
   }
 
+  .image-content-btn {
+    margin-bottom: 20px;
+  }
+
   @keyframes deploy {
     0%, 100% {
       transform: rotate(0deg);
@@ -888,6 +966,88 @@ $primary-color: #EBC8B2;
   .container {
     display: flex;
     flex-flow: row nowrap;
+  }
+
+   // modal
+  .modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: table;
+    transition: opacity .3s ease;
+  }
+
+  .modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .modal-container {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px auto;
+    padding: 20px 30px;
+    background-color: #EBC8B2;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    transition: all .3s ease;
+    font-family: Helvetica, Arial, sans-serif;
+
+    .images {
+      display: flex;
+      flex-wrap: wrap;
+      max-height: 600px;
+      overflow: scroll;
+    }
+
+    .button {
+      display: block;
+      flex: 1 1 100%;
+      text-align: center;
+      margin: 10px 40%;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      label {
+        color: #fff;
+        text-transform: capitalize;
+        padding: 10px 0;
+      }
+    }
+  }
+
+  .modal-header h3 {
+    margin-top: 0;
+    color: #42b983;
+  }
+
+  .modal-body {
+    margin: 20px 0;
+  }
+
+  .modal-default-button {
+    float: right;
+  }
+
+  .modal-enter {
+    opacity: 0;
+  }
+
+  .modal-leave-active {
+    opacity: 0;
+  }
+
+  .modal-enter .modal-container,
+  .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
   }
 
   @media (max-width: 768px) {

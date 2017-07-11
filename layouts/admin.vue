@@ -12,6 +12,7 @@
         nuxt-link(to="/admin").link Home
         nuxt-link(to="/admin/about").link About
         nuxt-link(to="/admin/contacts").link Contacts
+        nuxt-link(to="/admin/images").link Images
       nuxt
 </template>
 

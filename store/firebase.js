@@ -5,6 +5,7 @@ export const state = {
   user: !!firebase.auth().currentUser,
   categories: [],
   posts: [],
+  images: [],
   about: {},
   contacts: {},
   isSet: {
@@ -12,6 +13,7 @@ export const state = {
     posts: false,
     about: false,
     contacts: false,
+    images: false
   },
   category: 0,
   showContacts: false,
@@ -27,6 +29,7 @@ export const mutations = {
       posts: false,
       about: false,
       contacts: false,
+      images: false
     }
   },
 
@@ -145,6 +148,18 @@ export const actions = {
         cancelCallback: reject
       })
     })
+  }),
+
+  setImagesRef: firebaseAction(({
+      bindFirebaseRef
+    }, ref) => {
+    if (state.isSet.images) return Promise.resolve()
+    return new Promise((resolve, reject) => {
+      bindFirebaseRef('images', ref, {
+        readyCallback: resolve,
+        cancelCallback: reject
+      })
+    })
   })
 }
 
@@ -155,6 +170,7 @@ export const getters = {
   about: state => state.about,
   contacts: state => state.contacts,
   category: state => state.categories[state.category],
+  images: state => state.images,
 
   getCatByName: (state, getters) => (name) => {
     for (let cat of state.categories) {
