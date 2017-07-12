@@ -106,13 +106,17 @@
       },
   
       addClient() {
-        const newClientsArr = this.newClients.split(' ').join('').split(',');
-        this.clients.push(...newClientsArr);
+        this.clients.push(this.newClients);
       },
 
       removeClient(index) {
-        this.clients.splice(index, 1);
-        $about.child('clients').set([...this.clients]);
+        if (this.clients.length > 1) {
+          this.clients.splice(index, 1);
+          $about.child('clients').set([...this.clients]);
+        }
+        else {
+          alert('Could not be empty')
+        }
       },
 
       save: function () {
