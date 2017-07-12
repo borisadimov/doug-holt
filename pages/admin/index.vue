@@ -87,9 +87,11 @@
               .editing-label Slides
               .editing-field__new-slide
                 input(type="text" placeholder="Title" @input="inputChange" v-model="newSlide.title")
-                .button.image-content-btn(@click="handleSlideModalClick")
+                .button.image-content-btn(@click="handleSlideModalClick" v-if="!newSlide.image")
                   span 🏞
                   | add image
+                .slide-image(v-if="newSlide.image")
+                  img(:src="newSlide.image")
                 input(type="text" placeholder="Client" @input="inputChange" v-model="newSlide.client")
                 .button.save(@click="addNewSlide(portfolioItem.items)")
                     span ✅
@@ -615,6 +617,15 @@ $primary-color: #EBC8B2;
 
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+
+  .slide-image {
+    margin-bottom: 20px;
+    
+    img {
+      display: block;
+      width: 50%;
     }
   }
 
