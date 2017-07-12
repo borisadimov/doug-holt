@@ -7,6 +7,19 @@
             .editing-title
               span 🗒
               | Edit about page
+            .editing-field
+              .editing-label
+                | Edit image
+
+                .button.image-content-btn(@click="handleContentModalClick" v-if="!about.image")
+                  span 🏞
+                  | add image
+                
+                .image-preview(v-if="about.image")
+                  span.button.image-content-btn(@click="handleContentModalClick") Change Image 🏞
+                  img(:src="about.image")
+                  
+
             .editing-field(v-if="about.text_block1")
               .editing-label
                 | Edit texts
@@ -39,6 +52,20 @@
                 span ✅
                 | Save
 
+    transition(name='modal' v-if="showModal" @close="showModal = false")
+      .modal-mask
+        .modal-wrapper
+          .modal-container
+            .images(@click="showModal = false")
+              admin-image-card( v-for="(image, index) in images"
+                                v-bind:key="index"
+                                v-bind:image="image"
+                                v-on:on-remove-click="remove"
+                                v-on:on-card-click="addImageToAbout")
+            image-uploader
+            .button.modal-default-button(@click="showModal = false")
+              | Close
+
 </template>
 
 <!--<style src="vue-multiselect/dist/vue-multiselect.min.css">
@@ -53,6 +80,9 @@
     mapGetters
   } from 'vuex';
   import VueMarkdown from 'vue-markdown';
+
+  import ImageUploader from '~components/ImageUploader'
+  import AdminImageCard from '~components/AdminImageCard'
   
   var Multiselect = process.BROWSER_BUILD ? Multiselect = require('vue-multiselect') : null
   
@@ -67,7 +97,9 @@
   
     components: {
       Multiselect,
-      VueMarkdown
+      VueMarkdown,
+      ImageUploader,
+      AdminImageCard
     },
 
     // fetch ({ store }) {
@@ -82,13 +114,14 @@
         hasFilledField: false,
         isDeploying: false,
         deployFailed: false,
-        newClients: []
+        newClients: [],
+        showModal: false
         // about: null
       }
     },
   
     computed: {
-      // ...mapGetters(['about']),
+      ...mapGetters(['images']),
   
       clients() {
         return this.about.clients;
@@ -109,6 +142,17 @@
         this.clients.push(this.newClients);
       },
 
+      addImageToAbout: function (params) {
+        this.about.image = params.url
+      },
+
+      handleContentModalClick: function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+        this.showModal = !this.showModal
+        console.log(this.about.image)
+      },
+
       removeClient(index) {
         if (this.clients.length > 1) {
           this.clients.splice(index, 1);
@@ -119,11 +163,22 @@
         }
       },
 
+      remove: function (image) {
+        const storageRef = firebase.storage().ref(image['name'])
+
+        storageRef.delete().then(function () {
+          $images.child(image['.key']).remove()
+        }).catch(function (error) {
+          console.log(error)
+        })
+      },
+
       save: function () {
         $about.child('text_block1').set(this.about.text_block1);
         $about.child('text_block2').set(this.about.text_block2);
         $about.child('text_block3').set(this.about.text_block3);
         $about.child('text_block4').set(this.about.text_block4);
+        $about.child('image').set(this.about.image)
         $about.child('clients').set(this.clients);
       }
     },
@@ -309,6 +364,22 @@
     flex-flow: row nowrap;
     align-items: center;
     margin-top: 50px;
+  }
+
+  .image-preview {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    span {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
   }
   
   .button {
@@ -661,6 +732,88 @@
     .remove {
       cursor: pointer;
     }
+  }
+
+   // modal
+  .modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: table;
+    transition: opacity .3s ease;
+  }
+
+  .modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .modal-container {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px auto;
+    padding: 20px 30px;
+    background-color: #EBC8B2;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    transition: all .3s ease;
+    font-family: Helvetica, Arial, sans-serif;
+
+    .images {
+      display: flex;
+      flex-wrap: wrap;
+      max-height: 600px;
+      overflow: scroll;
+    }
+
+    .button {
+      display: block;
+      flex: 1 1 100%;
+      text-align: center;
+      margin: 10px 40%;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      label {
+        color: #fff;
+        text-transform: capitalize;
+        padding: 10px 0;
+      }
+    }
+  }
+
+  .modal-header h3 {
+    margin-top: 0;
+    color: #42b983;
+  }
+
+  .modal-body {
+    margin: 20px 0;
+  }
+
+  .modal-default-button {
+    float: right;
+  }
+
+  .modal-enter {
+    opacity: 0;
+  }
+
+  .modal-leave-active {
+    opacity: 0;
+  }
+
+  .modal-enter .modal-container,
+  .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
   }
   
   @media (max-width: 768px) {

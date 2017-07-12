@@ -165,7 +165,7 @@
               admin-image-card( v-for="(image, index) in images"
                                 v-bind:key="index"
                                 v-bind:image="image"
-                                v-on:on-remove-click="remove"
+                                v-on:on-remove-click="removeImage"
                                 v-on:on-card-click="addImageToContent")
             image-uploader
             .button.modal-default-button(@click="showModal = false")
@@ -179,7 +179,7 @@
               admin-image-card( v-for="(image, index) in images"
                                 v-bind:key="index"
                                 v-bind:image="image"
-                                v-on:on-remove-click="remove"
+                                v-on:on-remove-click="removeImage"
                                 v-on:on-card-click="addImageToSlide")
             image-uploader
             .button.modal-default-button(@click="showModalSlide = false")
@@ -285,6 +285,16 @@ export default {
       else if (this.editingPostId !== undefined) {
         this.postItem.image = params.url
       }      
+    },
+
+    removeImage: function (image) {
+      const storageRef = firebase.storage().ref(image['name'])
+
+      storageRef.delete().then(function () {
+        $images.child(image['.key']).remove()
+      }).catch(function (error) {
+        console.log(error)
+      })
     },
 
     addImageToSlide: function (params) {
@@ -622,7 +632,7 @@ $primary-color: #EBC8B2;
 
   .slide-image {
     margin-bottom: 20px;
-    
+
     img {
       display: block;
       width: 50%;
