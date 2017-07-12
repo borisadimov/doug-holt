@@ -90,7 +90,7 @@
                 .button.image-content-btn(@click="handleSlideModalClick" v-if="!newSlide.image")
                   span 🏞
                   | add image
-                .slide-image(v-if="newSlide.image")
+                .slide-image(v-if="newSlide.image" @click="handleSlideModalClick")
                   img(:src="newSlide.image")
                 input(type="text" placeholder="Client" @input="inputChange" v-model="newSlide.client")
                 .button.save(@click="addNewSlide(portfolioItem.items)")
