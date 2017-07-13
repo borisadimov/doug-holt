@@ -87,7 +87,7 @@
       this.makeMenuFixed();
       this.menuOpen();
       this.onCatUpdate();
-      this.handleUpdate()
+      this.handleUpdate();
       this.$store.dispatch('throttle');
       this.scrollHandler = new ScrollHandler(
         this.categoryNext,
@@ -176,7 +176,8 @@
         'makeMenuFixed',
         'menuOpen',
         'menuClose',
-        'onLoad'
+        'onLoad',
+        'categorySet'
       ])
 
     },

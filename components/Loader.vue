@@ -4,17 +4,16 @@
     name="main"
     v-bind:leave-active-class="leaveActClass"
     )
-    .loader(v-show="loadProgress!=100 && disableLoader")
+    .loader(v-show="!isLoaded" v-if="disableLoader")
       .curtain
-      transition(name="content")
-        .loader-content(v-if="true")
-          .loader-title
-            | Doug Holt
-          .loader-subtitle
-            | Photography
+      .loader-content
+        .loader-title
+          | Doug Holt
+        .loader-subtitle
+          | Photography
 
-          .loader-bar(v-bind:style="{'width': loadProgress+'%'}")
-            .loader-bar-line
+        .loader-bar(v-bind:style="{'width': loadProgress+'%'}")
+          .loader-bar-line
 </template>
 
 <script>
@@ -35,10 +34,6 @@
         height: '2px',
         duration: 5000,
         progress: 0,
-        // contentShow: false,
-        // timeout: 0,
-
-
         leaveActClass: 'main-leave-active-menu',
       }
     },
@@ -46,6 +41,7 @@
     mounted () {
       // this.onPageUpd();
       // this.show();
+      console.log(this.isLoaded)
     },
 
     methods: {
@@ -56,6 +52,10 @@
       // finish() {
       //   this.loading = false
       // }
+
+      returnActiveClass() {
+        return setTimeout(() => 'active', 500)
+      },
 
       start () {
         this.show = true
@@ -123,6 +123,11 @@
         return this.$store.state.nav.loadProgress
       },
 
+      isLoaded() {
+        console.log('is loaded', this.loadProgress > 99.99 ? true : false)
+        return this.loadProgress > 99.99 ? true : false;
+      },
+
       disableLoader() {
         return this.$store.state.nav.disableLoader;
       }
@@ -140,9 +145,11 @@
     background: #fff;
     opacity: 1;
     z-index: 10;
-    transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, 0, 0);
+    transition: transform .5s ease;
     will-change: transform;
   }
+
   .loader {
     position: absolute;
     top: 0;
@@ -158,14 +165,14 @@
       left: 0;
       width: 100%;
       height: 100vh;
-      opacity: 0;
+      opacity: 1;
 
       display: flex;
       flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
       z-index: 11;
-      transition-delay: 3s;
+      transition: opacity .5s ease;
 
       font-weight: 500;
       color: rgba(0,0,0,0.87);
@@ -194,33 +201,52 @@
   }
 
   .main-enter-to {
-    transition: opacity 1s ease 2s;
+    transition: opacity 1s ease;
     opacity: 1;
   }
 
   .main-leave-to {
-    transition: opacity 2s ease;
+    transition: opacity 1s ease;
     opacity: 1;
   }
 
   .main-enter-to .curtain {
     transform: translate3d(0,0,0);
-    transition: transform .5s ease;
   }
 
-  .main-leave-active-menu .curtain {
+  .main-enter .curtain {
     transform: translate3d(0,-100%,0);
-    transition: transform .5s ease .7s;
+  }
+
+  .main-leave .curtain {
+    transform: translate3d(0,0,0);
+  }
+
+  .main-leave-active .curtain {
+    transform: translate3d(0,0,0);
+    transition: transform .5s ease .5s;
+  }
+
+  .main-leave-to .curtain {
+    transform: translate3d(0,-100%,0);
+    transition: transform .5s ease .5s;
+  }
+
+  .main-enter .loader-content {
+    opacity: 0;
   }
 
   .main-enter-to .loader-content {
     opacity: 1;
-    transition: opacity .5s ease .5s;
+    transition-delay: .5s;
   }
 
-  .main-leave-active-menu .loader-content {
+  .main-leave .loader-content {
+    opacity: 1;
+  }
+
+  .main-leave-to .loader-content {
     opacity: 0;
-    transition: opacity .5s ease;
   }
   
 </style>
