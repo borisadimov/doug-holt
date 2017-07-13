@@ -41,7 +41,6 @@
     mounted () {
       // this.onPageUpd();
       // this.show();
-      console.log(this.isLoaded)
     },
 
     methods: {
@@ -124,7 +123,6 @@
       },
 
       isLoaded() {
-        console.log('is loaded', this.loadProgress > 99.99 ? true : false)
         return this.loadProgress > 99.99 ? true : false;
       },
 
