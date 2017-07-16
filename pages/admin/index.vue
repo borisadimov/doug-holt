@@ -46,15 +46,19 @@
       .mark__subtitle(v-if="portfolioItem.cover !== ''")
         img(:src="portfolioItem.cover", alt="")
 
-      .mark__slides(v-if="portfolioItem.items.length > 0")
-        .mark__slide(v-for="(slide, id) in portfolioItem.items")
+      .mark__slides(v-if="portfolioSlides.length > 0")
+        .mark__slide(v-for="(slide, id) in portfolioSlides")
           .mark__slideImg
+            .mark__left(@click="moveSlideUp(id, portfolioItem)")
+              span 👈
             img(:src="slide.image", :key="slide.index")
+            .mark__right(@click="moveSlideDown(id, portfolioItem)")
+              span 👉
           .mark__slideTitle
             | {{ slide.title }}
           .mark__slideClient
             | {{ slide.client }}
-          .mark__remove(@click="removeCatSlide(portfolioItem.items, id)")
+          .mark__remove(@click="removeCatSlide(portfolioSlides, id)")
             | ❌
 
     .form(v-if="editingId !== undefined", :class="{'form-centered': isAllEmpties}")
@@ -255,7 +259,8 @@ export default {
       deployFailed: false,
       newSlide: {},
       showModal: false,
-      showModalSlide: false
+      showModalSlide: false,
+      slides: []
     }
   },
 
@@ -269,12 +274,40 @@ export default {
 
     lastProjectId () {
       return this.categories.slice(-1)[0] ? this.categories.slice(-1)[0].index : 0
+    },
+
+    portfolioSlides() {
+      return this.portfolioItem.items;
     }
   },
 
   methods: {
     inputChange: function (event) {
       this.hasFilledField = event.target.value !== ''
+    },
+
+    moveSlideUp(index) {
+      for (let i = 0; i < this.portfolioSlides.length; i++) {
+        if (i === index - 1) {
+          let temp = this.slides[i];
+          this.slides[i] = this.slides[index];
+          this.slides[index] = temp;
+        }
+      }
+
+      this.portfolioItem.items = [...this.slides]
+    },
+
+    moveSlideDown(index) {
+      for (let i = 0; i < this.portfolioSlides.length; i++) {
+        if (i === index + 1) {
+          let temp = this.slides[i];
+          this.slides[i] = this.slides[index];
+          this.slides[index] = temp;
+        }
+      }
+
+      this.portfolioItem.items = [...this.slides]
     },
 
     addImageToContent: function (params) {
@@ -339,6 +372,9 @@ export default {
           this.portfolioItem = d.val()
         })
 
+     
+
+      setTimeout(() =>  this.slides = [...this.portfolioItem.items], 10)
     },
 
     editPost: function(key) {
@@ -731,6 +767,41 @@ $primary-color: #EBC8B2;
 
   .image-content-btn {
     margin-bottom: 20px;
+  }
+
+  .mark__slideImg {
+    position: relative
+  }
+
+  .mark__right,
+  .mark__left {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: rgba(255,255,255,0.5);
+    opacity: 0;
+    transition: opacity .2s ease;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .mark__right {
+    right: 0;
+  }
+
+  .mark__left {
+    left: 0;
   }
 
   @keyframes deploy {
