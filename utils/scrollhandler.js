@@ -222,7 +222,7 @@ export default class ScrollHandler {
     let events = [];
     events.y = typeof e.pageY !== 'undefined' && (e.pageY || e.pageX) ? e.pageY : e.touches[0].pageY;
     events.x = typeof e.pageX !== 'undefined' && (e.pageY || e.pageX) ? e.pageX : e.touches[0].pageX;
-    if (this.isTouch && this.isReallyTouch(e)) {
+    if (this.isTouch && this.isReallyTouch(e) && !!e.touches) {
       events.y = e.touches[0].pageY;
       events.x = e.touches[0].pageX;
     }

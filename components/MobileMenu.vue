@@ -9,7 +9,7 @@
         
         .menu-burger(
           ref="burgerMain"
-          @click="isMenuVisible = !isMenuVisible"
+          @click="toggleMenu"
           )
           |<svg width="35px" height="14px" viewBox="0 0 35 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           |    <defs></defs>
@@ -19,7 +19,7 @@
           |            <path d="M0,7 L24,7" id="Path-2-Copy"></path>
           |            <path class="line3" d="M0,13 L24,13" id="Path-2-Copy-2"></path>
           |            <g id="arrow" class="arrow" >
-          |                <polyline id="sidebar-close-arrow" transform="translate(3.005204, 7.250000) rotate(90.000000) translate(-3.005204, -7.250000) " points="-3 5 3.00520382 9.5 9.01040763 5"></polyline>
+          |                
           |            </g>
           |        </g>
           |    </g>
@@ -28,11 +28,11 @@
 
       .nav(:class="{active: isMenuVisible}")
         .nav-content
-          .nav-item.nav-work(@click="toggleWorks")
+          .nav-item.nav-work(@click="toggleWorks", :class="{'cats-active': showCats}")
             .nav-workLabel
               | Portfolios
               .nav-arrow(v-bind:class="{'arrow-up': showCats}")
-            .nav-inner(ref="cats" )
+            .nav-inner(ref="cats")
               .nav-innerItem(
                 v-for="(category, index) of categories"
                 v-bind:key="index")
@@ -69,63 +69,38 @@
         isMenuVisible: false,
         catsHeight: 0,
         bottomCont: null,
+        burgerLines1: null,
+        burgerLines3: null,
+        burgerArrow: null
       }
     },
 
     mounted() {
       this.catsHeight = this.$refs.cats.getBoundingClientRect().height;
+
+      this.burgerLine1 = this.$refs.burgerMain.querySelector('.line1');
+      this.burgerLine3 = this.$refs.burgerMain.querySelector('.line3');
+      this.burgerArrow = this.$refs.burgerMain.querySelector('.arrow');
     },
 
     methods: {
       toggleWorks() {
         this.showCats = !this.showCats;
-
-        if (this.showCats) {
-          this.catsClose();
-        }
-        else {
-          this.catsOpen();
-        }
       },
 
-      catsOpen() {
-        Velocity(this.$refs.bottom, "stop");
-        Velocity(
-          this.$refs.bottom, {
-            translateY: this.catsHeight - 20,
-            translateZ: 0
-          }, {
-            duration: 300,
-            complete: () =>
-              Velocity(this.$refs.bottom, {
-                translateY: 0,
-                marginTop: this.catsHeight - 20
-              }, {
-                duration: 30
-              })
+      toggleMenu() {
+        this.isMenuVisible = !this.isMenuVisible;
+
+        if (this.isMenuVisible) {
+            this.burgerArrow.classList.add('arrow-show');
+            this.burgerLine1.classList.add('line13-show');
+            this.burgerLine3.classList.add('line13-show');
+          } else {
+            this.burgerArrow.classList.remove('arrow-show');
+            this.burgerLine1.classList.remove('line13-show');
+            this.burgerLine3.classList.remove('line13-show');
+            this.showCats = false;
           }
-        );
-      },
-      catsClose(el, done) {
-        if(!this.$refs.bottom) return
-        Velocity(this.$refs.bottom, "stop");
-        Velocity(
-          this.$refs.bottom, {
-            translateY: this.catsHeight,
-            marginTop: 0
-          }, {
-            duration: 30,
-            complete: () => {
-              if(!this.$refs.bottom) return
-              return Velocity(this.$refs.bottom, {
-                translateY: 0,
-                translateZ: 0
-              }, {
-                duration: 300
-              })
-            }
-          }
-        );
       },
 
       toContacts() {
@@ -190,6 +165,7 @@
         margin-top: 3px;
         font-size: 14px;
         letter-spacing: 1.16px;
+
       }
     }
     .nav {
@@ -207,11 +183,13 @@
       transform: translate3d(0, 100%, 0);
       pointer-events: none;
       opacity: 0;
-      transition: opacity .2s ease;
+      transition: opacity .5s ease;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
 
       &-content {
-        position: absolute;
-        margin-top: 10vh;
+        text-align: center;
       }
 
       a {
@@ -242,10 +220,16 @@
       }
       &-work {
         position: relative;
+        max-height: 24px;
+        transition: max-height .5s ease-in-out;
+        will-change: max-height;
+        overflow: hidden;
+
         &Label {
           display: flex;
           flex-flow: row nowrap;
           align-items: center;
+          justify-content: center;
         }
         .nav-arrow {
           background: url('~assets/images/menu-arrow.svg') no-repeat center center / contain;
@@ -260,7 +244,6 @@
         }
       }
       &-inner {
-        position: absolute;
         font-family: 'Marvel', sans-serif;
         font-weight: bold;
         font-size: 16px;
@@ -269,6 +252,8 @@
         line-height: 18px;
         text-transform: uppercase;
         z-index: 9;
+        margin: 0 auto;
+
         &Item {
           margin-top: 12px;
           margin-left: 12px;
@@ -284,6 +269,11 @@
 
     .active {
       opacity: 1;
+      pointer-events: initial;
+    }
+
+    .cats-active {
+      max-height: 500px;
     }
   }
 
@@ -293,6 +283,24 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  .line1, .line3 {
+      transition: transform .6s;
+    }
+
+    .arrow {
+      transform: scale(0);
+      transform-origin: 0 50%;
+      transition: transform .6s;
+    }
+
+    .line13-show {
+      transform: translate3d(11px, 0, 0);
+    }
+
+    .arrow-show {
+      transform: scale(1);
+    }
 
   @media (min-width: 768px) {
     .menu {

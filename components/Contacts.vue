@@ -218,12 +218,13 @@
   @media (max-width: 767px) {
     .contacts {
       margin-left: 0;
-      padding: 0 30px 30px 30px;
+      padding: 0 30px 15vh 30px;
 
       &-close {
         width: 20px;
         height: 20px;
-        left: 30px;
+        position: initial;
+        margin-bottom: 6vh;
       }
 
       &-studio {

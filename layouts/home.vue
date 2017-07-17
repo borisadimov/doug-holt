@@ -181,6 +181,7 @@
 
   * {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
   }
 
   html {
@@ -309,7 +310,7 @@
 
     .inner {
       .router-view {
-        position: initial;
+        position: relative;
         height: calc(100vh - 79px);
         margin-top: 79px;
       }

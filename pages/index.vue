@@ -307,22 +307,6 @@
     }
   }
 
-  @media (max-width: 767px) {
-    .home {
-      .category {
-        left: 0;
-      }
-
-      .dots {
-        left: 50%;
-
-        .dot {
-          margin-right: 10px;
-        }
-      }
-    }
-  }
-
   @keyframes starting {
     0% {
       transform: translate3d(-175px, 0, 0);
@@ -380,5 +364,30 @@
 
   .scroll-leave-active {
     transform: translate3d(0, -100%, 0);
+  }
+
+  @media (max-width: 767px) {
+    .home {
+      .category {
+        left: 0;
+      }
+
+      .dots {
+        left: 50%;
+
+        .dot {
+          margin-right: 10px;
+        }
+      }
+    }
+
+    @keyframes starting {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
+    }
   }
 </style>
