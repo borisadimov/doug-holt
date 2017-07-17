@@ -307,6 +307,22 @@
     }
   }
 
+  @media (max-width: 767px) {
+    .home {
+      .category {
+        left: 0;
+      }
+
+      .dots {
+        left: 50%;
+
+        .dot {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
   @keyframes starting {
     0% {
       transform: translate3d(-175px, 0, 0);

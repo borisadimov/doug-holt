@@ -1,30 +1,50 @@
 <template lang="pug">
   .menu
-    .menu-container(v-bind:class="{'menu-white': nav.menuFixed}")
-      nuxt-link(to="/")
-        .logo
+    .menu-container.menu-white
+      .header
+        nuxt-link.logo(to="/")
           | DOUG HOLT
           .logo-inner
             | PHOTOGRAPHY
+        
+        .menu-burger(
+          ref="burgerMain"
+          @click="isMenuVisible = !isMenuVisible"
+          )
+          |<svg width="35px" height="14px" viewBox="0 0 35 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          |    <defs></defs>
+          |    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-opacity="0.87">
+          |        <g id="burger" stroke="#000000">
+          |            <path class="line1" d="M0,1 L24,1" id="Path-2"></path>
+          |            <path d="M0,7 L24,7" id="Path-2-Copy"></path>
+          |            <path class="line3" d="M0,13 L24,13" id="Path-2-Copy-2"></path>
+          |            <g id="arrow" class="arrow" >
+          |                <polyline id="sidebar-close-arrow" transform="translate(3.005204, 7.250000) rotate(90.000000) translate(-3.005204, -7.250000) " points="-3 5 3.00520382 9.5 9.01040763 5"></polyline>
+          |            </g>
+          |        </g>
+          |    </g>
+          |</svg>
+        
 
-      .nav(@mouseleave="onNavLeave")
-        .nav-item.nav-work(@mouseenter="onWorksEnter")
-          .nav-workLabel
-            | Portfolios
-            .nav-arrow(v-bind:class="{'arrow-up': showCats}")
-          .nav-inner(ref="cats" )
-            .nav-innerItem(
-              v-for="(category, index) of categories"
-              v-bind:key="index")
-                nuxt-link(v-bind:to="'/gallery/' + category.name")
-                  | {{category.name}}
-        .nav-bottom-cont(ref="bottom")
-          .nav-item
-            nuxt-link(to="/about") About
-          .nav-item
-            nuxt-link(to="/journal") Journal
-          .nav-item(v-bind:class="{disabled: !!showContacts}")
-            a(@click="toContacts") Contact
+      .nav(:class="{active: isMenuVisible}")
+        .nav-content
+          .nav-item.nav-work(@click="toggleWorks")
+            .nav-workLabel
+              | Portfolios
+              .nav-arrow(v-bind:class="{'arrow-up': showCats}")
+            .nav-inner(ref="cats" )
+              .nav-innerItem(
+                v-for="(category, index) of categories"
+                v-bind:key="index")
+                  nuxt-link(v-bind:to="'/gallery/' + category.name")
+                    | {{category.name}}
+          .nav-bottom-cont(ref="bottom")
+            .nav-item
+              nuxt-link(to="/about") About
+            .nav-item
+              nuxt-link(to="/journal") Journal
+            .nav-item(v-bind:class="{disabled: !!showContacts}")
+              a(@click="toContacts") Contact
 
       .lock
 </template>
@@ -41,12 +61,12 @@
   } from '~/db'
 
   export default {
-    name: "MenuComponent",
+    name: "MobileMenu",
 
     data() {
       return {
         showCats: false,
-
+        isMenuVisible: false,
         catsHeight: 0,
         bottomCont: null,
       }
@@ -57,17 +77,14 @@
     },
 
     methods: {
-      onWorksEnter() {
-        if (!this.showCats) {
-          this.showCats = true;
-          this.catsOpen();
-        }
-      },
+      toggleWorks() {
+        this.showCats = !this.showCats;
 
-      onNavLeave() {
         if (this.showCats) {
-          this.showCats = false;
           this.catsClose();
+        }
+        else {
+          this.catsOpen();
         }
       },
 
@@ -138,22 +155,8 @@
 
 <style lang="scss" scoped rel="stylesheet/scss">
   .menu {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 216px;
-    height: 100%;
-    z-index: 15;
-    &-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      padding: 10vh 36px;
-      background: #F5F5F5;
-      transition: background .5s;
-    }
+    width: 100%;
+
     .menu-white {
       background: white;
       .nav-bottom-cont {
@@ -181,6 +184,8 @@
       font-size: 18px;
       color: rgba(0, 0, 0, 0.87);
       letter-spacing: 1.5px;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+
       &-inner {
         margin-top: 3px;
         font-size: 14px;
@@ -188,11 +193,27 @@
       }
     }
     .nav {
-      margin-top: 18vh;
       font-size: 24px;
       color: rgba(0, 0, 0, 0.54);
+      background: #fff;
       letter-spacing: 2px;
       line-height: 24px;
+      position: absolute;
+      bottom: 1px;
+      padding: 30px;
+      height: calc(100vh - 79px);
+      left: 0;
+      width: 100%;
+      transform: translate3d(0, 100%, 0);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .2s ease;
+
+      &-content {
+        position: absolute;
+        margin-top: 10vh;
+      }
+
       a {
         color: rgba(0, 0, 0, 0.54);
         transition: color 0.2s ease;
@@ -260,9 +281,20 @@
         }
       }
     }
+
+    .active {
+      opacity: 1;
+    }
   }
 
-  @media (max-width: 767px) {
+  .header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
     .menu {
       display: none;
     }

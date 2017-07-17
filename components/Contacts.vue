@@ -214,4 +214,29 @@
   .v-enter, .v-leave-active {
     transform: translate3d(0, 100vh, 0);
   }
+
+  @media (max-width: 767px) {
+    .contacts {
+      margin-left: 0;
+      padding: 0 30px 30px 30px;
+
+      &-close {
+        width: 20px;
+        height: 20px;
+        left: 30px;
+      }
+
+      &-studio {
+        font-size: 24px;
+      }
+
+      &-address {
+        font-size: 18px;
+      }
+
+      &-infoItem {
+        font-size: 18px;
+      }
+    }
+  }
 </style>
