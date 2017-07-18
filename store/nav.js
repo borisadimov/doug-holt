@@ -13,6 +13,7 @@ export const state = {
   timeoutId: null,
 
   menuOpened: true,
+  mobileMenuOpened: false,
   menuFixed: true,
   menuRightOpened: false,
   disableLoader: false
@@ -59,6 +60,14 @@ export const mutations = {
 
   menuClose(state) {
     state.menuOpened = false;
+  },
+
+  toggleMobileMenu(state) {
+    state.mobileMenuOpened = !state.mobileMenuOpened;
+  },
+
+  closeMobileMenu(state) {
+    state.mobileMenuOpened = false;
   },
 
   menuRightOpen(state) {

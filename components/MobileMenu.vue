@@ -2,11 +2,11 @@
   .menu
     .menu-container.menu-white
       .header
-        nuxt-link.logo(to="/")
+        nuxt-link.logo(to="/" v-if="!title")
           | DOUG HOLT
           .logo-inner
             | PHOTOGRAPHY
-        
+
         .menu-burger(
           ref="burgerMain"
           @click="toggleMenu"
@@ -15,15 +15,24 @@
           |    <defs></defs>
           |    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-opacity="0.87">
           |        <g id="burger" stroke="#000000">
-          |            <path class="line1" d="M0,1 L24,1" id="Path-2"></path>
+          |            <path class="line1" d="M0,1 L24,1" id="Path-2" :class="{'line13-show': isMenuVisible}"></path>
           |            <path d="M0,7 L24,7" id="Path-2-Copy"></path>
-          |            <path class="line3" d="M0,13 L24,13" id="Path-2-Copy-2"></path>
-          |            <g id="arrow" class="arrow" >
+          |            <path class="line3" d="M0,13 L24,13" id="Path-2-Copy-2" :class="{'line13-show': isMenuVisible}"></path>
+          |            <g id="arrow" class="arrow" :class="{'arrow-show': isMenuVisible}" >
           |                
           |            </g>
           |        </g>
           |    </g>
           |</svg>
+
+        .title(v-if="title")
+          span(:class="{'activeTitle': !isMenuVisible}")
+            | {{title}}
+          nuxt-link.logo(to="/", :class="{'activeLogo': isMenuVisible}")
+            | DOUG HOLT
+            .logo-inner
+              | PHOTOGRAPHY
+          
         
 
       .nav(:class="{active: isMenuVisible}")
@@ -62,11 +71,11 @@
 
   export default {
     name: "MobileMenu",
+    props: ["title"],
 
     data() {
       return {
         showCats: false,
-        isMenuVisible: false,
         catsHeight: 0,
         bottomCont: null,
         burgerLines1: null,
@@ -89,7 +98,7 @@
       },
 
       toggleMenu() {
-        this.isMenuVisible = !this.isMenuVisible;
+        this.toggleMobileMenu()
 
         if (this.isMenuVisible) {
             this.burgerArrow.classList.add('arrow-show');
@@ -105,10 +114,11 @@
 
       toContacts() {
         this.$store.commit('setContacts')
+        this.$store.commit('toggleMobileMenu')
         this.$router.push('/')
       },
 
-      ...mapMutations(['setContacts'])
+      ...mapMutations(['setContacts', 'toggleMobileMenu'])
     },
 
     computed: {
@@ -121,6 +131,10 @@
       showContacts() {
         return this.$store.state.firebase.showContacts;
       },
+
+      isMenuVisible() {
+        return this.$store.state.nav.mobileMenuOpened;
+      }
     },
 
     created() {
@@ -138,6 +152,32 @@
         background: white;
       }
     }
+
+    .title {
+      position: absolute;
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+      height: 100%;
+      width: 40%;
+
+      span, a {
+        opacity: 0;
+        transition: opacity .5s ease;
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        width: 100%;
+        text-align: center;
+        will-change: opacity;
+      }
+
+      .activeLogo, .activeTitle {
+        opacity: 1;
+      }
+    }
+
     .lock {
       background: url('~assets/images/lock.svg') no-repeat center center / contain;
       height: 13px;
@@ -275,6 +315,11 @@
     .cats-active {
       max-height: 500px;
     }
+  }
+
+  .hideLogo {
+    opacity: 0;
+    display: none;
   }
 
   .header {

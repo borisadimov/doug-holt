@@ -9,8 +9,6 @@
       )
       menu-component(v-if="nav.menuOpened")
 
-    .mobile-menu
-      mobile-menu
     transition(
       name="menu-burger"
       )
@@ -295,33 +293,16 @@
     transform: translate3d(175px, 0, 0);
   }
 
-  .mobile-menu {
-    width: 100%;
-    padding: 20px 30px;
-    background: #fff;
-    z-index: 20;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: none;
-  }
-
   @media (max-width: 767px) {
 
     .inner {
       .router-view {
         position: relative;
-        height: calc(100vh - 79px);
-        margin-top: 79px;
       }
 
       .app-menu-burger { 
         display: none;
       }
-    }
-    
-    .mobile-menu {
-      display: block;
     }
     
   }

@@ -1,120 +1,124 @@
 <template lang="pug">
-  .gallery
-    .menu-burger(
-      ref="burgerGallery"
-      @click="onMenuToggle"
-      )
-      |<svg width="35px" height="14px" viewBox="0 0 35 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      |    <defs></defs>
-      |    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      |        <g id="burger-right" transform="translate(0.000000, 1.000000)" stroke="#000000">
-      |            <path class="line13" d="M15,0 L35,0" id="Path-2"></path>
-      |            <path d="M15,6 L35,6" id="Path-2-Copy"></path>
-      |            <path class="line13" d="M15,12 L35,12" id="Path-2-Copy-2"></path>
-      |            <path class="line13" d="M11,0 L13,0" id="Path-2-Copy-5"></path>
-      |            <path d="M11,6 L13,6" id="Path-2-Copy-4"></path>
-      |            <path class="line13" d="M11,12 L13,12" id="Path-2-Copy-3"></path>
-      |            <g id="arrow" class="arrow">
-      |                <polyline id="sidebar-right-close-arrow" transform="translate(33.010000, 6.250000) rotate(270.000000) translate(-33.010000, -6.250000) " points="27.0047964 4.0000002 33.0100002 8.5000002 39.015204 4.0000002"></polyline>
-      |            </g>
-      |        </g>
-      |    </g>
-      |</svg>
-    transition(name="curtain")
-      .menu-curtain(
-        v-if="nav.menuRightOpened"
-        @click="onCurtainClick"
+  .wrapper
+    .mobile-menu-wrapper
+        mobile-menu(:title="category.name")
+    .gallery
+      .menu-burger(
+        ref="burgerGallery"
+        @click="onMenuToggle"
         )
-
-    transition(name="menu")
-      .menu(v-if="nav.menuRightOpened")
-        .menu-title
-          | {{ category.name }} List
-        .menu-list
-          .menu-header
-            .menu-order
-              | Order
-            .menu-name
-              | Title
-            .menu-client
-              | Client
-          .menu-item(
-            v-for="(item, i) of category.items"
-            @click="onMenuItemClick(i)"
-            )
-            .menu-order
-              | {{ i + 1 }}
-            .menu-name
-              .menu-dot
-                .menu-dotBg(
-                  v-bind:key="i"
-                  v-if="i == itemNum"
-                  )
-              | {{ item.title }}
-            .menu-client
-              | {{ item.client }}
-    .content(v-bind:class="{'content-menu': nav.menuRightOpened}" v-if="category")
-      .title
-        | {{ category.name }}
-
-      transition(
-        v-bind:css="false"
-        v-on:before-enter="scrollBeforeEnter"
-        v-on:enter="scrollEnter"
-        v-on:leave="scrollLeave"
-        )
-        .item(
-          v-for="(item, i) of category.items"
-          v-bind:key="i"
-          v-if="i == itemNum"
+        |<svg width="35px" height="14px" viewBox="0 0 35 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        |    <defs></defs>
+        |    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        |        <g id="burger-right" transform="translate(0.000000, 1.000000)" stroke="#000000">
+        |            <path class="line13" d="M15,0 L35,0" id="Path-2"></path>
+        |            <path d="M15,6 L35,6" id="Path-2-Copy"></path>
+        |            <path class="line13" d="M15,12 L35,12" id="Path-2-Copy-2"></path>
+        |            <path class="line13" d="M11,0 L13,0" id="Path-2-Copy-5"></path>
+        |            <path d="M11,6 L13,6" id="Path-2-Copy-4"></path>
+        |            <path class="line13" d="M11,12 L13,12" id="Path-2-Copy-3"></path>
+        |            <g id="arrow" class="arrow">
+        |                <polyline id="sidebar-right-close-arrow" transform="translate(33.010000, 6.250000) rotate(270.000000) translate(-33.010000, -6.250000) " points="27.0047964 4.0000002 33.0100002 8.5000002 39.015204 4.0000002"></polyline>
+        |            </g>
+        |        </g>
+        |    </g>
+        |</svg>
+      transition(name="curtain")
+        .menu-curtain(
+          v-if="nav.menuRightOpened"
+          @click="onCurtainClick"
           )
-          .item-pic(v-bind:style="{ backgroundImage: 'url(' + item.image + ')' }")
-          .nav-left(@click="itemPrev" v-if="!(itemNum <= 0)")
-          .nav-right(@click="itemNext")
-      .arrow-left
-      .arrow-right
-      .count
-        .count-index-wrapper(v-bind:style="{ minWidth: counterWidth + 'px' }")
-          transition(
-            v-bind:css="false"
-            v-on:before-enter="counterBeforeEnter"
-            v-on:enter="counterEnter"
-            v-on:leave="counterLeave"
-            )
-            .count-index(
+
+      transition(name="menu")
+        .menu(v-if="nav.menuRightOpened")
+          .menu-title
+            | {{ category.name }} List
+          .menu-list
+            .menu-header
+              .menu-order
+                | Order
+              .menu-name
+                | Title
+              .menu-client
+                | Client
+            .menu-item(
               v-for="(item, i) of category.items"
-              v-bind:key="i"
-              v-if="i == itemNum"
-              ) {{ i + 1 }}
-        .count-items / {{ category.items.length }}
-        .count-name-wrapper
-          transition(
-            v-bind:css="false"
-            v-on:before-enter="counterBeforeEnter"
-            v-on:enter="counterEnter"
-            v-on:leave="counterLeave"
+              @click="onMenuItemClick(i)"
+              )
+              .menu-order
+                | {{ i + 1 }}
+              .menu-name
+                .menu-dot
+                  .menu-dotBg(
+                    v-bind:key="i"
+                    v-if="i == itemNum"
+                    )
+                | {{ item.title }}
+              .menu-client
+                | {{ item.client }}
+      .content(v-bind:class="{'content-menu': nav.menuRightOpened}" v-if="category")
+        .title
+          | {{ category.name }}
+
+        transition(
+          v-bind:css="false"
+          v-on:before-enter="scrollBeforeEnter"
+          v-on:enter="scrollEnter"
+          v-on:leave="scrollLeave"
+          )
+          .item(
+            v-for="(item, i) of category.items"
+            v-bind:key="i"
+            v-if="i == itemNum"
             )
-            .count-name(
-              v-for="(item, i) of category.items"
-              v-bind:key="i"
-              v-if="i == itemNum"
-              ) {{ item.title }}
-    .info-icon(v-on:click="toggleInfo")
-    .info-block(v-bind:class="{shown: showInfo}" v-if="category")
-      .info-block-cross(v-on:click="toggleInfo")
-      .info-block-label
-        | CATEGORY
-      .info-block-name
-        | {{ category.name }}
-      .info-block-label
-        | INFO
-      .info-block-text
-        | {{ category.info }}
+            .item-pic(v-bind:style="{ backgroundImage: 'url(' + item.image + ')' }")
+            .nav-left(@click="itemPrev" v-if="!(itemNum <= 0)")
+            .nav-right(@click="itemNext")
+        .arrow-left
+        .arrow-right
+        .count
+          .count-index-wrapper(v-bind:style="{ minWidth: counterWidth + 'px' }")
+            transition(
+              v-bind:css="false"
+              v-on:before-enter="counterBeforeEnter"
+              v-on:enter="counterEnter"
+              v-on:leave="counterLeave"
+              )
+              .count-index(
+                v-for="(item, i) of category.items"
+                v-bind:key="i"
+                v-if="i == itemNum"
+                ) {{ i + 1 }}
+          .count-items / {{ category.items.length }}
+          .count-name-wrapper
+            transition(
+              v-bind:css="false"
+              v-on:before-enter="counterBeforeEnter"
+              v-on:enter="counterEnter"
+              v-on:leave="counterLeave"
+              )
+              .count-name(
+                v-for="(item, i) of category.items"
+                v-bind:key="i"
+                v-if="i == itemNum"
+                ) {{ item.title }}
+      .info-icon(v-on:click="toggleInfo")
+      .info-block(v-bind:class="{shown: showInfo}" v-if="category")
+        .info-block-cross(v-on:click="toggleInfo")
+        .info-block-label
+          | CATEGORY
+        .info-block-name
+          | {{ category.name }}
+        .info-block-label
+          | INFO
+        .info-block-text
+          | {{ category.info }}
 </template>
 
 <script>
   const Velocity = process.BROWSER_BUILD ? require('velocity-animate') : null;
   import ScrollHandler    from '~/utils/scrollhandler';
+  import MobileMenu from '~components/MobileMenu'
   import { mapMutations, mapGetters } from 'vuex';
   import { db } from '~/db'
 
@@ -123,6 +127,10 @@
   export default {
     name: "CatComponent",
     layout: 'home',
+    
+    components: {
+      MobileMenu
+    },
 
     fetch ({ store }) {
       return store.dispatch('setCategoriesRef', $categories)
@@ -336,7 +344,17 @@
 
 </script>
 
-<style lang="scss" rel="stylesheet/scss">
+<style lang="scss" scoped rel="stylesheet/scss">
+  .mobile-menu-wrapper {
+    width: 100%;
+    padding: 30px;
+    background: #fff;
+    z-index: 20;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
   .gallery {
     .preloader {
       width: 100%;
@@ -712,5 +730,63 @@
   }
   .curtain-enter, .curtain-leave-active {
     opacity: .01;
+  }
+
+  @media (max-width: 767px) {
+    .gallery {
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+
+      .menu-burger {
+        top: 30px;
+        right: 30px;
+        opacity: 1;
+      }
+
+      .menu {
+        width: 100%;
+        padding: 27px 0;
+
+        &-title {
+          text-align: center;
+        }
+      }
+
+      .menu-list {
+        margin-top: 60px;
+        padding: 0 30px;
+        max-height: calc(100% - 62px)
+      }
+
+      .count-name-wrapper {
+        min-width: 70% !important;
+      }
+
+      .count-name {
+        max-width: calc(100% - 25px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .info-icon {
+        bottom: 27px;
+      }
+
+      .info-block {
+        width: 100vw;
+        height: 100vh;
+        padding: 30px;
+        overflow-y: auto;
+        z-index: 100;
+
+        &-cross {
+          left: initial;
+          right: 30px;
+          top: 30px;
+          z-index: 10;
+        }
+      }
+    }
   }
 </style>

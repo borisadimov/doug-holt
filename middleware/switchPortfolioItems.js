@@ -4,6 +4,7 @@ export default function(context) {
   
   store.commit('pageOpen', {to})
   store.dispatch('throttle');
+  store.commit('closeMobileMenu');
 
   store.commit('showLoader');
 
