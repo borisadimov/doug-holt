@@ -1,5 +1,7 @@
 <template lang="pug">
   .about(v-if="about")
+    .mobile-menu-wrapper
+      mobile-menu(title="About")
     .about-title
       | About
 
@@ -48,6 +50,8 @@
 <script type="text/babel">
   import { mapMutations, mapGetters } from 'vuex';
   import { db } from '~/db';
+  import MobileMenu from '~components/MobileMenu'
+
 
   const $about = db.ref('about')
   const $categories = db.ref('categories')
@@ -57,6 +61,10 @@
   export default {
     name: "AboutComponent",
     layout: 'home',
+
+    components: {
+      MobileMenu
+    },
 
     fetch ({ store }) {
       return store.dispatch('setAboutRef', $about).then(() => store.dispatch('setCategoriesRef', $categories))
@@ -120,6 +128,17 @@
     overflow-y: scroll;
 
     padding: 0 10% 11vw;
+
+    .mobile-menu-wrapper {
+      width: 100%;
+      padding: 30px;
+      background: #fff;
+      z-index: 20;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: none;
+    }
 
     &-title {
       margin-top: 14vw;
@@ -245,6 +264,19 @@
       letter-spacing: 0;
       line-height: 1.45vw;
     }
+  }
 
+  @media (max-width: 767px) {
+    .about {
+      padding: 79px 30px 30px 30px;
+
+      .mobile-menu-wrapper {
+        display: block;
+      }
+
+      .about-title {
+        display: none;
+      }
+    }
   }
 </style>
