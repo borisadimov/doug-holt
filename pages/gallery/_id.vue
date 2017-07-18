@@ -258,14 +258,15 @@
       scrollBeforeEnter (el) {
         let value = this.direction === 'right' ? '100%' : "-100%";
         el.style.transform = `translate3d(${value}, 0, 0)`;
+        el.style.opacity = '0';
       },
       scrollEnter (el, done) {
         let value = this.direction === 'right' ? '99%' : "-99%";
-        Velocity(el, { translateX: [0, value], translateZ: 0 }, { duration: 400, complete: done });
+        Velocity(el, { translateX: [0, value], translateZ: 0, opacity: 1 }, { duration: 400, complete: done });
       },
       scrollLeave (el, done) {
         let value = this.direction === 'right' ? '-100%' : "100%";
-        Velocity(el, { translateX: value, translateZ: 0}, { duration: 400, complete: done });
+        Velocity(el, { translateX: value, translateZ: 0, opacity: 0}, { duration: 400, complete: done });
       },
 
       counterBeforeEnter (el) {
@@ -353,6 +354,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    display: none;
   }
 
   .gallery {
@@ -733,6 +735,10 @@
   }
 
   @media (max-width: 767px) {
+    .mobile-menu-wrapper {
+      display: flex;
+    }
+
     .gallery {
       height: 100vh;
       overflow: hidden;

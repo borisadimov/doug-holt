@@ -173,6 +173,10 @@
         will-change: opacity;
       }
 
+      span {
+        font-size: 20px;
+      }
+
       .activeLogo, .activeTitle {
         opacity: 1;
       }
