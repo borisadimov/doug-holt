@@ -277,6 +277,51 @@
       .about-title {
         display: none;
       }
+
+      .about-item {
+        flex-flow: column nowrap;
+        margin-top: 30px;
+      }
+
+      .about-text {
+        font-size: 16px;
+        line-height: 20px;
+      }
+
+      .about-image {
+        margin-bottom: 30px;
+      }
+
+      .about-copy {
+        font-size: 18px;
+      }
+
+      .about-margin-1vw {
+        margin-top: 15px;
+      }
+
+      .about-largeText {
+        font-size: 18px;
+        line-height: 23px;
+      }
+
+      .clients {
+        margin-top: 60px;
+
+        &-item span {
+          font-size: 11px;
+          line-height: 14px;
+        }
+
+        &-letter {
+          font-size: 11px;
+          line-height: 14px;
+        }
+
+        &-column {
+          max-height: 2000px;
+        }
+      }
     }
   }
 </style>
