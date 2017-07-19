@@ -1,5 +1,7 @@
 <template lang="pug">
   .journal
+    .mobile-menu-wrapper
+      mobile-menu(title="Journal")
     .journal-title
       | Journal
 
@@ -40,6 +42,8 @@
 <script>
   import { mapMutations, mapGetters } from 'vuex';
   import { db } from '~/db'
+  import MobileMenu from '~components/MobileMenu'
+
 
   const $posts = db.ref('posts')
   const $categories = db.ref('categories')
@@ -50,6 +54,10 @@
 
     fetch ({ store }) {
       return store.dispatch('setPostsRef', $posts).then(() => store.dispatch('setCategoriesRef', $categories))
+    },
+
+    components: {
+      MobileMenu
     },
 
     data () {
@@ -108,6 +116,17 @@
 
     padding: 0 10% 11vw;
 
+    .mobile-menu-wrapper {
+      width: 100%;
+      padding: 30px;
+      background: #fff;
+      z-index: 20;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: none;
+    }
+
     &-title {
       margin-top: 14vw;
       margin-bottom: 14vw;
@@ -161,6 +180,38 @@
       color: rgba(0,0,0,0.87);
       letter-spacing: 1px;
       line-height: 2.6vw;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .journal {
+      padding: 79px 30px 30px 30px;
+
+      .mobile-menu-wrapper {
+        display: block;
+      }
+
+      .journal-title {
+        display: none;
+      }
+
+      .journal-content {
+        margin-top: 60px;
+      }
+
+      .journal-column {
+        flex-basis: 100%;
+      }
+
+      .journal-date {
+        font-size: 18px;
+        line-height: 22px;
+      }
+
+      .journal-name {
+        font-size: 20px;
+        line-height: 24px;
+      }
     }
   }
 </style>

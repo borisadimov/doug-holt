@@ -319,7 +319,7 @@
         }
 
         &-column {
-          max-height: 2000px;
+          max-height: 100%;
         }
       }
     }
