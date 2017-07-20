@@ -1,76 +1,81 @@
 <template lang="pug">
-  .journal-single(v-bind:class="{ disabled: nav.menuRightOpened }")
-    .menu-burger(
-      ref="burgerRight"
-      @click="onMenuToggle"
-      )
-      |<svg width="35px" height="14px" viewBox="0 0 35 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      |    <defs></defs>
-      |    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      |        <g id="burger-right" transform="translate(0.000000, 1.000000)" stroke="#000000">
-      |            <path class="line13" d="M15,0 L35,0" id="Path-2"></path>
-      |            <path d="M15,6 L35,6" id="Path-2-Copy"></path>
-      |            <path class="line13" d="M15,12 L35,12" id="Path-2-Copy-2"></path>
-      |            <path class="line13" d="M11,0 L13,0" id="Path-2-Copy-5"></path>
-      |            <path d="M11,6 L13,6" id="Path-2-Copy-4"></path>
-      |            <path class="line13" d="M11,12 L13,12" id="Path-2-Copy-3"></path>
-      |            <g id="arrow" class="arrow">
-      |                <polyline id="sidebar-right-close-arrow" transform="translate(33.010000, 6.250000) rotate(270.000000) translate(-33.010000, -6.250000) " points="27.0047964 4.0000002 33.0100002 8.5000002 39.015204 4.0000002"></polyline>
-      |            </g>
-      |        </g>
-      |    </g>
-      |</svg>
-
-    transition(name="curtain")
-      .menu-curtain(
-        v-if="nav.menuRightOpened"
-        @click="onCurtainClick"
+  .inner 
+    .mobile-menu-wrapper
+      mobile-menu(:title="activePost.title")
+    .journal-single(v-bind:class="{ disabled: nav.menuRightOpened }")
+      
+      .menu-burger(
+        ref="burgerRight"
+        @click="onMenuToggle"
         )
+        |<svg width="35px" height="14px" viewBox="0 0 35 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        |    <defs></defs>
+        |    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        |        <g id="burger-right" transform="translate(0.000000, 1.000000)" stroke="#000000">
+        |            <path class="line13" d="M15,0 L35,0" id="Path-2"></path>
+        |            <path d="M15,6 L35,6" id="Path-2-Copy"></path>
+        |            <path class="line13" d="M15,12 L35,12" id="Path-2-Copy-2"></path>
+        |            <path class="line13" d="M11,0 L13,0" id="Path-2-Copy-5"></path>
+        |            <path d="M11,6 L13,6" id="Path-2-Copy-4"></path>
+        |            <path class="line13" d="M11,12 L13,12" id="Path-2-Copy-3"></path>
+        |            <g id="arrow" class="arrow">
+        |                <polyline id="sidebar-right-close-arrow" transform="translate(33.010000, 6.250000) rotate(270.000000) translate(-33.010000, -6.250000) " points="27.0047964 4.0000002 33.0100002 8.5000002 39.015204 4.0000002"></polyline>
+        |            </g>
+        |        </g>
+        |    </g>
+        |</svg>
 
-    transition(name="menu")
-      .menu(v-if="nav.menuRightOpened")
-        .menu-title
-          | Journal List
-        .menu-list
-          .menu-header
-            .menu-year
-              | Year
-            .menu-title
-              | Title
-          .menu-item(
-            v-for="(tempPost, i) of posts"
-            v-bind:key="i"
-            @click="onMenuItemClick(tempPost)"
-            )
-            .menu-year
-              | 2016
-            .menu-name
-              .menu-dot
-                .menu-dotBg(v-if="tempPost.id == activePost.id")
-              | {{tempPost.title}}
-
-    .journal-content(v-bind:class="{'content-menu': nav.menuRightOpened}")
-      .journal-content-image
-        img(
-          v-bind:src="activePost.image"
-          v-on:error="onImgLoaded"
-          v-on:load="onImgLoaded"
+      transition(name="curtain")
+        .menu-curtain(
+          v-if="nav.menuRightOpened"
+          @click="onCurtainClick"
           )
-      .journal-content-info
-        .journal-content-title
-          | {{activePost.title}}
-        .journal-content-date
-          | {{activePost.date}}
-        .journal-content-titleBig
-          | {{activePost.title}}
-        .journal-content-author
-          | By {{activePost.author}}
-        .journal-content-text(v-html="activePost.text")
+
+      transition(name="menu")
+        .menu(v-if="nav.menuRightOpened")
+          .menu-title
+            | Journal List
+          .menu-list
+            .menu-header
+              .menu-year
+                | Year
+              .menu-title
+                | Title
+            .menu-item(
+              v-for="(tempPost, i) of posts"
+              v-bind:key="i"
+              @click="onMenuItemClick(tempPost)"
+              )
+              .menu-year
+                | 2016
+              .menu-name
+                .menu-dot
+                  .menu-dotBg(v-if="tempPost.id == activePost.id")
+                | {{tempPost.title}}
+
+      .journal-content(v-bind:class="{'content-menu': nav.menuRightOpened}")
+        .journal-content-image
+          img(
+            v-bind:src="activePost.image"
+            v-on:error="onImgLoaded"
+            v-on:load="onImgLoaded"
+            )
+        .journal-content-info
+          .journal-content-title
+            | {{activePost.title}}
+          .journal-content-date
+            | {{activePost.date}}
+          .journal-content-titleBig
+            | {{activePost.title}}
+          .journal-content-author
+            | By {{activePost.author}}
+          .journal-content-text(v-html="activePost.text")
 </template>
 
 <script>
   import { mapMutations, mapGetters } from 'vuex';
   import { db } from '~/db'
+  import MobileMenu from '~components/MobileMenu'
 
   const $posts = db.ref('posts')
   const $categories = db.ref('categories')
@@ -78,6 +83,10 @@
   export default {
     name: "JournalItemComponent",
     layout: 'home',
+
+    components: {
+      MobileMenu
+    },
 
     fetch ({ store }) {
       return store.dispatch('setPostsRef', $posts).then(() => store.dispatch('setCategoriesRef', $categories))
@@ -175,7 +184,9 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
+
   .journal-single {
+
     .menu-burger {
       position: absolute;
       top: 26px;
@@ -216,12 +227,22 @@
 </style>
 
 <style lang="scss" scoped rel="stylesheet/scss">
+  .mobile-menu-wrapper {
+    width: 100%;
+    padding: 30px;
+    background: #fff;
+    z-index: 20;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+  }
   .journal-single{
     width: 100%;
     height: 100%;
     background: white;
 
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 
     padding: 0 6% 5vw;
@@ -441,4 +462,40 @@
       opacity: .01;
     }
   }
+
+  @media (max-width: 767px) {
+    .mobile-menu-wrapper {
+        display: flex;
+        position: fixed;
+      }
+    .journal-single {
+
+      .menu {
+        width: 100%;
+        padding: 27px 0;
+
+        &-title {
+          text-align: center;
+        }
+      }
+
+      .menu-burger {
+        top: 30px;
+        right: 30px;
+        opacity: 1;
+      }
+
+      .journal-content {
+        flex-direction: column;
+        padding-top: 80px;
+      }
+
+      .menu-list {
+        padding: 0 30px;
+      }
+    }
+
+  }
+
+  
 </style>
