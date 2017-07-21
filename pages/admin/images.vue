@@ -47,10 +47,11 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 $primary-color: #EBC8B2;
 .admin {
   padding: 0 50px;
+  padding-bottom: 50px;
   min-height: 100vh;
   background: $primary-color;
   width: 100%;

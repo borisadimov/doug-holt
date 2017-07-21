@@ -7,6 +7,9 @@
           accept="image/*"
           name='image'
           ref='image')
+
+    .progress.hidden(ref="progress")
+      .deploying 🤙
 </template>
 
 <script>
@@ -16,7 +19,8 @@ const $images = db.ref('images')
 export default {
   data () {
     return {
-      file: ''
+      file: '',
+      loading: false
     }
   },
 
@@ -25,14 +29,24 @@ export default {
       const file = this.$refs.image.files[0]
       const timestamp = new Date().getTime().toString()
       const uploadName = file.name + '_' + timestamp
-      const storageRef = firebase.storage().ref(uploadName)
+      const storageRef = firebase.storage().ref(uploadName).put(file)
 
-      storageRef.put(file).then(function (snapshot) {
+      storageRef.then(function (snapshot) {
         $images.push({
           'url': snapshot.metadata.downloadURLs[0],
           'name': uploadName,
           'created_at': snapshot.metadata.updated
         })
+      })
+
+      storageRef.on('state_changed', (snapshot) => {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        if (progress === 100) {
+          this.$refs.progress.classList.add('hidden')
+        }
+        else {
+          this.$refs.progress.classList.remove('hidden')
+        }
       })
     }
   }
@@ -40,6 +54,27 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style scoped lang="scss">
+  .progress {
+    display: inline-block;
+  }
 
+  .hidden {
+    display: none;
+  }
+
+  @keyframes deploy {
+    0%, 100% {
+      transform: rotate(0deg);
+    }
+
+    50% {
+      transform: rotate(10deg);
+    }
+  }
+
+  .deploying {
+    animation: deploy .3s ease infinite;
+    margin-left: 20px;
+  }
 </style>
