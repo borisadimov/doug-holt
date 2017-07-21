@@ -2,7 +2,7 @@
 .image(@click="handleCardClick(image)")
   span(@click="handleRemoveClick(image)").image-delete-btn
     | ❌
-  img(:src="image.url", alt="")
+  img(:src="image.url", alt="" ref="image")
   .name {{ image.name }}
   .date(v-if="image.created_at") {{ new Date(image.created_at).toTimeString() }}
 </template>

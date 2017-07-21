@@ -37,6 +37,10 @@ export default {
     }
   },
 
+  created() {
+    this.$store.dispatch('setImagesRef', $images)
+  },
+
   computed: {
     ...mapGetters(['images'])
   }
