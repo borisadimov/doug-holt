@@ -1,7 +1,7 @@
 <template lang="pug">
   .wrapper
     .mobile-menu-wrapper
-        mobile-menu(:title="category.name")
+        mobile-menu(:title="category.name" v-if="category")
     .gallery
       .menu-burger(
         ref="burgerGallery"
@@ -355,6 +355,7 @@
     top: 0;
     left: 0;
     display: none;
+    border-bottom: 1px solid #f5f5f5;
   }
 
   .gallery {

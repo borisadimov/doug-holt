@@ -138,6 +138,7 @@
       top: 0;
       left: 0;
       display: none;
+      border-bottom: 1px solid #f5f5f5;
     }
 
     &-title {

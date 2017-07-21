@@ -235,6 +235,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    border-bottom: 1px solid #f5f5f5;
     display: none;
   }
   .journal-single{
