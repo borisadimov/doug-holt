@@ -331,6 +331,7 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+    position: relative;
   }
 
   .line1, .line3 {
