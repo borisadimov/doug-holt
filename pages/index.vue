@@ -32,7 +32,13 @@
         .bg
         .slide
           .slide-img(
-            v-bind:style="{ backgroundImage: 'url(' + category.cover + ')' }"
+            v-bind:style="{ backgroundImage: 'url(' + category.cover + ')' }",
+            :class="{'desktop': category.cover_mobile}"
+            
+            )
+          .slide-img.mobile(
+            v-if="category.cover_mobile"
+            v-bind:style="{ backgroundImage: 'url(' + category.cover_mobile + ')' }"
             )
       contacts-component(v-if="portfolio.showContacts", key="contacts")
   
@@ -310,6 +316,10 @@
     }
   }
 
+  .mobile {
+    display: none;
+  }
+
   .mobile-menu {
     width: 100%;
     padding: 20px 30px;
@@ -386,6 +396,14 @@
         left: 0;
         margin-top: 79px;
         height: calc(100vh - 79px);
+      }
+
+      .mobile {
+        display: initial;
+      }
+
+      .desktop {
+        display: none;
       }
 
       .dots {

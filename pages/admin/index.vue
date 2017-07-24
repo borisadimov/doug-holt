@@ -45,6 +45,8 @@
         vue-markdown(v-if="portfolioItem.info !== ''", :source="portfolioItem.info")
       .mark__subtitle(v-if="portfolioItem.cover !== ''")
         img(:src="portfolioItem.cover", alt="")
+      .mark__subtitle.mobile-image(v-if="portfolioItem.cover_mobile !== '' && portfolioItem.cover_mobile " )
+        img(:src="portfolioItem.cover_mobile", alt="")
 
       .mark__slides(v-if="portfolioSlides.length > 0")
         .mark__slide(v-for="(slide, id) in portfolioSlides")
@@ -84,6 +86,13 @@
               .editing-label Cover Image URL
               
               .button.image-content-btn(@click="handleContentModalClick")
+                span 🏞
+                | add image
+
+            .editing-field
+              .editing-label Mobile Cover Image URL
+              
+              .button.image-content-btn(@click="handleMobileImagesContent")
                 span 🏞
                 | add image
 
@@ -189,6 +198,20 @@
             .button.modal-default-button(@click="showModalSlide = false")
               | Close
 
+    transition(name='modal' v-if="showMobileCover" @close="showMobileCover = false")
+      .modal-mask
+        .modal-wrapper
+          .modal-container
+            .images(@click="showMobileCover = false")
+              admin-image-card( v-for="(image, index) in images"
+                                v-bind:key="index"
+                                v-bind:image="image"
+                                v-on:on-remove-click="removeImage"
+                                v-on:on-card-click="addMobileImageToContent")
+            image-uploader
+            .button.modal-default-button(@click="showMobileCover = false")
+              | Close
+
 </template>
 
 <!-- <style src="vue-multiselect/dist/vue-multiselect.min.css"></style> -->
@@ -212,7 +235,8 @@ const emptyItem = {
   info: '',
   items: [],
   name: '',
-  cover: ''
+  cover: '',
+  cover_mobile: ''
 }
 
 
@@ -260,6 +284,7 @@ export default {
       newSlide: {},
       showModal: false,
       showModalSlide: false,
+      showMobileCover: '',
       slides: []
     }
   },
@@ -320,6 +345,12 @@ export default {
       }      
     },
 
+    addMobileImageToContent: function (params) {
+      if (this.editingId !== undefined) {
+        this.portfolioItem.cover_mobile = params.url
+      }
+    },
+
     removeImage: function (image) {
       const storageRef = firebase.storage().ref(image['name'])
 
@@ -338,6 +369,12 @@ export default {
       e.preventDefault()
       e.stopPropagation()
       this.showModal = !this.showModal
+    },
+
+    handleMobileImagesContent: function (e) {
+      e.preventDefault()
+      e.stopPropagation()
+      this.showMobileCover = !this.showMobileCover
     },
 
     handleSlideModalClick: function (e) {
@@ -492,6 +529,8 @@ $primary-color: #EBC8B2;
       width: 100%;
     }
   }
+
+  
 
   .login {
     width: 100%;
@@ -1113,6 +1152,10 @@ $primary-color: #EBC8B2;
         padding: 10px 0;
       }
     }
+  }
+
+  .mobile-image img {
+    max-width: 500px;
   }
 
   .modal-header h3 {
