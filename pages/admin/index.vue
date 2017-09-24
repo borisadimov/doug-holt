@@ -51,15 +51,16 @@
       .mark__slides(v-if="portfolioSlides.length > 0")
         .mark__slide(v-for="(slide, id) in portfolioSlides")
           .mark__slideImg
-            .mark__left(@click="moveSlideUp(id, portfolioItem)")
-              span 👈
-            img(:src="slide.image", :key="slide.index")
-            .mark__right(@click="moveSlideDown(id, portfolioItem)")
-              span 👉
+            .button.image-content-btn(@click="handleImageRewrite(slide)", :key="slide.index")
+              span 🏞
+              | edit image
+            .slide-image(v-if="slide.image" @click="handleImageRewrite(slide)")
+              img(:src="slide.image")
           .mark__slideTitle
-            | {{ slide.title }}
+            input(type="text" v-model="slide.title", :value="slide.title")
+            
           .mark__slideClient
-            | {{ slide.client }}
+            input(type="text" v-model="slide.client", :value="slide.client")
           .mark__remove(@click="removeCatSlide(portfolioSlides, id)")
             | ❌
 
@@ -198,6 +199,20 @@
             .button.modal-default-button(@click="showModalSlide = false")
               | Close
 
+    transition(name='modal' v-if="showModalSlideRewrite" @close="showModalSlideRewrite = false")
+      .modal-mask
+        .modal-wrapper
+          .modal-container
+            .images(@click="showModalSlideRewrite = false")
+              admin-image-card( v-for="(image, index) in images"
+                                v-bind:key="index"
+                                v-bind:image="image"
+                                v-on:on-remove-click="removeImage"
+                                v-on:on-card-click="rewriteSlideImage")
+            image-uploader
+            .button.modal-default-button(@click="showModalSlideRewrite = false")
+              | Close
+
     transition(name='modal' v-if="showMobileCover" @close="showMobileCover = false")
       .modal-mask
         .modal-wrapper
@@ -284,6 +299,8 @@ export default {
       newSlide: {},
       showModal: false,
       showModalSlide: false,
+      showModalSlideRewrite: false,
+      activeSlide: null,
       showMobileCover: '',
       slides: []
     }
@@ -363,6 +380,15 @@ export default {
 
     addImageToSlide: function (params) {
       this.newSlide.image = params.url
+    },
+
+    handleImageRewrite: function (slide) {
+      this.showModalSlideRewrite = true;
+      this.activeSlide = slide;
+    },
+
+    rewriteSlideImage: function (params) {
+      this.activeSlide.image = params.url
     },
 
     handleContentModalClick: function (e) {
@@ -523,6 +549,20 @@ $primary-color: #EBC8B2;
   .mark__slide {
     width: 33%;
     padding: 10px;
+    border: 1px solid #eee;
+
+    &:nth-child(n+4) {
+      border-top: 0;
+    }
+
+    &:nth-child(3n-1) {
+      border-left:0;
+      border-right: 0;
+    }
+
+    &:last-child() {
+      border-right: 1px solid #eee;
+    }
 
     img {
       display: block;
@@ -809,7 +849,13 @@ $primary-color: #EBC8B2;
   }
 
   .mark__slideImg {
-    position: relative
+    position: relative;
+
+    .button {
+      display: inline-block;
+      border-color: #ccc;
+      color: #000;
+    }
   }
 
   .mark__right,
@@ -898,6 +944,14 @@ $primary-color: #EBC8B2;
     flex: 1;
     padding: 16px;
     border: 1px solid #f1f1f1;
+
+    input {
+      background: transparent;
+      color: #000;
+      padding: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
 
    .video-wrapper {
       max-width: 100%;
