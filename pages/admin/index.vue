@@ -48,13 +48,13 @@
       .mark__subtitle.mobile-image(v-if="portfolioItem.cover_mobile !== '' && portfolioItem.cover_mobile " )
         img(:src="portfolioItem.cover_mobile", alt="")
 
-      .mark__slides(v-if="portfolioSlides.length > 0")
+      .mark__slides(v-if="portfolioSlides.length > 0" v-sortable="{onUpdate: onSlidesUpdate}")
         .mark__slide(v-for="(slide, id) in portfolioSlides")
           .mark__slideImg
             .button.image-content-btn(@click="handleImageRewrite(slide)", :key="slide.index")
               span 🏞
               | edit image
-            .slide-image(v-if="slide.image" @click="handleImageRewrite(slide)")
+            .slide-image(v-if="slide.image")
               img(:src="slide.image")
           .mark__slideTitle
             input(type="text" v-model="slide.title", :value="slide.title")
@@ -238,6 +238,14 @@ import VueMarkdown from 'vue-markdown';
 
 import ImageUploader from '~components/ImageUploader'
 import AdminImageCard from '~components/AdminImageCard'
+import Vue from 'vue'
+import Sortable from 'sortablejs'
+
+Vue.directive('sortable', {
+  inserted: function (el, binding) {
+    new Sortable(el, binding.value || {})
+  }
+})
 
 var Multiselect = process.BROWSER_BUILD ? Multiselect = require('vue-multiselect') : null
 
@@ -319,6 +327,7 @@ export default {
     },
 
     portfolioSlides() {
+      console.log('portfolioSlides', this.portfolioItem.items)
       return this.portfolioItem.items;
     }
   },
@@ -326,6 +335,16 @@ export default {
   methods: {
     inputChange: function (event) {
       this.hasFilledField = event.target.value !== ''
+    },
+
+    onSlidesUpdate: function (event) {
+      //this.portfolioItem.items.splice(event.newIndex, 0, this.portfolioItem.items.splice(event.oldIndex, 1)[0])
+      console.log('old', event.oldIndex, 'new', event.newIndex)
+      let temp = this.portfolioItem.items[event.oldIndex]
+      this.portfolioItem.items[event.oldIndex] = this.portfolioItem.items[event.newIndex]
+      this.portfolioItem.items[event.newIndex] = temp;
+
+      console.log('this.portfolioItem.items', this.portfolioItem.items)
     },
 
     moveSlideUp(index) {
@@ -525,7 +544,6 @@ export default {
   },
 
   mounted() {
-
   },
 
   created() {
