@@ -51,10 +51,7 @@
       .mark__slides(v-if="portfolioSlides.length > 0" v-sortable="{onUpdate: onSlidesUpdate}")
         .mark__slide(v-for="(slide, id) in portfolioSlides")
           .mark__slideImg
-            .button.image-content-btn(@click="handleImageRewrite(slide)", :key="slide.index")
-              span 🏞
-              | edit image
-            .slide-image(v-if="slide.image")
+            .slide-image(v-if="slide.image" @click="handleImageRewrite(slide)")
               img(:src="slide.image")
           .mark__slideTitle
             input(type="text" v-model="slide.title", :value="slide.title")
@@ -338,13 +335,9 @@ export default {
     },
 
     onSlidesUpdate: function (event) {
-      //this.portfolioItem.items.splice(event.newIndex, 0, this.portfolioItem.items.splice(event.oldIndex, 1)[0])
-      console.log('old', event.oldIndex, 'new', event.newIndex)
       let temp = this.portfolioItem.items[event.oldIndex]
       this.portfolioItem.items[event.oldIndex] = this.portfolioItem.items[event.newIndex]
       this.portfolioItem.items[event.newIndex] = temp;
-
-      console.log('this.portfolioItem.items', this.portfolioItem.items)
     },
 
     moveSlideUp(index) {
@@ -868,6 +861,7 @@ $primary-color: #EBC8B2;
 
   .mark__slideImg {
     position: relative;
+    cursor: pointer;
 
     .button {
       display: inline-block;
