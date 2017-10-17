@@ -138,9 +138,9 @@
 
     beforeMount() {
       console.log('beforeMount')
-      if (this.$route.params.id.split(' ').length > 2) {
+      if (this.$route.params.id.split(' ').length > 1) {
         console.log('true')
-        let cat = this.$store.getters.getCatByName(decodeURI(to.params.id));
+        let cat = this.$store.getters.getCatByName(decodeURI(this.$route.params.id));
         if (cat)
           this.$store.commit('categorySet', cat.index )
       }
