@@ -138,7 +138,7 @@
 
     beforeMount() {
       if (this.$route.params.id.split(' ') > 2) {
-        let cat = store.getters.getCatByName(decodeURI(to.params.id));
+        let cat = this.$store.getters.getCatByName(decodeURI(to.params.id));
         if (cat)
           this.$store.commit('categorySet', cat.index )
       }
