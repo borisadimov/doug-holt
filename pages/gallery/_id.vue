@@ -138,7 +138,7 @@
 
     beforeMount() {
       console.log('beforeMount')
-      if (this.$route.params.id.split(' ') > 2) {
+      if (this.$route.params.id.split(' ').length > 2) {
         console.log('true')
         let cat = this.$store.getters.getCatByName(decodeURI(to.params.id));
         if (cat)
