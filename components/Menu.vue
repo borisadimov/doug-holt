@@ -17,7 +17,7 @@
               v-for="(category, index) of categories"
               v-bind:key="index")
                 nuxt-link(v-bind:to="'/gallery/' + category.name")
-                  | {{category.name}}
+                  | {{category.name.replace(/-/g, ' ')}}
         .nav-bottom-cont(ref="bottom")
           .nav-item
             nuxt-link(to="/about") About

@@ -1,7 +1,7 @@
 <template lang="pug">
   .wrapper
     .mobile-menu-wrapper
-        mobile-menu(:title="category.name" v-if="category")
+        mobile-menu(:title="categoryName" v-if="category")
     .gallery
       .menu-burger(
         ref="burgerGallery"
@@ -32,7 +32,7 @@
       transition(name="menu")
         .menu(v-if="nav.menuRightOpened")
           .menu-title
-            | {{ category.name }} List
+            | {{ category.name.replace(/-/g, ' ') }} List
           .menu-list
             .menu-header
               .menu-order
@@ -58,7 +58,7 @@
                 | {{ item.client }}
       .content(v-bind:class="{'content-menu': nav.menuRightOpened}" v-if="category")
         .title
-          | {{ category.name }}
+          | {{ categoryName }}
 
         transition(
           v-bind:css="false"
@@ -108,7 +108,7 @@
         .info-block-label
           | CATEGORY
         .info-block-name
-          | {{ category.name }}
+          | {{ categoryName }}
         .info-block-label
           | INFO
         .info-block-text
@@ -134,19 +134,6 @@
 
     fetch ({ store }) {
       return store.dispatch('setCategoriesRef', $categories)
-    },
-
-    beforeMount() {
-      console.log('beforeMount new')
-      if (this.$route.params.id.split(' ').length > 1) {
-        console.log('spaces in url true', decodeURI(this.$route.params.id))
-        let cat = this.$store.getters.getCatByName(decodeURI(this.$route.params.id));
-        console.log('cat', cat, this.$store.getters)
-        if (cat) {
-          console.log('commit category set')
-          this.$store.commit('categorySet', cat.index )
-        }
-      }
     },
 
     data () {
@@ -319,6 +306,10 @@
       category() {
         this.itemNum = 0;
         return this.categories[this.portfolio.category];
+      },
+
+      categoryName() {
+        return this.categories[this.portfolio.category].name.replace(/-/g, ' ')
       }
     },
 
