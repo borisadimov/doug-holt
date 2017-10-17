@@ -137,12 +137,14 @@
     },
 
     beforeMount() {
-      console.log('beforeMount')
+      console.log('beforeMount new')
       if (this.$route.params.id.split(' ').length > 1) {
-        console.log('true')
+        console.log('spaces in url true')
         let cat = this.$store.getters.getCatByName(decodeURI(this.$route.params.id));
-        if (cat)
+        if (cat) {
+          console.log('commit category set')
           this.$store.commit('categorySet', cat.index )
+        }
       }
     },
 
