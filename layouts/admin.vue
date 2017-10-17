@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    .login(v-show="!user")
+    form.login(v-show="!user")
       .login-inner
         .login-title Welcome to Doug Holt Admin
         input(type='text' placeholder="Email" v-model="email")

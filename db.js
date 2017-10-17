@@ -22,8 +22,8 @@ var getPortfolioRoutes = function () {
       .ref(type)
       .once('value')
       .then(i => i.val())
-      .then(_.values)
       .then(items => items.map((item, index) => {
+        console.log('item', item)
         return type === 'posts' ? ('/journal/' + item.id) : ('/gallery/' + item.name)
       }))
     )
