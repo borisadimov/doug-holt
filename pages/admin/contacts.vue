@@ -62,7 +62,7 @@
   } from 'vuex';
   import VueMarkdown from 'vue-markdown';
   
-  var Multiselect = process.BROWSER_BUILD ? Multiselect = require('vue-multiselect') : null
+  var Multiselect = process.browser ? Multiselect = require('vue-multiselect') : null
   
   const $contacts = db.ref('contacts')
   

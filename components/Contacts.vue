@@ -158,14 +158,14 @@
     }
 
     &-ig {
-      background: url('~assets/images/ig.svg') no-repeat center center / contain;
+      background: url('~/assets/images/ig.svg') no-repeat center center / contain;
       width: 26px;
       height: 26px;
       margin-right: 14px;
     }
 
     &-fb {
-      background: url('~assets/images/fb.svg') no-repeat center center / contain;
+      background: url('~/assets/images/fb.svg') no-repeat center center / contain;
       width: 15px;
       height: 28px;
       margin-left: 11px;
@@ -173,7 +173,7 @@
     }
 
     &-tw {
-      background: url('~assets/images/tw.svg') no-repeat center center / contain;
+      background: url('~/assets/images/tw.svg') no-repeat center center / contain;
       width: 26px;
       height: 22px;
       margin-left: 10px;
@@ -191,7 +191,7 @@
     }
 
     &-close {
-      background: url('~assets/images/cross-black.svg') no-repeat center center / contain;
+      background: url('~/assets/images/cross-black.svg') no-repeat center center / contain;
       height: 24px;
       width: 24px;
       position: absolute;

@@ -21,6 +21,7 @@ module.exports = {
       { property: "og:url", content: "http://dougholtphotography.com" },
       { property: "og:image", content: "http://dougholtphotography.com/doug-holt_photography.jpg" },
 
+
       { name: "twitter:card", content: "summary"},
       { name: "twitter:site", content: "@DougHolt"},
       { name: "twitter:title", content: "Doug Holt Studios"},
@@ -36,7 +37,7 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading:'~components/Loader.vue',
+  loading:'~/components/Loader.vue',
   /*
   ** Build configuration
   */

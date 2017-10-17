@@ -34,18 +34,17 @@
           .slide-img(
             v-bind:style="{ backgroundImage: 'url(' + category.cover + ')' }",
             :class="{'desktop': category.cover_mobile}"
-            
+
             )
           .slide-img.mobile(
             v-if="category.cover_mobile"
             v-bind:style="{ backgroundImage: 'url(' + category.cover_mobile + ')' }"
             )
       contacts-component(v-if="portfolio.showContacts", key="contacts")
-  
 </template>
 
 <script>
-  var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null
+  var Velocity = process.browser ? require('velocity-animate') : function(){}
 
   import ScrollHandler from '~/utils/scrollhandler';
   import {

@@ -42,7 +42,7 @@
 <script>
   import { mapMutations, mapGetters } from 'vuex';
   import { db } from '~/db'
-  import MobileMenu from '~components/MobileMenu'
+  import MobileMenu from '~/components/MobileMenu'
 
 
   const $posts = db.ref('posts')

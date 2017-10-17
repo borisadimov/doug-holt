@@ -19,7 +19,7 @@
           |            <path d="M0,7 L24,7" id="Path-2-Copy"></path>
           |            <path class="line3" d="M0,13 L24,13" id="Path-2-Copy-2" :class="{'line13-show': isMenuVisible}"></path>
           |            <g id="arrow" class="arrow" :class="{'arrow-show': isMenuVisible}" >
-          |                
+          |
           |            </g>
           |        </g>
           |    </g>
@@ -32,8 +32,8 @@
             | DOUG HOLT
             .logo-inner
               | PHOTOGRAPHY
-          
-        
+
+
 
       .nav(:class="{active: isMenuVisible}")
         .nav-content
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-  var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null
+  var Velocity = process.browser ? require('velocity-animate') : function(){}
 
   import {
     mapGetters,
@@ -183,7 +183,7 @@
     }
 
     .lock {
-      background: url('~assets/images/lock.svg') no-repeat center center / contain;
+      background: url('~/assets/images/lock.svg') no-repeat center center / contain;
       height: 13px;
       width: 10px;
       display: none;
@@ -276,7 +276,7 @@
           justify-content: center;
         }
         .nav-arrow {
-          background: url('~assets/images/menu-arrow.svg') no-repeat center center / contain;
+          background: url('~/assets/images/menu-arrow.svg') no-repeat center center / contain;
           height: 6px;
           width: 12px;
           margin-left: 7px;

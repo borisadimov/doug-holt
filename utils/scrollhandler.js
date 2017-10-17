@@ -47,7 +47,7 @@ export default class ScrollHandler {
     if (this.disabled)
       return;
 
-    if (process.BROWSER_BUILD)
+    if (process.browser)
       e = e || window.event;
 
     let scrollInfo = lethargy.check(e);

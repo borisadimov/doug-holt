@@ -233,8 +233,8 @@ import { mapGetters } from 'vuex';
 import VueMarkdown from 'vue-markdown';
 //import Multiselect from 'vue-multiselect';
 
-import ImageUploader from '~components/ImageUploader'
-import AdminImageCard from '~components/AdminImageCard'
+import ImageUploader from '~/components/ImageUploader'
+import AdminImageCard from '~/components/AdminImageCard'
 import Vue from 'vue'
 import Sortable from 'sortablejs'
 
@@ -244,7 +244,7 @@ Vue.directive('sortable', {
   }
 })
 
-var Multiselect = process.BROWSER_BUILD ? Multiselect = require('vue-multiselect') : null
+var Multiselect = process.browser ? Multiselect = require('vue-multiselect') : null
 
 const $categories = db.ref('categories')
 const $posts = db.ref('posts')

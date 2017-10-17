@@ -81,10 +81,10 @@
   } from 'vuex';
   import VueMarkdown from 'vue-markdown';
 
-  import ImageUploader from '~components/ImageUploader'
-  import AdminImageCard from '~components/AdminImageCard'
+  import ImageUploader from '~/components/ImageUploader'
+  import AdminImageCard from '~/components/AdminImageCard'
   
-  var Multiselect = process.BROWSER_BUILD ? Multiselect = require('vue-multiselect') : null
+  var Multiselect = process.browser ? Multiselect = require('vue-multiselect') : null
   
   const $about = db.ref('about')
   

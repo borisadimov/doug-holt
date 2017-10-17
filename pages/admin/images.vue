@@ -14,8 +14,8 @@ import { db, firebase } from '~/db'
 import { mapGetters } from 'vuex'
 const $images = db.ref('images')
 // components
-import ImageUploader from '~components/ImageUploader'
-import AdminImageCard from '~components/AdminImageCard'
+import ImageUploader from '~/components/ImageUploader'
+import AdminImageCard from '~/components/AdminImageCard'
 
 export default {
   layout: 'admin',

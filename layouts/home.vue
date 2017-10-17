@@ -156,25 +156,25 @@
 <style lang="scss" rel="stylesheet/scss">
   @font-face {
   	font-family: 'Marvel';
-  	src: url('~assets/fonts/Marvel-Regular.eot');
-  	src: url('~assets/fonts/Marvel-Regular.eot?#iefix') format('embedded-opentype'),
-  		url('~assets/fonts/Marvel-Regular.woff') format('woff'),
-  		url('~assets/fonts/Marvel-Regular.ttf') format('truetype');
+  	src: url('~/assets/fonts/Marvel-Regular.eot');
+  	src: url('~/assets/fonts/Marvel-Regular.eot?#iefix') format('embedded-opentype'),
+  		url('~/assets/fonts/Marvel-Regular.woff') format('woff'),
+  		url('~/assets/fonts/Marvel-Regular.ttf') format('truetype');
   	font-weight: normal;
   	font-style: normal;
   }
 
   @font-face {
   	font-family: 'Marvel';
-  	src: url('~assets/fonts/Marvel-Bold.eot');
-  	src: url('~assets/fonts/Marvel-Bold.eot?#iefix') format('embedded-opentype'),
-  		url('~assets/fonts/Marvel-Bold.woff') format('woff'),
-  		url('~assets/fonts/Marvel-Bold.ttf') format('truetype');
+  	src: url('~/assets/fonts/Marvel-Bold.eot');
+  	src: url('~/assets/fonts/Marvel-Bold.eot?#iefix') format('embedded-opentype'),
+  		url('~/assets/fonts/Marvel-Bold.woff') format('woff'),
+  		url('~/assets/fonts/Marvel-Bold.ttf') format('truetype');
   	font-weight: bold;
   	font-style: normal;
   }
 
-  @import '~assets/normalize.css';
+  @import '../assets/normalize.css';
   @import url('https://fonts.googleapis.com/css?family=Work+Sans:100,300,400,500,700');
 
   * {
@@ -300,11 +300,11 @@
         position: relative;
       }
 
-      .app-menu-burger { 
+      .app-menu-burger {
         display: none;
       }
     }
-    
+
   }
 
 </style>

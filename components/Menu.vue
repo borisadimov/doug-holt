@@ -30,8 +30,7 @@
 </template>
 
 <script>
-  var Velocity = process.BROWSER_BUILD ? Velocity = require('velocity-animate') : null
-
+  var Velocity = process.browser ? require('velocity-animate') : function(){}
   import {
     mapGetters,
     mapMutations
@@ -161,7 +160,7 @@
       }
     }
     .lock {
-      background: url('~assets/images/lock.svg') no-repeat center center / contain;
+      background: url('~/assets/images/lock.svg') no-repeat center center / contain;
       height: 13px;
       width: 10px;
       display: none;
@@ -227,7 +226,7 @@
           align-items: center;
         }
         .nav-arrow {
-          background: url('~assets/images/menu-arrow.svg') no-repeat center center / contain;
+          background: url('~/assets/images/menu-arrow.svg') no-repeat center center / contain;
           height: 6px;
           width: 12px;
           margin-left: 7px;

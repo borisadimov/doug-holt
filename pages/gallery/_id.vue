@@ -116,9 +116,9 @@
 </template>
 
 <script>
-  const Velocity = process.BROWSER_BUILD ? require('velocity-animate') : null;
+  const Velocity = process.browser ? require('velocity-animate') : function(){};
   import ScrollHandler    from '~/utils/scrollhandler';
-  import MobileMenu from '~components/MobileMenu'
+  import MobileMenu from '~/components/MobileMenu'
   import { mapMutations, mapGetters } from 'vuex';
   import { db } from '~/db'
 
@@ -172,12 +172,12 @@
     beforeDestroy() {
       this.scrollHandler.destroy();
       this.active = true;
-      if (process.BROWSER_BUILD)
+      if (process.browser)
         window.removeEventListener('keydown', this.handleKey);
     },
 
     created: function () {
-      if (process.BROWSER_BUILD)
+      if (process.browser)
         window.addEventListener('keydown', this.handleKey);
     },
     methods: {
@@ -486,7 +486,7 @@
         width: 80%;
         height: 70%;
         .nav-left {
-          cursor: url(~assets/images/arrow-left.png), w-resize;
+          cursor: url(~/assets/images/arrow-left.png), w-resize;
           position: absolute;
           top: 0;
           left: 0;
@@ -501,7 +501,7 @@
           bottom: 0;
           width: 50%;
           z-index: 5;
-          cursor: url(~assets/images/arrow-right.png), e-resize;
+          cursor: url(~/assets/images/arrow-right.png), e-resize;
         }
         &-pic {
           position: absolute;
@@ -640,7 +640,7 @@
     }
 
     .info-icon {
-      background: url('~assets/images/info.svg') no-repeat center center / contain;
+      background: url('~/assets/images/info.svg') no-repeat center center / contain;
       height: 17px;
       width: 16px;
       position: absolute;

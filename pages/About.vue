@@ -50,7 +50,7 @@
 <script type="text/babel">
   import { mapMutations, mapGetters } from 'vuex';
   import { db } from '~/db';
-  import MobileMenu from '~components/MobileMenu'
+  import MobileMenu from '~/components/MobileMenu'
 
 
   const $about = db.ref('about')
