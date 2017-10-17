@@ -136,6 +136,14 @@
       return store.dispatch('setCategoriesRef', $categories)
     },
 
+    beforeMount() {
+      if (this.$route.params.id.split(' ') > 2) {
+        let cat = store.getters.getCatByName(decodeURI(to.params.id));
+        if (cat)
+          this.$store.commit('categorySet', cat.index )
+      }
+    },
+
     data () {
       return {
         active: false,

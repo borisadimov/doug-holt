@@ -7,9 +7,9 @@ export default function(context) {
   store.commit('closeMobileMenu');
 
   store.commit('showLoader');
-
+  
   if (to.name == 'gallery-id') {
-    let cat = store.getters.getCatByName(to.params.id);
+    let cat = store.getters.getCatByName(decodeURI(to.params.id));
     if (cat)
       setTimeout(() => store.commit('categorySet', cat.index ), 1000)
   }
