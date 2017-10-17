@@ -139,8 +139,9 @@
     beforeMount() {
       console.log('beforeMount new')
       if (this.$route.params.id.split(' ').length > 1) {
-        console.log('spaces in url true')
+        console.log('spaces in url true', decodeURI(this.$route.params.id))
         let cat = this.$store.getters.getCatByName(decodeURI(this.$route.params.id));
+        console.log('cat', cat, this.$store.getters)
         if (cat) {
           console.log('commit category set')
           this.$store.commit('categorySet', cat.index )
