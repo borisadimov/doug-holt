@@ -129,8 +129,8 @@
     }
 
     &-title {
-      margin-top: 14vw;
-      margin-bottom: 14vw;
+      margin-top: 6vw;
+      margin-bottom: 6vw;
 
       font-size: 2.2vw;
       color: rgba(0,0,0,0.87);
