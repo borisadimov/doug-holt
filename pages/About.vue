@@ -12,27 +12,11 @@
         | THE STUDIO
         .about-largeText.about-margin-1vw
           | {{ about.text_block1.text1 }}
-        .about-text.about-margin-5vw
-          | {{ about.text_block1.text2 }}
 
     .about-item
       .about-copy
         .about-text
           | {{ about.text_block2.text1 }}
-
-    .about-item
-      .about-copy
-        .about-text
-          | {{ about.text_block3.text1 }}
-        .about-largeText.about-margin-5vw
-          | {{ about.text_block3.text2 }}
-
-    .about-item
-      .about-copy
-        .about-largeText
-          | {{ about.text_block4.text1 }}
-        .about-text.about-margin-5vw
-          | {{ about.text_block4.text2 }}
 
     .clients
       .clients-column
@@ -142,7 +126,7 @@
     }
 
     &-title {
-      margin-top: 14vw;
+      margin-top: 6vw;
 
       font-size: 2.2vw;
       color: rgba(0,0,0,0.87);
@@ -157,7 +141,7 @@
       flex-flow: row nowrap;
       justify-content: space-between;
 
-      margin-top: 11vw;
+      margin-top: 6vw;
 
       font-family: 'Marvel', sans-serif;
       font-weight: bold;
