@@ -46,7 +46,8 @@ module.exports = {
       { name: "google-site-verification", content: "XH8A9vU487otKoEhGGovB0Vf79BkXsq1eix9QnGWj0I" }
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-    plugins: [{ src: "~plugins/ga.js", ssr: false }]
+    plugins: [{ src: "~plugins/ga.js", ssr: false }],
+    modules: [["@nuxtjs/google-tag-manager", { id: "GTM-T5TJJZQ" }]]
   },
   /*
   ** Customize the progress-bar color
