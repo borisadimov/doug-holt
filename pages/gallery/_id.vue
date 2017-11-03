@@ -127,7 +127,7 @@
   export default {
     name: "CatComponent",
     layout: 'home',
-    
+
     components: {
       MobileMenu
     },
@@ -154,7 +154,10 @@
       this.menuClose();
       this.hideContacts();
       this.handleUpdate()
-
+      const cat = this.$store.getters.getCatByName(decodeURI(this.$route.params.id));
+      if (cat){
+        setTimeout(() => this.$store.commit('categorySet', cat.index ), 1000)
+      }
       if (this.category && this.category.items.length > 9)
         this.counterWidth = 24;
 
@@ -182,7 +185,7 @@
     },
     methods: {
       handleUpdate() {
-        if (this.$store.state.nav.loadProgress === 100) return
+        if (this.$store.state.loadProgress === 100) return
         let loadCnt = 0;
         const loadHandler = () => {
           loadCnt++;
@@ -296,11 +299,11 @@
       ...mapGetters(['categories']),
 
       nav() {
-        return this.$store.state.nav;
+        return this.$store.state;
       },
 
       portfolio() {
-        return this.$store.state.firebase;
+        return this.$store.state;
       },
 
       category() {

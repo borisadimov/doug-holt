@@ -60,7 +60,7 @@
       ...mapGetters(['contacts']),
 
       nav() {
-        return this.$store.state.nav
+        return this.$store.state
       },
 
       portfolio() {

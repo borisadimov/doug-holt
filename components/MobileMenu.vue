@@ -125,15 +125,15 @@
       ...mapGetters(['categories']),
 
       nav() {
-        return this.$store.state.nav;
+        return this.$store.state;
       },
 
       showContacts() {
-        return this.$store.state.firebase.showContacts;
+        return this.$store.state.showContacts;
       },
 
       isMenuVisible() {
-        return this.$store.state.nav.mobileMenuOpened;
+        return this.$store.state.mobileMenuOpened;
       }
     },
 

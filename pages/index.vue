@@ -111,7 +111,7 @@
 
     methods: {
       handleUpdate() {
-        if (this.$store.state.nav.loadProgress === 100) return
+        if (this.$store.state.loadProgress === 100) return
         let loadCnt = 0;
         const loadHandler = () => {
           loadCnt++;
@@ -192,15 +192,15 @@
 
     computed: {
       portfolio() {
-        return this.$store.state.firebase
+        return this.$store.state
       },
 
       nav() {
-        return this.$store.state.nav
+        return this.$store.state
       },
 
       categoryId() {
-        return this.$store.state.firebase.category
+        return this.$store.state.category
       },
 
       isContactsOpen() {
