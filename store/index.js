@@ -281,6 +281,7 @@ function store () {
       }),
 
       setImagesRef: firebaseAction(({
+          state,
           bindFirebaseRef
         }, ref) => {
         if (state.isSet.images) return Promise.resolve()

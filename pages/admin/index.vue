@@ -226,12 +226,10 @@
 
 </template>
 
-<!-- <style src="vue-multiselect/dist/vue-multiselect.min.css"></style> -->
 <script>
 import { db, firebase } from '~/db';
 import { mapGetters } from 'vuex';
 import VueMarkdown from 'vue-markdown';
-//import Multiselect from 'vue-multiselect';
 
 import ImageUploader from '~/components/ImageUploader'
 import AdminImageCard from '~/components/AdminImageCard'
@@ -284,7 +282,7 @@ export default {
   },
 
   fetch ({ store }) {
-    return store.dispatch('setImagesRef', $images)
+    return store.dispatch('setCategoriesRef', $categories).then(() => store.dispatch('setPostsRef', $posts))
   },
 
   data () {

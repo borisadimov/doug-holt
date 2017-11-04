@@ -25,6 +25,10 @@ export default {
     AdminImageCard
   },
 
+  fetch({store}) {
+    return store.dispatch('setImagesRef', $images)
+  },
+
   methods: {
     remove: function (image) {
       const storageRef = firebase.storage().ref(image['name'])
@@ -37,8 +41,7 @@ export default {
     }
   },
 
-  created() {
-    this.$store.dispatch('setImagesRef', $images)
+  mounted() {
   },
 
   computed: {
