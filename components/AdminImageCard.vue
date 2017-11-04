@@ -2,24 +2,23 @@
 .image(@click="handleCardClick(image)")
   span(@click="handleRemoveClick(image)").image-delete-btn
     | ❌
-  img(:src="image.url", alt="" ref="image")
+  img(:src="image.thumb_url || image.url" v-if="true" alt="" ref="image")
   .name {{ image.name }}
   .date(v-if="image.created_at") {{ new Date(image.created_at).toTimeString() }}
 </template>
 
 <script>
 export default {
-  props: ['image'],
-
+  props: ["image"],
   methods: {
-    handleRemoveClick: function (params) {
-      this.$emit('on-remove-click', params)
+    handleRemoveClick: function(params) {
+      this.$emit("on-remove-click", params);
     },
-    handleCardClick: function (params) {
-      this.$emit('on-card-click', params)
+    handleCardClick: function(params) {
+      this.$emit("on-card-click", params);
     }
   }
-}
+};
 </script>
 
 <style lang="scss">

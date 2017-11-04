@@ -18,7 +18,7 @@
 
 <script>
   import Vue from 'vue'
-  import {PAGE_HOME} from '~/store/nav';
+  import {PAGE_HOME} from '~/store';
 
   export default {
     name: 'LoaderComponent',
@@ -119,7 +119,7 @@
 
     computed: {
       loadProgress() {
-        return this.$store.state.nav.loadProgress
+        return this.$store.state.loadProgress
       },
 
       isLoaded() {
@@ -127,7 +127,7 @@
       },
 
       disableLoader() {
-        return this.$store.state.nav.disableLoader;
+        return this.$store.state.disableLoader;
       }
     }
   }
@@ -246,5 +246,5 @@
   .main-leave-to .loader-content {
     opacity: 0;
   }
-  
+
 </style>

@@ -55,7 +55,7 @@
               img(:src="slide.image")
           .mark__slideTitle
             input(type="text" v-model="slide.title", :value="slide.title")
-            
+
           .mark__slideClient
             input(type="text" v-model="slide.client", :value="slide.client")
           .mark__remove(@click="removeCatSlide(portfolioSlides, id)")
@@ -82,14 +82,14 @@
               textarea(type="text" placeholder="Any description" @input="inputChange" v-model="portfolioItem.info")
             .editing-field
               .editing-label Cover Image URL
-              
+
               .button.image-content-btn(@click="handleContentModalClick")
                 span 🏞
                 | add image
 
             .editing-field
               .editing-label Mobile Cover Image URL
-              
+
               .button.image-content-btn(@click="handleMobileImagesContent")
                 span 🏞
                 | add image
@@ -371,7 +371,7 @@ export default {
       }
       else if (this.editingPostId !== undefined) {
         this.postItem.image = params.url
-      }      
+      }
     },
 
     addMobileImageToContent: function (params) {
@@ -447,7 +447,7 @@ export default {
           this.portfolioItem = d.val()
         })
 
-     
+
 
       setTimeout(() =>  this.slides = [...this.portfolioItem.items], 10)
     },
@@ -540,7 +540,7 @@ export default {
   },
 
   created() {
-    
+
   }
 
 }
@@ -581,7 +581,7 @@ $primary-color: #EBC8B2;
     }
   }
 
-  
+
 
   .login {
     width: 100%;

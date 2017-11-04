@@ -147,7 +147,7 @@
 
     computed: {
       nav() {
-        return this.$store.state.nav;
+        return this.$store.state;
       },
 
       ...mapGetters(['posts', 'getPost']),
